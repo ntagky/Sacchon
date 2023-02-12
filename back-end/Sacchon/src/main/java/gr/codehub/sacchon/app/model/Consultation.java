@@ -20,11 +20,9 @@ import java.time.LocalDate;
  * id: unique identification number <br>
  * doctorName: the name of the doctor that prescribed this consultation <br>
  * dateCreated: the local date that the consultation was created <br>
- * dateChanged: the local date that the consultation changed <br>
- * seenConsultation: the local date that the patient saw their consultation the last time //??? <br>
+ * seenConsultation: boolean variable that becomes true when the patient opens their new consultation <br>
  * List<Medication>: the list of medications (name and dosage) the doctor prescribed <br>
- * details: further instructions / details that the doctor may give to the patient
- *
+ * details: further instructions / details that the doctor may give to the patient*
  *
  * @author Georgia Giannokosta - geogiannokosta@gmail.com
  */
@@ -39,8 +37,7 @@ public class Consultation {
     private int id;
     private String doctorName;
     private LocalDate dateCreated;
-    private LocalDate dateChanged;
-    private LocalDate seenConsultation;
+    private boolean seenConsultation;
 //    private List<Medication> medications;
     private String details;
 }

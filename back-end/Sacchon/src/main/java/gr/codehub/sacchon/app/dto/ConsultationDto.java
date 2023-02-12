@@ -15,8 +15,7 @@ public class ConsultationDto {
     private int id;
     private String doctorName; // ayto mipws den xreiazetai giati tha to pairnei ap ti vasi afotou sindethoun oi pinakes?
     private LocalDate dateCreated;
-    private LocalDate dateChanged;
-    private LocalDate seenConsultation;
+    private boolean seenConsultation;
     //    private List<Medication> medications;
     private String details;
 
@@ -25,8 +24,7 @@ public class ConsultationDto {
             id = consultation.getId();
             doctorName = consultation.getDoctorName();
             dateCreated = consultation.getDateCreated();
-            dateChanged = consultation.getDateChanged();
-            seenConsultation = consultation.getSeenConsultation();
+            seenConsultation = consultation.isSeenConsultation();
 //            medications = consultation.getMedications();
             details = consultation.getDetails();
         }
@@ -36,9 +34,8 @@ public class ConsultationDto {
         Consultation consultation = new Consultation();
         consultation.setId(id);
         consultation.setDateCreated(dateCreated);
-        consultation.setDateCreated(dateChanged);
-        consultation.setDateCreated(seenConsultation);
-//        consultation.setDateCreated(medications);
+        consultation.setSeenConsultation(seenConsultation);
+//        consultation.setMedications(medications);
         consultation.setDetails(details);
         return consultation;
     }
