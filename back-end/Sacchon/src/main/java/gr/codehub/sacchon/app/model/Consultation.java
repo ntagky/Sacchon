@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <p>Consultation is one of the main entities of the Sacchon Diabetes Management application.
@@ -35,7 +36,8 @@ public class Consultation {
     private String doctorName;
     private LocalDate dateCreated;
     private boolean seenConsultation;
-//    private List<Medication> medications;
+    @ElementCollection
+    private List<String> medications;
     private String details;
     @ManyToOne
     private Doctor doctor;

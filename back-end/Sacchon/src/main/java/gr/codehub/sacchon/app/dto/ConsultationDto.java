@@ -1,11 +1,13 @@
 package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.Consultation;
+import jakarta.persistence.ElementCollection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Setter
 @Getter
@@ -15,7 +17,8 @@ public class ConsultationDto {
     private String doctorName; // ayto mipws den xreiazetai giati tha to pairnei ap ti vasi afotou sindethoun oi pinakes?
     private LocalDate dateCreated;
     private boolean seenConsultation;
-    //    private List<Medication> medications;
+    @ElementCollection
+    private List<String> medications;
     private String details;
     private PatientDto patientDto;
     private DoctorDto doctorDto;
