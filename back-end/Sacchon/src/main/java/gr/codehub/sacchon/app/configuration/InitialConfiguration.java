@@ -24,7 +24,7 @@ import java.util.List;
 public class InitialConfiguration {
 
     @Bean
-    CommandLineRunner commandLineRunner(
+    CommandLineRunner PatientCommandLineRunner(
             PatientRepository patientRepository){
         System.out.println("System dummy saved object");
         return args -> {
@@ -56,15 +56,19 @@ public class InitialConfiguration {
 
         };
 
+
+
+
+
     }
 
 
     @Bean
-    CommandLineRunner commandLineRunner(
+    CommandLineRunner DoctorCommandLineRunner(
             DoctorRepository docRepository, ChiefDoctorRepository chiefDocRepository, ConsultationRepository consultationRepository){
         return args -> {
-            Doctor doctor1 = new Doctor(0);
-            Doctor doctor2 = new Doctor(1);
+            Doctor doctor1 = new Doctor(0, new ArrayList<Patient>(), new ArrayList<Consultation>());
+            Doctor doctor2 = new Doctor(1, new ArrayList<Patient>(), new ArrayList<Consultation>());
             docRepository.saveAll(List.of(doctor1, doctor2));
 
 //            ChiefDoctor chiefDoctor1 = new ChiefDoctor();
