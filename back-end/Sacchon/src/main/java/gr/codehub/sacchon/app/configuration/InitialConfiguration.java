@@ -29,6 +29,7 @@ public class InitialConfiguration {
         System.out.println("System dummy saved object");
         return args -> {
             Patient patient = new Patient();
+            patient.setId(1);
             patient.setAddress("123 Main St.");
             patient.setGender("Male");
             patient.setDateOfBirth(LocalDate.of(1980, 1, 1));
