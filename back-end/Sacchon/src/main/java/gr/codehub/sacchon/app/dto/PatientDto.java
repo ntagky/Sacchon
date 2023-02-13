@@ -46,20 +46,20 @@ public class PatientDto extends PersonDto {
             medications = patient.getMedications();
             conditions = patient.getConditions();
 
-            doctorDto = new DoctorDto(patient.getDoctor());
-            consultationsDto = patient.getDoctor()
-                    .getConsultations()
-                    .stream()
-                    .map(ConsultationDto::new)
-                    .collect(Collectors.toList());
-            glucoseDto = patient.getGlucose()
-                    .stream()
-                    .map(GlucoseDto::new)
-                    .collect(Collectors.toList());
-            carbsDto = patient.getCarbs()
-                    .stream()
-                    .map(CarbsDto::new)
-                    .collect(Collectors.toList());
+//            doctorDto = new DoctorDto(patient.getDoctor());
+//            consultationsDto = patient.getDoctor()
+//                    .getConsultations()
+//                    .stream()
+//                    .map(ConsultationDto::new)
+//                    .collect(Collectors.toList());
+//            glucoseDto = patient.getGlucose()
+//                    .stream()
+//                    .map(GlucoseDto::new)
+//                    .collect(Collectors.toList());
+//            carbsDto = patient.getCarbs()
+//                    .stream()
+//                    .map(CarbsDto::new)
+//                    .collect(Collectors.toList());
         }
     }
     public Patient asPatient() {
@@ -76,17 +76,17 @@ public class PatientDto extends PersonDto {
         patient.setAllergies(allergies);
         patient.setMedications(medications);
         patient.setConditions(conditions);
-        patient.setDoctor(doctorDto.asDoctor());
-        patient.setCarbs(
-                carbsDto.stream()
-                        .map(CarbsDto::asCarbs)
-                        .collect(Collectors.toList())
-        );
-        patient.setGlucose(
-                glucoseDto.stream()
-                        .map(GlucoseDto::asGlucose)
-                        .collect(Collectors.toList())
-        );
+//        patient.setDoctor(doctorDto.asDoctor());
+//        patient.setCarbs(
+//                carbsDto.stream()
+//                        .map(CarbsDto::asCarbs)
+//                        .collect(Collectors.toList())
+//        );
+//        patient.setGlucose(
+//                glucoseDto.stream()
+//                        .map(GlucoseDto::asGlucose)
+//                        .collect(Collectors.toList())
+//        );
         return patient;
     }
 }

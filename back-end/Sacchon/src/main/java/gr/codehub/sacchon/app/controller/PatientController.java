@@ -17,7 +17,6 @@ public class PatientController {
     private PatientService patientService;
 
     @GetMapping("/patient")
-
     public List<PatientDto> getPatientDto(){
         log.info("The end point PatientDto has been used");
         return patientService.readPatient();
@@ -29,7 +28,7 @@ public class PatientController {
         return patientService.readPatientById(id);
     }
 
-    @PostMapping("/patient]")
+    @PostMapping("/patient")
     public  PatientDto createPatientDto(@RequestBody PatientDto PatientDto){
         log.info("The end point PatientDto has been used");
         return patientService.createPatient(PatientDto);
