@@ -28,12 +28,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Doctor {
+public class Doctor extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    private List<Patient> patients;
+    @OneToMany
+    private List<Patient> patients;
 
-//    private List<Consultation> consultations; //todo: connection with Consultation class
+    @OneToMany
+    private List<Consultation> consultations; //todo: connection with Consultation class
 }

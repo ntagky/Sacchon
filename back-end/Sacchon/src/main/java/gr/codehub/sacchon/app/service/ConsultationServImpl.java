@@ -52,8 +52,7 @@ public class ConsultationServImpl implements ConsultationServices{
             Consultation dbConsultation = readConsultationDb(id);
             dbConsultation.setDoctorName(consultation.getDoctorName()); // ???
             dbConsultation.setDateCreated(consultation.getDateCreated());
-            dbConsultation.setDateChanged(consultation.getDateChanged());
-            dbConsultation.setSeenConsultation(consultation.getSeenConsultation());
+            dbConsultation.setSeenConsultation(false);
             dbConsultation.setDetails(consultation.getDetails());
             doctorRepository.save(dbConsultation);
             action = true;

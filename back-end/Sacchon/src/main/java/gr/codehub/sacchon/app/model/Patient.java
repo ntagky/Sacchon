@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Patient {
+public class Patient extends Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +35,13 @@ public class Patient {
     @ElementCollection
     private List<String> conditions;
 
-    // Doctor doctor  //todo: Implement
+    @OneToMany
+    private List<Consultation> consultations;
+    @OneToMany
+    private List<Carbs> carbs;
+    @OneToMany
+    private List<Glucose> glucose;
+    @ManyToOne
+    private Doctor doctor;
 
 }

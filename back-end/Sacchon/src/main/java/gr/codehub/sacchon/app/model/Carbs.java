@@ -10,13 +10,15 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Carbs implements Measurement<Long> {
+public class Carbs implements Measurement<Double> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private final String UNITS = "g";
     private LocalDate date;
-    private double measurement;
+    private Double measurement;
+    @ManyToOne
+    private Patient patient;
 
 }

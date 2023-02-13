@@ -11,22 +11,29 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Setter
 @Getter
-public class CarbsDto implements Measurement<Long> {
+public class CarbsDto implements Measurement<Double> {
 
     private int id;
     private final String UNITS = "g";
     private LocalDate date;
-    private double measurement;
+    private Double measurement;
+    private PatientDto patientDto;
 
     public CarbsDto(Carbs carbs) {
         if (carbs == null)
             return;
+        id = carbs.getId();
         date = carbs.getDate();
         measurement = carbs.getMeasurement();
+        patientDto = new PatientDto(carbs.getPatient());
     }
 
     public Carbs asCarbs() {
-        return new Carbs(id, date, measurement);
+        return new Carbs(
+                id,
+                date,
+                measurement,
+                patientDto.asPatient());
     }
 
 }

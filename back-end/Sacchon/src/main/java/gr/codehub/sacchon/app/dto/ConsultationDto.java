@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Setter
 @Getter
@@ -18,6 +17,8 @@ public class ConsultationDto {
     private boolean seenConsultation;
     //    private List<Medication> medications;
     private String details;
+    private PatientDto patientDto;
+    private DoctorDto doctorDto;
 
     public ConsultationDto(Consultation consultation){
         if(consultation!=null){
@@ -27,6 +28,8 @@ public class ConsultationDto {
             seenConsultation = consultation.isSeenConsultation();
 //            medications = consultation.getMedications();
             details = consultation.getDetails();
+            patientDto = new PatientDto(consultation.getPatient());
+            doctorDto = new DoctorDto(consultation.getDoctor());
         }
     }
 
@@ -37,6 +40,8 @@ public class ConsultationDto {
         consultation.setSeenConsultation(seenConsultation);
 //        consultation.setMedications(medications);
         consultation.setDetails(details);
+        consultation.setPatient(patientDto.asPatient());
+        consultation.setDoctor(doctorDto.asDoctor());
         return consultation;
     }
 }

@@ -1,9 +1,6 @@
 package gr.codehub.sacchon.app.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,4 +37,8 @@ public class Consultation {
     private boolean seenConsultation;
 //    private List<Medication> medications;
     private String details;
+    @ManyToOne
+    private Doctor doctor;
+    @ManyToOne
+    private Patient patient;
 }

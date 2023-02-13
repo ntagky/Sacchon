@@ -19,15 +19,18 @@ public class GlucoseDto implements Measurement<List<GlucoseRecordDto>> {
     private final String UNITS = "mg/dL";
     private LocalDate date;
     private List<GlucoseRecordDto> measurement;
+    private PatientDto patientDto;
 
     public GlucoseDto(Glucose glucose) {
         if (glucose == null)
             return;
+        id = glucose.getId();
         date = glucose.getDate();
         measurement = glucose.getMeasurement()
                 .stream()
                 .map(GlucoseRecordDto::new)
                 .collect(Collectors.toList());
+        patientDto = new PatientDto(glucose.getPatient());
     }
 
     public Glucose asGlucose() {
@@ -37,7 +40,8 @@ public class GlucoseDto implements Measurement<List<GlucoseRecordDto>> {
                 measurement
                         .stream()
                         .map(GlucoseRecordDto::asGlucoseMeasurementRecord)
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                patientDto.asPatient()
         );
     }
 

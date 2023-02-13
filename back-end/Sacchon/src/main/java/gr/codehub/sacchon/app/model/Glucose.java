@@ -20,5 +20,7 @@ public class Glucose implements Measurement<List<GlucoseRecord>> {
     private LocalDate date;
     @OneToMany
     private List<GlucoseRecord> measurement;
+    @ManyToOne
+    private Patient patient;
 
 }
