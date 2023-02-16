@@ -34,7 +34,7 @@ public class InitialConfiguration {
             patient.setDiabetesType("Type 2");
             patient.setHeight(72);
             patient.setWeight(200.0);
-            patient.setDoctor(new Doctor());
+//            patient.setDoctor(new Doctor());
 
             List<String> allergies = new ArrayList<>();
             allergies.add("Peanuts");
@@ -69,7 +69,7 @@ public class InitialConfiguration {
             List<String> medications2 = new ArrayList<>();
             medications2.add("Medrol");
             medications2.add("Aspirin");
-            patient2.setDoctor(new Doctor());
+//            patient2.setDoctor(new Doctor());
             patient2.setMedications(medications2);
 
             List<String> conditions2 = new ArrayList<>();
@@ -77,9 +77,9 @@ public class InitialConfiguration {
             patient2.setConditions(conditions2);
             patientRepository.saveAll(List.of(patient,patient2));
 
-            Doctor doctor1 = new Doctor(0, new ArrayList<Patient>(), new ArrayList<Consultation>());
-            Doctor doctor2 = new Doctor(1, new ArrayList<Patient>(), new ArrayList<Consultation>());
-            doctorRepository.saveAll(List.of(doctor1, doctor2));
+//            Doctor doctor1 = new Doctor(0, new ArrayList<Patient>(), new ArrayList<Consultation>());
+//            Doctor doctor2 = new Doctor(1, new ArrayList<Patient>(), new ArrayList<Consultation>());
+//            doctorRepository.saveAll(List.of(doctor1, doctor2));
 
             ChiefDoctor chiefDoctor1 = new ChiefDoctor();
             ChiefDoctor chiefDoctor2 = new ChiefDoctor();
