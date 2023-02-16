@@ -72,9 +72,9 @@ public class InitialConfiguration {
             Doctor doctor2 = new Doctor(1, new ArrayList<Patient>(), new ArrayList<Consultation>());
             docRepository.saveAll(List.of(doctor1, doctor2));
 
-//            ChiefDoctor chiefDoctor1 = new ChiefDoctor();
-//            ChiefDoctor chiefDoctor2 = new ChiefDoctor();
-//            chiefDocRepository.saveAll(List.of(chiefDoctor1, chiefDoctor2));
+            ChiefDoctor chiefDoctor1 = new ChiefDoctor();
+            ChiefDoctor chiefDoctor2 = new ChiefDoctor();
+            chiefDocRepository.saveAll(List.of(chiefDoctor1, chiefDoctor2));
         };
     }
 }
