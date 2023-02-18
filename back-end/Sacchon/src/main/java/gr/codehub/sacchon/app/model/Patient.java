@@ -1,14 +1,15 @@
 package gr.codehub.sacchon.app.model;
 
+import gr.codehub.sacchon.app.SacchonApplication;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Patient extends Person {
@@ -20,7 +21,8 @@ public class Patient extends Person {
     private String address;
     private String gender;
     private LocalDate dateOfBirth;
-    private String bloodType;
+    @Enumerated(EnumType.STRING)
+    private BloodType bloodType;
     private String diabetesType;
     private int height;
     private double weight;
@@ -34,9 +36,9 @@ public class Patient extends Person {
 
     @OneToMany
     private List<Consultation> consultations;
-    @OneToMany
+    @OneToMany(mappedBy = "patient")
     private List<Carbs> carbs;
-    @OneToMany
+    @OneToMany(mappedBy = "patient")
     private List<Glucose> glucose;
     @ManyToOne
     private Doctor doctor;

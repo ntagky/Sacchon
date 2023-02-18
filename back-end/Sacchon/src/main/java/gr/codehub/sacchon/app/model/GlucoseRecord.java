@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.model;
 
+import gr.codehub.sacchon.app.SacchonApplication;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 
 @Entity
+@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -18,7 +20,8 @@ public class GlucoseRecord {
     private int id;
     private LocalTime time;
     private BigDecimal measurement;
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "glucose_id", referencedColumnName = "id")
     private Glucose glucose;
 
 }

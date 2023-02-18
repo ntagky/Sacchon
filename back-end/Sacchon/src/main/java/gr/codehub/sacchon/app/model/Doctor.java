@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.model;
 
+import gr.codehub.sacchon.app.SacchonApplication;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
 public class Doctor extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

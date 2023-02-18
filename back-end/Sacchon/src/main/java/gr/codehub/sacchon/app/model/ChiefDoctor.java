@@ -1,9 +1,10 @@
 package gr.codehub.sacchon.app.model;
 
+import gr.codehub.sacchon.app.SacchonApplication;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -20,5 +21,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Entity
+@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
 public class ChiefDoctor extends Doctor {
 }
