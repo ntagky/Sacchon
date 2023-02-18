@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
+@Table(schema = SacchonApplication.SCHEMA)
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

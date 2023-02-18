@@ -21,6 +21,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Entity
-@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
+@Table(schema = SacchonApplication.SCHEMA)
 public class ChiefDoctor extends Doctor {
 }

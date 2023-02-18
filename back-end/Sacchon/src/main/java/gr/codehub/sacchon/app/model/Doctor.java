@@ -29,7 +29,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
+@Table(schema = SacchonApplication.SCHEMA)
 public class Doctor extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

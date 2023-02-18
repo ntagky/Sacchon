@@ -114,7 +114,7 @@ public class InitialConfiguration {
             GlucoseRecord glucoseRecord1 = new GlucoseRecord(
                     1,
                     LocalTime.of(18, 30),
-                    new BigDecimal("88.10"),
+                    new BigDecimal("76.98"),
                     glucose1
             );
             GlucoseRecord glucoseRecord2 = new GlucoseRecord(
@@ -126,7 +126,7 @@ public class InitialConfiguration {
             GlucoseRecord glucoseRecord3 = new GlucoseRecord(
                     3,
                     LocalTime.of(14, 10),
-                    new BigDecimal("88.10"),
+                    new BigDecimal("92.44"),
                     glucose2
             );
             glucoseRecordRepository.saveAll(List.of(

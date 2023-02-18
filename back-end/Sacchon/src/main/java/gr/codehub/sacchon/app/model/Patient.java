@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
+@Table(schema = SacchonApplication.SCHEMA)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Patient extends Person {

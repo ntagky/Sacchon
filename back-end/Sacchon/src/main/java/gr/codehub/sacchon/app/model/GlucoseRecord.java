@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 
 @Entity
-@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
+@Table(schema = SacchonApplication.SCHEMA)
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

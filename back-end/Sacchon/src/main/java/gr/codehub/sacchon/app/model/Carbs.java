@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 @Getter
-@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
+@Table(schema = SacchonApplication.SCHEMA)
 public class Carbs implements Measurement<Double> {
 
     @Id

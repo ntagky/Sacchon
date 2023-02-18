@@ -15,24 +15,22 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Setter
 @Getter
-public class GlucoseDto implements Measurement<List<GlucoseRecordDto>> {
+public class GlucoseFromPersonDto implements Measurement<List<GlucoseRecordFromDayDto>> {
 
     private int id;
     private final String UNITS = "mg/dL";
     private LocalDate date;
-    private List<GlucoseRecordDto> measurement;
-    private PatientDto patientDto;
+    private List<GlucoseRecordFromDayDto> measurement;
 
-    public GlucoseDto(Glucose glucose) {
+    public GlucoseFromPersonDto(Glucose glucose) {
         if (glucose == null)
             return;
         id = glucose.getId();
         date = glucose.getDate();
         measurement = glucose.getMeasurement()
                 .stream()
-                .map(GlucoseRecordDto::new)
+                .map(GlucoseRecordFromDayDto::new)
                 .collect(Collectors.toList());
-        patientDto = new PatientDto(glucose.getPatient());
     }
 
     public Glucose asGlucose() {
@@ -41,9 +39,9 @@ public class GlucoseDto implements Measurement<List<GlucoseRecordDto>> {
                 date,
                 measurement
                         .stream()
-                        .map(GlucoseRecordDto::asGlucoseMeasurementRecord)
+                        .map(GlucoseRecordFromDayDto::asGlucoseMeasurementRecord)
                         .collect(Collectors.toList()),
-                patientDto.asPatient()
+                null
         );
     }
 
