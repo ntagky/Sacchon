@@ -9,8 +9,11 @@ import gr.codehub.sacchon.app.service.GlucoseService;
 import gr.codehub.sacchon.app.service.PatientService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -38,6 +41,28 @@ public class PatientController {
     public List<CarbsFromPersonDto> getCarbsDtoFromPatientById(@PathVariable(name="id") int id) {
         log.info("The end point PatientDto & CarbsDto has been used");
         return carbsService.readCarbsByPatientId(id);
+    }
+
+    @GetMapping("/patient/{id}/carbs/query")
+    public Integer getDailyAverageCarbsByPatientIdOnSpecificDates(
+            @PathVariable(name="id") int patientId,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
+    ) {
+        log.info("The end point @DailyAverageCarbsByPatientIdOnSpecificDates has been used.");
+        return carbsService.readAverageCarbsIntakeByPatientIdOnSpecificDates(
+                patientId, startingDate, endingDate);
+    }
+
+    @GetMapping("/patient/{id}/glucose/query")
+    public List<BigDecimal> getDailyAverageGlucoseByPatientIdOnSpecificDates(
+            @PathVariable(name="id") int patientId,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
+            ) {
+        log.info("The end point @DailyAverageGlucoseByPatientIdOnSpecificDates has been used.");
+        return glucoseService.readDailyAverageGlucoseByPatientIdOnSpecificDates(
+                patientId, startingDate, endingDate);
     }
 
     @GetMapping("/patient/{id}/glucose")

@@ -7,6 +7,7 @@ import gr.codehub.sacchon.app.repository.GlucoseRecordRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,6 +35,13 @@ public class GlucoseRecordServImpl implements GlucoseRecordService {
     public GlucoseRecordDto readGlucoseRecordById(int id) throws GlucoseRecordException {
         return new GlucoseRecordDto(readGlucoseRecordDb(id));
     }
+
+    @Override
+    public BigDecimal readAverageDailyGlucoseByGlucoseId(int id) {
+        return glucoseRecordRepository
+                .findGlucoseRecordsByGlucoseId(id);
+    }
+
     private GlucoseRecord readGlucoseRecordDb(int id) throws GlucoseRecordException {
         Optional<GlucoseRecord> glucoseRecordOptional = glucoseRecordRepository.findById(id);
         if (glucoseRecordOptional.isPresent())

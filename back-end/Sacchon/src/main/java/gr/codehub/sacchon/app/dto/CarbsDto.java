@@ -11,12 +11,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Setter
 @Getter
-public class CarbsDto implements Measurement<Double> {
+public class CarbsDto implements Measurement<Integer> {
 
     private int id;
     private final String UNITS = "g";
     private LocalDate date;
-    private Double measurement;
+    private Integer measurement;
     private PatientDto patientDto;
 
     public CarbsDto(Carbs carbs) {

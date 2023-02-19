@@ -7,12 +7,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface GlucoseRepository extends JpaRepository<Glucose, Integer> {
 
-    @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".GLUCOSE WHERE patient_id = :patientId", nativeQuery = true)
+    @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".GLUCOSE WHERE GLUCOSE.PATIENT_ID = :patientId",
+            nativeQuery = true)
     List<Glucose> findGlucoseByPatientId(@Param("patientId") int patientId);
+
+    @Query(value = "SELECT GLUCOSE.ID FROM " + SacchonApplication.SCHEMA + ".GLUCOSE " +
+            "WHERE GLUCOSE.PATIENT_ID = :patientId AND GLUCOSE.DATE >= :startingDate AND GLUCOSE.DATE <= :endingDate",
+            nativeQuery = true)
+    List<Integer> findGlucoseDatesAndIdsByPatientIdOnSpecificDates(
+            @Param("patientId") int patientId,
+            @Param("startingDate") LocalDate startingDate,
+            @Param("endingDate") LocalDate endingDate
+    );
 
 }

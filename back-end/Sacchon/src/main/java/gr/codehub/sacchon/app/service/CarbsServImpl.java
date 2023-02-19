@@ -8,6 +8,7 @@ import gr.codehub.sacchon.app.repository.CarbsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,6 +44,12 @@ public class CarbsServImpl implements CarbsService {
                 .stream()
                 .map(CarbsFromPersonDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer readAverageCarbsIntakeByPatientIdOnSpecificDates(int id, LocalDate startingDate, LocalDate endingDate) {
+        return carbsRepository
+                .findAverageCarbsByPatientIdOnSpecificDates(id, startingDate, endingDate);
     }
 
     private Carbs readCarbsDb(int id) throws CarbsException {

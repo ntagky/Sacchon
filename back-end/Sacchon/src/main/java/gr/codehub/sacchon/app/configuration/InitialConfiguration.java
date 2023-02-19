@@ -90,11 +90,11 @@ public class InitialConfiguration {
 
             patientRepository.saveAll(List.of(patient1, patient2));
 
-            Carbs carb1 = new Carbs(1,LocalDate.of(2023, 11, 16),12.56, patient1);
-            Carbs carb2 = new Carbs(2,LocalDate.of(2022, 11, 17),13.2, patient1);
-            Carbs carb3 = new Carbs(3,LocalDate.of(2022, 11, 18),14.3, patient1);
-            Carbs carb4 = new Carbs(4,LocalDate.of(2022, 11, 12),10.88, patient2);
-            Carbs carb5 = new Carbs(5,LocalDate.of(2022, 11, 12),11.2, patient2);
+            Carbs carb1 = new Carbs(1,LocalDate.of(2023, 11, 16),1900, patient1);
+            Carbs carb2 = new Carbs(2,LocalDate.of(2022, 11, 17),2300, patient1);
+            Carbs carb3 = new Carbs(3,LocalDate.of(2022, 11, 18),1980, patient1);
+            Carbs carb4 = new Carbs(4,LocalDate.of(2022, 11, 12),2210, patient2);
+            Carbs carb5 = new Carbs(5,LocalDate.of(2022, 11, 12),2830, patient2);
             carbsRepository.saveAll(List.of(carb1, carb2, carb3, carb4, carb5));
 
             Glucose glucose1 = new Glucose(
@@ -105,7 +105,7 @@ public class InitialConfiguration {
             );
             Glucose glucose2 = new Glucose(
                     2,
-                    LocalDate.of(2023, 11, 16),
+                    LocalDate.of(2023, 11, 17),
                     new ArrayList<> (),
                     patient1
             );
@@ -119,12 +119,18 @@ public class InitialConfiguration {
             );
             GlucoseRecord glucoseRecord2 = new GlucoseRecord(
                     2,
-                    LocalTime.of(23, 10),
+                    LocalTime.of(21, 10),
                     new BigDecimal("88.10"),
                     glucose1
             );
             GlucoseRecord glucoseRecord3 = new GlucoseRecord(
                     3,
+                    LocalTime.of(23, 9),
+                    new BigDecimal("120.99"),
+                    glucose1
+            );
+            GlucoseRecord glucoseRecord4 = new GlucoseRecord(
+                    4,
                     LocalTime.of(14, 10),
                     new BigDecimal("92.44"),
                     glucose2
@@ -132,7 +138,8 @@ public class InitialConfiguration {
             glucoseRecordRepository.saveAll(List.of(
                     glucoseRecord1,
                     glucoseRecord2,
-                    glucoseRecord3)
+                    glucoseRecord3,
+                    glucoseRecord4)
             );
 
 //
