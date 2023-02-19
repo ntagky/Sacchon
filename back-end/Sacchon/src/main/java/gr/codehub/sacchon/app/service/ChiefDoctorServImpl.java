@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class ChiefDoctorServImpl implements ChiefDoctorServices{
+public class ChiefDoctorServImpl implements ChiefDoctorService {
     private final ChiefDoctorRepository doctorRepository;
 
     @Override

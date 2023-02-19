@@ -5,10 +5,11 @@ import gr.codehub.sacchon.app.exception.ConsultationException;
 
 import java.util.List;
 
-public interface ConsultationServices {
+public interface ConsultationService {
     ConsultationDto createConsultation(ConsultationDto consultation);
     List<ConsultationDto> readConsultation();
     ConsultationDto readConsultation(int id) throws ConsultationException;
+//    List<ConsultationDto> readConsultationByPatientId(int id);
     boolean updateConsultation(ConsultationDto consultation, int id);
     boolean deleteConsultation(int id);
 }

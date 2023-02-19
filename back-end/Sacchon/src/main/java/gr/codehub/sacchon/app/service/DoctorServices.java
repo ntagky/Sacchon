@@ -8,6 +8,7 @@ public interface DoctorServices {
 
     DoctorDto createDoctor(DoctorDto doctor);
     List<DoctorDto> readDoctor();
+    List<DoctorDto> readDoctorByEmailNativeService(String match);
     DoctorDto readDoctor(int id) throws DoctorException;
     boolean updateDoctor(DoctorDto doctor, int id);
     boolean deleteDoctor(int id);

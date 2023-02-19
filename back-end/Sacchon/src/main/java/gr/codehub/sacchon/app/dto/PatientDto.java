@@ -1,13 +1,16 @@
 package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.BloodType;
+import gr.codehub.sacchon.app.model.Consultation;
 import gr.codehub.sacchon.app.model.Patient;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -46,20 +49,19 @@ public class PatientDto extends PersonDto {
             medications = patient.getMedications();
             conditions = patient.getConditions();
 
-//            doctorDto = new DoctorDto(patient.getDoctor());
-//            consultationsDto = patient.getDoctor()
-//                    .getConsultations()
-//                    .stream()
-//                    .map(ConsultationDto::new)
-//                    .collect(Collectors.toList());
-//            glucoseDto = patient.getGlucose()
-//                    .stream()
-//                    .map(GlucoseDto::new)
-//                    .collect(Collectors.toList());
-//            carbsDto = patient.getCarbs()
-//                    .stream()
-//                    .map(CarbsDto::new)
-//                    .collect(Collectors.toList());
+            doctorDto = new DoctorDto(patient.getDoctor());
+            consultationsDto = patient.getConsultations()
+                    .stream()
+                    .map(ConsultationDto::new)
+                    .collect(Collectors.toList());
+            glucoseDto = patient.getGlucose()
+                    .stream()
+                    .map(GlucoseDto::new)
+                    .collect(Collectors.toList());
+            carbsDto = patient.getCarbs()
+                    .stream()
+                    .map(CarbsDto::new)
+                    .collect(Collectors.toList());
         }
     }
     public Patient asPatient() {
@@ -80,17 +82,23 @@ public class PatientDto extends PersonDto {
         patient.setAllergies(allergies);
         patient.setMedications(medications);
         patient.setConditions(conditions);
-//        patient.setDoctor(doctorDto.asDoctor());
-//        patient.setCarbs(
-//                carbsDto.stream()
-//                        .map(CarbsDto::asCarbs)
-//                        .collect(Collectors.toList())
-//        );
-//        patient.setGlucose(
-//                glucoseDto.stream()
-//                        .map(GlucoseDto::asGlucose)
-//                        .collect(Collectors.toList())
-//        );
+        patient.setDoctor(doctorDto.asDoctor());
+        patient.setConsultations(
+                consultationsDto.stream()
+                        .map(ConsultationDto::asConsultation)
+                        .collect(Collectors.toList())
+        );
+        patient.setCarbs(
+                carbsDto.stream()
+                        .map(CarbsDto::asCarbs)
+                        .collect(Collectors.toList())
+        );
+        patient.setGlucose(
+                glucoseDto.stream()
+                        .map(GlucoseDto::asGlucose)
+                        .collect(Collectors.toList())
+        );
+        doctorDto.asDoctor();
         return patient;
     }
 }

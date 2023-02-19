@@ -22,6 +22,6 @@ public class Carbs implements Measurement<Integer> {
     private Integer measurement;
     @ManyToOne(optional = false)
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
-    private Patient patient;
+    private Patient patient; // ???
 
 }

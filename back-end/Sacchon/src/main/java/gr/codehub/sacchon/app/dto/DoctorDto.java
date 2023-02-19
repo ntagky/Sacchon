@@ -1,7 +1,6 @@
 package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.Doctor;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,20 +11,21 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-public class DoctorDto extends PersonDto {
+public class DoctorDto {
     private int id;
-    private List<PatientDto> patients;
-    private List<ConsultationDto> consultations;
+    private List<PatientDto> patientsDto;
+    private List<ConsultationDto> consultationsDto;
 
     public DoctorDto(Doctor doctor){
         if(doctor!=null){
             id = doctor.getId();
-            patients = doctor.getPatients()
+            patientsDto = doctor
+                    .getPatients()
                     .stream()
                     .map(PatientDto::new)
                     .collect(Collectors.toList());
-            consultations = doctor.getConsultations()
+            consultationsDto = doctor
+                    .getConsultations()
                     .stream()
                     .map(ConsultationDto::new)
                     .collect(Collectors.toList());
@@ -35,16 +35,14 @@ public class DoctorDto extends PersonDto {
     public Doctor asDoctor(){
         Doctor doctor = new Doctor();
         doctor.setId(id);
-        doctor.setPatients(
-                patients
-                        .stream()
-                        .map(PatientDto::asPatient)
+        doctor.setConsultations(
+                consultationsDto.stream()
+                        .map(ConsultationDto::asConsultation)
                         .collect(Collectors.toList())
         );
-        doctor.setConsultations(
-                consultations
-                        .stream()
-                        .map(ConsultationDto::asConsultation)
+        doctor.setPatients(
+                patientsDto.stream()
+                        .map(PatientDto::asPatient)
                         .collect(Collectors.toList())
         );
         return doctor;

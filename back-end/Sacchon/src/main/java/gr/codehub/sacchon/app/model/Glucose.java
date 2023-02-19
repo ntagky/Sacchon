@@ -24,6 +24,5 @@ public class Glucose implements Measurement<List<GlucoseRecord>> {
     private List<GlucoseRecord> measurement;
     @ManyToOne(optional = false)
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
-    private Patient patient;
-
+    private Patient patient; // ???
 }

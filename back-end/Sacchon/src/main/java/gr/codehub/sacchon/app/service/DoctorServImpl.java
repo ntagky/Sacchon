@@ -34,6 +34,15 @@ public class DoctorServImpl implements DoctorServices{
     }
 
     @Override
+    public List<DoctorDto> readDoctorByEmailNativeService(String match) {
+       return doctorRepository
+               .findDoctorByEmailNative(match)
+               .stream()
+               .map(DoctorDto::new)
+               .collect(Collectors.toList());
+    }
+
+    @Override
     public DoctorDto readDoctor(int id) throws DoctorException {
         return new DoctorDto(readDoctorDb(id));
     }

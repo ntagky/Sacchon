@@ -5,7 +5,7 @@ import gr.codehub.sacchon.app.exception.ChiefDoctorException;
 
 import java.util.List;
 
-public interface ChiefDoctorServices {
+public interface ChiefDoctorService {
     ChiefDoctorDto createChiefDoctor(ChiefDoctorDto chiefDoctor);
     List<ChiefDoctorDto> readChiefDoctor();
     ChiefDoctorDto readChiefDoctor(int id) throws ChiefDoctorException;

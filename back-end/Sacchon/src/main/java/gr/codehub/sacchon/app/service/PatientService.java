@@ -11,6 +11,6 @@ public interface PatientService {
     List<PatientDto> readPatient();
     PatientDto readPatientById(int id) throws PatientException;
     boolean updatePatient(PatientDto patient, int id);
-    boolean deletePatientById(int id);
+    boolean deletePatientById(int id) ;
 
 }

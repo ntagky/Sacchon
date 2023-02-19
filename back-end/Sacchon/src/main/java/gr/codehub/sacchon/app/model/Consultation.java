@@ -35,14 +35,18 @@ public class Consultation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String doctorName;
+    private String doctorName; // in case the doctor leaves the system - referral
+    private String doctorEmail; // in case the doctor leaves the system  - referral
     private LocalDate dateCreated;
     private boolean seenConsultation;
     @ElementCollection
     private List<String> medications;
     private String details;
-    @ManyToOne
+    @ManyToOne(optional = true)
+    @JoinColumn(name="doctor_id", referencedColumnName = "id")
     private Doctor doctor;
-    @ManyToOne
+
+    @ManyToOne(optional = false) // me ti logiki oti o asthenis de mporei na meinei xwris consultation
+    @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 }

@@ -28,6 +28,12 @@ public class DoctorController {
         return doctorServices.readDoctor(id);
     }
 
+    @GetMapping("doctor/email/{match}")
+    public List<DoctorDto> readDoctorByEmailNative(@PathVariable("match") String match){
+        log.info("The end point email/{match} has been used");
+        return doctorServices.readDoctorByEmailNativeService(match);
+    }
+
     @PostMapping("/doctor")
     public  DoctorDto  createDoctorDto(@RequestBody DoctorDto doctor){
         log.info("The end point doctor has been used");

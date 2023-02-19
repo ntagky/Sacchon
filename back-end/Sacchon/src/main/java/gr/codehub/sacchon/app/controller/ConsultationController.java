@@ -2,7 +2,7 @@ package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.ConsultationDto;
 import gr.codehub.sacchon.app.exception.ConsultationException;
-import gr.codehub.sacchon.app.service.ConsultationServices;
+import gr.codehub.sacchon.app.service.ConsultationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -13,36 +13,36 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class ConsultationController {
-    private ConsultationServices consultationServices;
+    private ConsultationService consultationService;
 
     @GetMapping("/consultation")
     public List<ConsultationDto> getConsultationDto(){
         log.info("The end point consultation has been used");
-        return consultationServices.readConsultation();
+        return consultationService.readConsultation();
     }
 
     @GetMapping("/consultation/{id}")
     public ConsultationDto getConsultationDto(@PathVariable(name="id")  int id) throws ConsultationException {
         log.info("The end point consultation with id has been used");
-        return consultationServices.readConsultation(id);
+        return consultationService.readConsultation(id);
     }
 
     @PostMapping("/consultation")
     public  ConsultationDto  createConsultationDto(@RequestBody ConsultationDto consultation){
         log.info("The end point consultation has been used");
-        return consultationServices.createConsultation(consultation);
+        return consultationService.createConsultation(consultation);
     }
 
     @PutMapping("/consultation/{id}")
     public boolean updateConsultationDto(@RequestBody ConsultationDto consultation,
                                    @PathVariable(name="id")  int id){
         log.info("The end point consultation with id has been used");
-        return consultationServices.updateConsultation(consultation, id);
+        return consultationService.updateConsultation(consultation, id);
     }
 
     @DeleteMapping("/consultation/{id}")
     public boolean deleteConsultationDto(@PathVariable(name="id")  int id){
         log.info("The end point consultation with id has been used");
-        return consultationServices.deleteConsultation(id);
+        return consultationService.deleteConsultation(id);
     }
 }

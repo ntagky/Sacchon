@@ -10,8 +10,8 @@ import java.util.List;
 @Setter
 @Entity
 @Table(schema = SacchonApplication.SCHEMA)
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Patient extends Person {
 
     @Id
@@ -28,19 +28,24 @@ public class Patient extends Person {
     private double weight;
 
     @ElementCollection
-    private List<String> allergies;  //todo: Maybe a class?
+    private List<String> allergies;
     @ElementCollection
     private List<String> medications;
     @ElementCollection
     private List<String> conditions;
 
-    @OneToMany
+    @OneToMany(mappedBy = "patient")
     private List<Consultation> consultations;
     @OneToMany(mappedBy = "patient")
     private List<Carbs> carbs;
     @OneToMany(mappedBy = "patient")
     private List<Glucose> glucose;
-    @ManyToOne
+
+    // @ManyToOne -> by default: eager loading
+    // optional = false -> de mporei na mhn exei doctor. To default einai true
+    // @ManyToOne(optional = true, cascade = CascadeType.PERSIST)
+    @ManyToOne(optional = true)
+    @JoinColumn(name="doctor_id", referencedColumnName = "id")
     private Doctor doctor;
 
 }

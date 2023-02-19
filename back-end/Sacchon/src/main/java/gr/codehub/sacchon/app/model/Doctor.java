@@ -30,14 +30,14 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(schema = SacchonApplication.SCHEMA)
-public class Doctor extends Person {
+public class Doctor extends Person{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "doctor") //by default: lazy loading
     private List<Patient> patients;
 
-    @OneToMany
-    private List<Consultation> consultations; //todo: connection with Consultation class
+    @OneToMany(mappedBy = "doctor") //by default: lazy loading
+    private List<Consultation> consultations;
 }

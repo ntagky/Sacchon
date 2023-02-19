@@ -2,6 +2,7 @@ package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.Glucose;
 import gr.codehub.sacchon.app.model.Measurement;
+import gr.codehub.sacchon.app.model.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,6 @@ public class GlucoseDto implements Measurement<List<GlucoseRecordDto>> {
     public GlucoseDto(Glucose glucose) {
         if (glucose == null)
             return;
-        id = glucose.getId();
         date = glucose.getDate();
         measurement = glucose.getMeasurement()
                 .stream()

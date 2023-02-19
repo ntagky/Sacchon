@@ -20,15 +20,17 @@ public class InitialConfiguration {
             PatientRepository patientRepository, CarbsRepository carbsRepository,
             GlucoseRepository glucoseRepository, GlucoseRecordRepository glucoseRecordRepository,
             DoctorRepository doctorRepository,
-            ChiefDoctorRepository chiefDoctorRepository){
+            ChiefDoctorRepository chiefDoctorRepository, ConsultationRepository consultationRepository){
         return args -> {
             System.out.println("System dummy saved object");
 
-            Doctor doctor1 = new Doctor(0, new ArrayList<>(), new ArrayList<>());
-            doctor1.setId(1);
+            Doctor doctor1 = new Doctor();
             doctor1.setFirstName("Brand");
-            doctor1.setFirstName("Red");
-            doctor1.setEmail("dc.brand@hotmail.com");
+            doctor1.setLastName("Red");
+            doctor1.setEmail("dc.brand@gmail.com");
+            doctor1.setId(1);
+            doctor1.setPatients(null);
+            doctor1.setConsultations(null);
             doctorRepository.saveAll(List.of(doctor1));
 
             Patient patient1 = new Patient();
@@ -43,6 +45,7 @@ public class InitialConfiguration {
             patient1.setDiabetesType("Type 2");
             patient1.setHeight(72);
             patient1.setWeight(200.0);
+            patientRepository.saveAll(List.of(patient1));
 
             List<String> allergies = new ArrayList<>();
             allergies.add("Peanuts");
@@ -59,9 +62,21 @@ public class InitialConfiguration {
             conditions.add("High Blood Pressure");
             patient1.setConditions(conditions);
 
+            Consultation consultation = new Consultation();
+            consultation.setId(0);
+            consultation.setDoctorName(doctor1.getLastName());
+            consultation.setDoctorEmail(doctor1.getEmail());
+            consultation.setDateCreated(LocalDate.of(2023, 2, 19));
+            consultation.setSeenConsultation(true);
+            consultation.setMedications(medications);
+            consultation.setDetails("blah blah");
+            consultation.setPatient(patient1);
+            consultation.setDoctor(doctor1);
+            consultationRepository.saveAll(List.of(consultation));
+
             patient1.setCarbs(null);
             patient1.setGlucose(null);
-            patient1.setDoctor(doctor1);
+            patient1.setDoctor(null);
 
             Patient patient2 = new Patient();
             patient2.setId(2);
