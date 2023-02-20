@@ -5,6 +5,7 @@ import gr.codehub.sacchon.app.dto.ConsultationDto;
 import gr.codehub.sacchon.app.dto.GlucoseFromPersonDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.exception.PatientException;
+import gr.codehub.sacchon.app.model.Patient;
 import gr.codehub.sacchon.app.service.CarbsService;
 import gr.codehub.sacchon.app.service.ConsultationService;
 import gr.codehub.sacchon.app.service.GlucoseService;
@@ -12,6 +13,7 @@ import gr.codehub.sacchon.app.service.PatientService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -29,11 +31,31 @@ public class PatientController {
     private GlucoseService glucoseService;
     private ConsultationService consultationService;
 
+
+    @PostMapping("/signup")
+    public ResponseEntity<PatientDto> signUp(@RequestBody PatientDto patientDto) {
+        patientService.registerPatient(patientDto);
+        return ResponseEntity.ok(patientDto);
+    }
+
+    @GetMapping("/{id}")
+    //http://localhost:9000/api/{{id}}
+    public Patient getPatientById(@PathVariable int id) {
+        return patientService.getPatientById(id);
+    }
+
+
     @GetMapping("/patient")
     //http://localhost:9000/api/patient
     public List<PatientDto> getPatientDto(){
         log.info("The end point PatientDto has been used");
         return patientService.readPatient();
+    }
+
+    @DeleteMapping("/{patientId}")   //<?> for generic response, could also be not found
+    public ResponseEntity<?> deletePatientById(@PathVariable("patientId") int patientId) {
+        patientService.deletePatientById(patientId);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/patient/{id}")

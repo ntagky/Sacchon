@@ -1,9 +1,7 @@
 package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.BloodType;
-import gr.codehub.sacchon.app.model.Consultation;
 import gr.codehub.sacchon.app.model.Patient;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -76,7 +74,7 @@ public class PatientDto extends PersonDto {
         patient.setGender(gender);
         patient.setDateOfBirth(dateOfBirth);
         patient.setBloodType(BloodType.AB_NEGATIVE);
-        patient.setDiabetesType(diabetesType);
+        patient.setDiabetesType("Type 1");
         patient.setHeight(height);
         patient.setWeight(weight);
         patient.setAllergies(allergies);

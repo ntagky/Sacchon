@@ -19,6 +19,22 @@ public class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepository;
 
     @Override
+    public long getPatientCount(){
+        long patientOptional = patientRepository.countPatients();
+        return patientOptional;
+    }
+
+    @Override
+    public void deletePatientById(Long patientId) {
+        patientRepository.deletePatientById(patientId);
+    }
+
+    @Override
+    public Patient getPatientById(int patientId) {
+        return patientRepository.DisplayAccountData(patientId);
+    }
+
+    @Override
     public PatientDto createPatient(PatientDto patientDto) {
         Patient patient = patientDto.asPatient();
         return new PatientDto(patientRepository.save(patient));
@@ -70,6 +86,16 @@ public class PatientServiceImpl implements PatientService {
             action = false;
         }
         return action;
+    }
+
+    @Override
+    public void registerPatient(PatientDto patientDto) {
+
+        Patient patient = patientDto.asPatient();
+
+        patientRepository.registerPatient(patient.getFirstName(), patient.getLastName(), patient.getPassword(), patient.getEmail(),
+                patient.getMedicalRecordNumber(), patient.getAddress(), patient.getGender(), patient.getDateOfBirth(),
+                patient.getBloodType(), patient.getDiabetesType(), patient.getHeight(), patient.getWeight());
     }
 
 

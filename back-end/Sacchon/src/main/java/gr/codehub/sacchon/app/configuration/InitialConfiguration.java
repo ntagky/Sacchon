@@ -42,7 +42,7 @@ public class InitialConfiguration {
             patient1.setGender("Male");
             patient1.setDateOfBirth(LocalDate.of(1990, 1, 1));
             patient1.setBloodType(BloodType.AB_NEGATIVE);
-            patient1.setDiabetesType("Type 2");
+            patient1.setDiabetesType("Type_2");
             patient1.setHeight(72);
             patient1.setWeight(200.0);
             patientRepository.saveAll(List.of(patient1));
@@ -86,7 +86,7 @@ public class InitialConfiguration {
             patient2.setGender("Female");
             patient2.setDateOfBirth(LocalDate.of(1992, 2, 1));
             patient2.setBloodType(BloodType.O_NEGATIVE);
-            patient2.setDiabetesType("Type 1");
+            patient2.setDiabetesType("Type_1");
             patient2.setHeight(52);
             patient2.setWeight(140.0);
 
