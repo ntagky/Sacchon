@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.controller;
 
+import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
 import gr.codehub.sacchon.app.dto.ConsultationDto;
 import gr.codehub.sacchon.app.exception.ConsultationException;
 import gr.codehub.sacchon.app.service.ConsultationService;
@@ -27,8 +28,13 @@ public class ConsultationController {
         return consultationService.readConsultation(id);
     }
 
+//    @GetMapping("/consultation{id}/info")
+//    public ConsultationBasicInfoDto getConsultationInfoByPatientId(@PathVariable(name="id") int id){
+//        return consultationService.findConsultationInfoByPatientId(id);
+//    }
+
     @PostMapping("/consultation")
-    public  ConsultationDto  createConsultationDto(@RequestBody ConsultationDto consultation){
+    public ConsultationDto createConsultationDto(@RequestBody ConsultationDto consultation){
         log.info("The end point consultation has been used");
         return consultationService.createConsultation(consultation);
     }

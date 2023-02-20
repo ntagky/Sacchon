@@ -77,11 +77,11 @@ public class PatientController {
         return glucoseService.readGlucoseByPatientId(id);
     }
 
-//    @GetMapping("/patient/{id}/consultation")
-//    public List<ConsultationDto> getConsultationOfPatientById(@PathVariable(name="id") int id) {
-//        log.info("The end point patient/{id}/consultation has been used");
-//        return consultationService.readConsultationByPatientId(id);
-//    }
+    @GetMapping("/patient/{id}/consultation")
+    public List<ConsultationDto> getConsultationOfPatientById(@PathVariable(name="id") int id) {
+        log.info("The end point patient/{id}/consultation has been used");
+        return consultationService.readConsultationByPatientId(id);
+    }
 
     @PostMapping("/patient")
     //http://localhost:9000/api/patient]

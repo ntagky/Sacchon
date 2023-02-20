@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @NoArgsConstructor
-public class DoctorDto {
+public class DoctorDto extends PersonDto{
     private int id;
     private List<PatientDto> patientsDto;
     private List<ConsultationDto> consultationsDto;

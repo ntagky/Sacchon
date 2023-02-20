@@ -1,6 +1,8 @@
 package gr.codehub.sacchon.app.service;
 
 import gr.codehub.sacchon.app.dto.DoctorDto;
+import gr.codehub.sacchon.app.dto.DoctorNameAndEmailDto;
+import gr.codehub.sacchon.app.dto.GlucoseFromPersonDto;
 import gr.codehub.sacchon.app.exception.DoctorException;
 import gr.codehub.sacchon.app.model.Doctor;
 import gr.codehub.sacchon.app.repository.DoctorRepository;
@@ -45,6 +47,11 @@ public class DoctorServImpl implements DoctorServices{
     @Override
     public DoctorDto readDoctor(int id) throws DoctorException {
         return new DoctorDto(readDoctorDb(id));
+    }
+
+    @Override
+    public DoctorNameAndEmailDto findDoctorNameAndEmailByPatientId(int id) {
+        return new DoctorNameAndEmailDto(doctorRepository.findDoctorNameAndEmailById(id));
     }
 
     // private method created for internal use

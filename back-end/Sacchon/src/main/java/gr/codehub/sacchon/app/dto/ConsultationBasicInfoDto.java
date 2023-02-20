@@ -13,42 +13,36 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConsultationDto {
-    private int id;
+public class ConsultationBasicInfoDto {
+    private DoctorDto doctorDto;
     private String doctorFirstName;
     private String doctorLastName;
     private String doctorEmail;
     private LocalDate dateCreated;
-    private boolean seenConsultation;
     private List<String> medications;
     private String details;
-    private DoctorDto doctorDto;
-    private PatientDto patientDto;
 
-    public ConsultationDto(Consultation consultation){
+    public ConsultationBasicInfoDto(Consultation consultation){
         if(consultation!=null){
-            id = consultation.getId();
+            doctorDto = new DoctorDto(consultation.getDoctor());
             doctorFirstName = consultation.getDoctor().getFirstName();
             doctorLastName = consultation.getDoctor().getLastName();
             doctorEmail = consultation.getDoctor().getEmail();
+
             dateCreated = consultation.getDateCreated();
-            seenConsultation = consultation.isSeenConsultation();
             medications = consultation.getMedications();
             details = consultation.getDetails();
-            doctorDto = new DoctorDto(consultation.getDoctor());
-            patientDto = new PatientDto(consultation.getPatient());
         }
     }
 
     public Consultation asConsultation(){
         Consultation consultation = new Consultation();
-//        consultation.setId(id);
-//        consultation.setDateCreated(dateCreated);
-//        consultation.setSeenConsultation(seenConsultation);
-//        consultation.setMedications(medications);
-//        consultation.setDetails(details);
-//        consultation.setPatient(patientDto.asPatient());
-//        consultation.setDoctor(doctorDto.asDoctor());
+        consultation.setDoctor(doctorDto.asDoctor());
+        consultation.setDoctorFirstName(getDoctorFirstName());
+        consultation.setDoctorFirstName(getDoctorLastName());
+        consultation.setDateCreated(dateCreated);
+        consultation.setMedications(medications);
+        consultation.setDetails(details);
         return consultation;
     }
 }

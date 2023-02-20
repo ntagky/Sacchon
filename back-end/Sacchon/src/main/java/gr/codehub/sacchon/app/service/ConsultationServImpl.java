@@ -1,6 +1,8 @@
 package gr.codehub.sacchon.app.service;
 
+import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
 import gr.codehub.sacchon.app.dto.ConsultationDto;
+import gr.codehub.sacchon.app.dto.DoctorNameAndEmailDto;
 import gr.codehub.sacchon.app.exception.ConsultationException;
 import gr.codehub.sacchon.app.model.Consultation;
 import gr.codehub.sacchon.app.repository.ConsultationRepository;
@@ -37,14 +39,25 @@ public class ConsultationServImpl implements ConsultationService {
         return new ConsultationDto(readConsultationDb(id));
     }
 
-//    @Override
-//    public List<ConsultationDto> readConsultationByPatientId(int id) {
-//        return consultationRepository
-//                .findConsultationByPatientId(id)
-//                .stream()
-//                .map(ConsultationDto::new)
-//                .collect(Collectors.toList());
-//    }
+    @Override
+    public List<ConsultationDto> readConsultationByPatientId(int id) {
+        return consultationRepository
+                .findConsultationByPatientId(id)
+                .stream()
+                .map(ConsultationDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ConsultationBasicInfoDto> findConsultationInfoByPatientId(int id) {
+        List<ConsultationBasicInfoDto> test = consultationRepository.
+                findConsultationInfoByPatientId(id)
+                .stream()
+                .map(ConsultationBasicInfoDto::new)
+                .collect(Collectors.toList());
+
+        return test;
+    }
 
     // private method created for internal use
     private Consultation readConsultationDb(int id) throws ConsultationException{
@@ -59,7 +72,8 @@ public class ConsultationServImpl implements ConsultationService {
         boolean action;
         try {
             Consultation dbConsultation = readConsultationDb(id);
-            dbConsultation.setDoctorName(consultationDto.getDoctorDto().asDoctor().getLastName());
+            dbConsultation.setDoctorFirstName(consultationDto.getDoctorDto().asDoctor().getFirstName());
+            dbConsultation.setDoctorLastName(consultationDto.getDoctorDto().asDoctor().getLastName());
             dbConsultation.setDoctorEmail(consultationDto.getDoctorDto().asDoctor().getEmail());
             dbConsultation.setDateCreated(consultationDto.getDateCreated());
             dbConsultation.setSeenConsultation(consultationDto.isSeenConsultation());

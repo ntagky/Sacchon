@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import gr.codehub.sacchon.app.SacchonApplication;
 import jakarta.persistence.*;
 import lombok.*;

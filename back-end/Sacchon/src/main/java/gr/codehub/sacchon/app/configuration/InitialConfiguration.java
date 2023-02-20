@@ -64,7 +64,8 @@ public class InitialConfiguration {
 
             Consultation consultation = new Consultation();
             consultation.setId(0);
-            consultation.setDoctorName(doctor1.getLastName());
+            consultation.setDoctorFirstName(doctor1.getFirstName());
+            consultation.setDoctorLastName(doctor1.getLastName());
             consultation.setDoctorEmail(doctor1.getEmail());
             consultation.setDateCreated(LocalDate.of(2023, 2, 19));
             consultation.setSeenConsultation(true);
@@ -72,7 +73,8 @@ public class InitialConfiguration {
             consultation.setDetails("blah blah");
             consultation.setPatient(patient1);
             consultation.setDoctor(doctor1);
-            consultationRepository.saveAll(List.of(consultation));
+            consultationRepository.save(consultation);
+//            consultationRepository.saveAll(List.of(consultation));
 
             patient1.setCarbs(null);
             patient1.setGlucose(null);

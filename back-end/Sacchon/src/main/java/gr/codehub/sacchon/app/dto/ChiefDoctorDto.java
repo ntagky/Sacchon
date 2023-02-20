@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class ChiefDoctorDto {
+public class ChiefDoctorDto extends DoctorDto{
 
     public ChiefDoctorDto(ChiefDoctor chiefDoctor){
 

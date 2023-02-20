@@ -2,10 +2,7 @@ package gr.codehub.sacchon.app.model;
 
 import gr.codehub.sacchon.app.SacchonApplication;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +24,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -35,14 +33,15 @@ public class Consultation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String doctorName; // in case the doctor leaves the system - referral
+    private String doctorFirstName; // in case the doctor leaves the system - referral
+    private String doctorLastName; // in case the doctor leaves the system - referral
     private String doctorEmail; // in case the doctor leaves the system  - referral
     private LocalDate dateCreated;
     private boolean seenConsultation;
     @ElementCollection
     private List<String> medications;
     private String details;
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true) // me ti logiki oti to consultation de tha syndeetai pleon me ton giatro, an fygei apo to systima, ara mporei na meinei xwris referenced giatro
     @JoinColumn(name="doctor_id", referencedColumnName = "id")
     private Doctor doctor;
 

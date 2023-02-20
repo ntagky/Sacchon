@@ -1,6 +1,8 @@
 package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.DoctorDto;
+import gr.codehub.sacchon.app.dto.DoctorNameAndEmailDto;
+import gr.codehub.sacchon.app.dto.GlucoseFromPersonDto;
 import gr.codehub.sacchon.app.exception.DoctorException;
 import gr.codehub.sacchon.app.service.DoctorServices;
 import lombok.AllArgsConstructor;
@@ -32,6 +34,12 @@ public class DoctorController {
     public List<DoctorDto> readDoctorByEmailNative(@PathVariable("match") String match){
         log.info("The end point email/{match} has been used");
         return doctorServices.readDoctorByEmailNativeService(match);
+    }
+
+    @GetMapping("/doctor/{id}/info")
+    public DoctorNameAndEmailDto getDoctorNameAndEmailById(@PathVariable(name="id") int id) {
+        log.info("The end point doctor/id/info has been used");
+        return doctorServices.findDoctorNameAndEmailByPatientId(id);
     }
 
     @PostMapping("/doctor")
