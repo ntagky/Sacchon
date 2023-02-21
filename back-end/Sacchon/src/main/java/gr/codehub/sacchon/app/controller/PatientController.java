@@ -37,12 +37,6 @@ public class PatientController {
         return ResponseEntity.ok(patientDto);
     }
 
-    @GetMapping("/{id}")
-    //http://localhost:9000/api/{{id}}
-    public Patient getPatientById(@PathVariable long id) {
-        return patientService.getPatientById(id);
-    }
-
 
     @GetMapping("/patient/{id}")
     //http://localhost:9000/api/{{id}}
