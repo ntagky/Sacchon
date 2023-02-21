@@ -10,7 +10,7 @@ public interface PatientService {
 
     PatientDto createPatient(PatientDto patient);
     List<PatientDto> readPatient();
-    List<PatientDto> readPatientById(int id);
+    List<PatientDto> readPatientById(long id);
     boolean updatePatient(PatientDto patient, long id);
 //    boolean deletePatientById(long id);
     long getPatientCount();

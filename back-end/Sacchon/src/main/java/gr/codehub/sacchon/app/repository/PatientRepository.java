@@ -4,6 +4,7 @@ import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.model.BloodType;
 import gr.codehub.sacchon.app.model.DiabetesType;
 import gr.codehub.sacchon.app.model.Patient;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +23,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id = :patientId", nativeQuery = true)
     List<Patient> DisplayAccountData(@Param("patientId") long patientId);
 
+    @Transactional
     @Modifying
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id=:patientId", nativeQuery = true)
     void deletePatientById(@Param("patientId") long patientId);

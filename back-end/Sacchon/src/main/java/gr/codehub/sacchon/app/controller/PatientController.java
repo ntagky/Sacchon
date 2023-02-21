@@ -37,7 +37,7 @@ public class PatientController {
 
     @GetMapping("/patient/{id}")
     //http://localhost:9000/api/{{id}}
-    public List<PatientDto> findPatientById(@PathVariable("id") int id){
+    public List<PatientDto> findPatientById(@PathVariable("id") long id){
         return patientService.readPatientById(id);}
 
     @DeleteMapping("/{patientId}")   //<?> for generic response, could also be not found
