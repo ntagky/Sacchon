@@ -36,7 +36,7 @@ public class GlucoseServImpl implements GlucoseService {
     }
 
     @Override
-    public List<GlucoseFromPersonDto> readGlucoseByPatientId(int id) {
+    public List<GlucoseFromPersonDto> readGlucoseByPatientId(long id) {
         return glucoseRepository
                 .findGlucoseByPatientId(id)
                 .stream()
@@ -45,8 +45,8 @@ public class GlucoseServImpl implements GlucoseService {
     }
 
     @Override
-    public List<BigDecimal> readDailyAverageGlucoseByPatientIdOnSpecificDates(int id, LocalDate startingDate, LocalDate endingDate) {
-        List<Integer> glucoseIds = glucoseRepository
+    public List<BigDecimal> readDailyAverageGlucoseByPatientIdOnSpecificDates(long id, LocalDate startingDate, LocalDate endingDate) {
+        List<Long> glucoseIds = glucoseRepository
                 .findGlucoseDatesAndIdsByPatientIdOnSpecificDates(id, startingDate, endingDate)
                 .stream()
                 .toList();
@@ -61,18 +61,18 @@ public class GlucoseServImpl implements GlucoseService {
         return averageDailyGlucose;
     }
 
-    private Glucose readGlucoseDb(int id) throws GlucoseException {
+    private Glucose readGlucoseDb(long id) throws GlucoseException {
         Optional<Glucose> glucoseOptional = glucoseRepository.findById(id);
         if (glucoseOptional.isPresent())
             return glucoseOptional.get();
         throw new GlucoseException("Glucose with id " + id + " does not exist.");
     }
     @Override
-    public GlucoseDto readGlucoseById(int id) throws GlucoseException {
+    public GlucoseDto readGlucoseById(long id) throws GlucoseException {
         return new GlucoseDto(readGlucoseDb(id));
     }
     @Override
-    public boolean updateGlucose(GlucoseDto glucoseDto, int id) {
+    public boolean updateGlucose(GlucoseDto glucoseDto, long id) {
         GlucoseDto newGlucoseDto = new GlucoseDto();
         newGlucoseDto.setId(glucoseDto.getId());
         newGlucoseDto.setMeasurement(glucoseDto.getMeasurement());
@@ -82,7 +82,7 @@ public class GlucoseServImpl implements GlucoseService {
         return true;
     }
     @Override
-    public boolean deleteGlucoseById(int id) throws GlucoseException {
+    public boolean deleteGlucoseById(long id) throws GlucoseException {
         glucoseRepository.delete(readGlucoseDb(id));
         return true;
     }

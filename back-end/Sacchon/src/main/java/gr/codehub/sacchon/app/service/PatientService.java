@@ -10,13 +10,13 @@ public interface PatientService {
 
     PatientDto createPatient(PatientDto patient);
     List<PatientDto> readPatient();
-    PatientDto readPatientById(int id) throws PatientException;
-    boolean updatePatient(PatientDto patient, int id);
-    boolean deletePatientById(int id) ;
+    PatientDto readPatientById(long id) throws PatientException;
+    boolean updatePatient(PatientDto patient, long id);
+//    boolean deletePatientById(long id);
     long getPatientCount();
-    public Patient getPatientById(int patientId);
+    public Patient getPatientById(long patientId);
 
-    void deletePatientById(Long patientId);
+    void deletePatientById(long patientId);
 
     public void registerPatient(PatientDto patientDto);
 

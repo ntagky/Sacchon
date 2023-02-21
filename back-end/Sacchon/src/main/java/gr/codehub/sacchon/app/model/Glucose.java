@@ -17,7 +17,7 @@ public class Glucose implements Measurement<List<GlucoseRecord>> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private final String UNITS = "mg/dL";
     private LocalDate date;
     @OneToMany(mappedBy = "glucose")

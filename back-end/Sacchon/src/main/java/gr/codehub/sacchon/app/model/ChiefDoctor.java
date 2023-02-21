@@ -4,6 +4,7 @@ import gr.codehub.sacchon.app.SacchonApplication;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * <p>ChiefDoctor is one of the main entities of the Sacchon Diabetes Management application.
@@ -21,6 +22,7 @@ import lombok.*;
 @AllArgsConstructor
 //@NoArgsConstructor
 @Entity
-@Table(schema = SacchonApplication.SCHEMA)
+@Table(schema = SacchonApplication.SCHEMA, name = "ChiefDoctor")
+@SuperBuilder
 public class ChiefDoctor extends Doctor {
 }

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 public class DoctorDto extends PersonDto{
-    private int id;
+    private Long id;
     private List<PatientDto> patientsDto;
     private List<ConsultationDto> consultationsDto;
 

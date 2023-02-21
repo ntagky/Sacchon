@@ -9,9 +9,9 @@ import java.util.List;
 public interface ConsultationService {
     ConsultationDto createConsultation(ConsultationDto consultation);
     List<ConsultationDto> readConsultation();
-    ConsultationDto readConsultation(int id) throws ConsultationException;
-    List<ConsultationDto> readConsultationByPatientId(int id);
-    List<ConsultationBasicInfoDto> findConsultationInfoByPatientId(int id);
-    boolean updateConsultation(ConsultationDto consultation, int id);
-    boolean deleteConsultation(int id);
+    ConsultationDto readConsultation(long id) throws ConsultationException;
+    List<ConsultationDto> readConsultationByPatientId(long id);
+    List<ConsultationBasicInfoDto> findConsultationInfoByPatientId(long id);
+    boolean updateConsultation(ConsultationDto consultation, long id);
+    boolean deleteConsultation(long id);
 }

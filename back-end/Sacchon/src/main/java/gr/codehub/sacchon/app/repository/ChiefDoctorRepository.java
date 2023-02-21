@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChiefDoctorRepository
-        extends JpaRepository<ChiefDoctor, Integer> {
+        extends JpaRepository<ChiefDoctor, Long> {
 }

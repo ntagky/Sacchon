@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 public class PatientDto extends PersonDto {
-    private int id;
+    private Long id;
     private String medicalRecordNumber;
     private String address;
     private String gender;

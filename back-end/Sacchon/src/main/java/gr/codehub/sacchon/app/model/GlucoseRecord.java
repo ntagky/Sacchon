@@ -17,7 +17,7 @@ public class GlucoseRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private LocalTime time;
     private BigDecimal measurement;
     @ManyToOne(optional = false)

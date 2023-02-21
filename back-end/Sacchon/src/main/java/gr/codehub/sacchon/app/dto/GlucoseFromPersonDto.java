@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Getter
 public class GlucoseFromPersonDto implements Measurement<List<GlucoseRecordFromDayDto>> {
 
-    private int id;
+    private Long id;
     private final String UNITS = "mg/dL";
     private LocalDate date;
     private List<GlucoseRecordFromDayDto> measurement;

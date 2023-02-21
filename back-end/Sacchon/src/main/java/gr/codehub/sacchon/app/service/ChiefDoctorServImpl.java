@@ -33,12 +33,12 @@ public class ChiefDoctorServImpl implements ChiefDoctorService {
     }
 
     @Override
-    public ChiefDoctorDto readChiefDoctor(int id) throws ChiefDoctorException {
+    public ChiefDoctorDto readChiefDoctor(long id) throws ChiefDoctorException {
         return new ChiefDoctorDto(readChiefDoctorDb(id));
     }
 
     // private method created for internal use
-    private ChiefDoctor readChiefDoctorDb(int id) throws ChiefDoctorException{
+    private ChiefDoctor readChiefDoctorDb(long id) throws ChiefDoctorException{
         Optional<ChiefDoctor> chiefDoctorOptional = doctorRepository.findById(id);
         if (chiefDoctorOptional.isPresent())
             return chiefDoctorOptional.get();
@@ -47,7 +47,7 @@ public class ChiefDoctorServImpl implements ChiefDoctorService {
 
 
     @Override
-    public boolean updateChiefDoctor(ChiefDoctorDto doctor, int id){
+    public boolean updateChiefDoctor(ChiefDoctorDto doctor, long id){
         boolean action;
         try {
             ChiefDoctor dbChiefDoctor = readChiefDoctorDb(id);
@@ -60,7 +60,7 @@ public class ChiefDoctorServImpl implements ChiefDoctorService {
     }
 
     @Override
-    public boolean deleteChiefDoctor(int id) {
+    public boolean deleteChiefDoctor(long id) {
         boolean action;
         try {
             ChiefDoctor dbChiefDoctor = readChiefDoctorDb(id);

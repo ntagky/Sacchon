@@ -12,6 +12,7 @@ import lombok.Setter;
 @Getter
 public class PersonDto {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private String password;
@@ -20,6 +21,7 @@ public class PersonDto {
     public PersonDto(Person person) {
         if (person == null)
             return;
+        id = person.getId();
         firstName = person.getFirstName();
         lastName = person.getLastName();
         password = person.getPassword();
@@ -27,7 +29,7 @@ public class PersonDto {
     }
 
     public Person asPerson() {
-        return new Person(firstName, lastName, password, email);
+        return new Person(id, firstName, lastName, password, email);
     }
 
 }

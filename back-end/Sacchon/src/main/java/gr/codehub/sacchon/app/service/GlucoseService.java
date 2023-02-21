@@ -12,10 +12,10 @@ public interface GlucoseService {
 
     GlucoseDto createGlucose(GlucoseDto glucoseDto);
     List<GlucoseDto> readGlucose();
-    List<GlucoseFromPersonDto> readGlucoseByPatientId(int id);
-    List<BigDecimal> readDailyAverageGlucoseByPatientIdOnSpecificDates(int id, LocalDate startingDate, LocalDate endingDate);
-    GlucoseDto readGlucoseById(int id) throws GlucoseException;
-    boolean updateGlucose(GlucoseDto glucoseDto, int id) throws GlucoseException;
-    boolean deleteGlucoseById(int id) throws GlucoseException;
+    List<GlucoseFromPersonDto> readGlucoseByPatientId(long id);
+    List<BigDecimal> readDailyAverageGlucoseByPatientIdOnSpecificDates(long id, LocalDate startingDate, LocalDate endingDate);
+    GlucoseDto readGlucoseById(long id) throws GlucoseException;
+    boolean updateGlucose(GlucoseDto glucoseDto, long id) throws GlucoseException;
+    boolean deleteGlucoseById(long id) throws GlucoseException;
 
 }

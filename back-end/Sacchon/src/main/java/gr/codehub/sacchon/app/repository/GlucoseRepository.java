@@ -11,17 +11,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface GlucoseRepository extends JpaRepository<Glucose, Integer> {
+public interface GlucoseRepository extends JpaRepository<Glucose, Long> {
 
     @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".GLUCOSE WHERE GLUCOSE.PATIENT_ID = :patientId",
             nativeQuery = true)
-    List<Glucose> findGlucoseByPatientId(@Param("patientId") int patientId);
+    List<Glucose> findGlucoseByPatientId(@Param("patientId") long patientId);
 
     @Query(value = "SELECT GLUCOSE.ID FROM " + SacchonApplication.SCHEMA + ".GLUCOSE " +
             "WHERE GLUCOSE.PATIENT_ID = :patientId AND GLUCOSE.DATE >= :startingDate AND GLUCOSE.DATE <= :endingDate",
             nativeQuery = true)
-    List<Integer> findGlucoseDatesAndIdsByPatientIdOnSpecificDates(
-            @Param("patientId") int patientId,
+    List<Long> findGlucoseDatesAndIdsByPatientIdOnSpecificDates(
+            @Param("patientId") long patientId,
             @Param("startingDate") LocalDate startingDate,
             @Param("endingDate") LocalDate endingDate
     );

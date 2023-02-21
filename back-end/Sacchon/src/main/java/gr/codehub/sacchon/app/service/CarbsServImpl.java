@@ -33,12 +33,12 @@ public class CarbsServImpl implements CarbsService {
                 .collect(Collectors.toList());
     }
     @Override
-    public CarbsDto readCarbsById(int id) throws CarbsException {
+    public CarbsDto readCarbsById(long id) throws CarbsException {
         return new CarbsDto(readCarbsDb(id));
     }
 
     @Override
-    public List<CarbsFromPersonDto> readCarbsByPatientId(int id) {
+    public List<CarbsFromPersonDto> readCarbsByPatientId(long id) {
         return carbsRepository
                 .findCarbsByPatientId(id)
                 .stream()
@@ -47,19 +47,19 @@ public class CarbsServImpl implements CarbsService {
     }
 
     @Override
-    public Integer readAverageCarbsIntakeByPatientIdOnSpecificDates(int id, LocalDate startingDate, LocalDate endingDate) {
+    public Integer readAverageCarbsIntakeByPatientIdOnSpecificDates(long id, LocalDate startingDate, LocalDate endingDate) {
         return carbsRepository
                 .findAverageCarbsByPatientIdOnSpecificDates(id, startingDate, endingDate);
     }
 
-    private Carbs readCarbsDb(int id) throws CarbsException {
+    private Carbs readCarbsDb(long id) throws CarbsException {
         Optional<Carbs> carbsOptional = carbsRepository.findById(id);
         if (carbsOptional.isPresent())
             return carbsOptional.get();
         throw new CarbsException("Carbs with id " + id + " does not exist.");
     }
     @Override
-    public boolean updateCarbs(CarbsDto carbsDto, int id) throws CarbsException {
+    public boolean updateCarbs(CarbsDto carbsDto, long id) throws CarbsException {
         CarbsDto dbCarbs = readCarbsById(id);
         dbCarbs.setDate(carbsDto.getDate());
         dbCarbs.setMeasurement(carbsDto.getMeasurement());
@@ -68,7 +68,7 @@ public class CarbsServImpl implements CarbsService {
         return true;
     }
     @Override
-    public boolean deleteCarbsById(int id) throws CarbsException {
+    public boolean deleteCarbsById(long id) throws CarbsException {
         carbsRepository.delete(readCarbsDb(id));
         return true;
     }

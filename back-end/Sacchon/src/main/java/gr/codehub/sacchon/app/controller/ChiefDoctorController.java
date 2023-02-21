@@ -22,7 +22,7 @@ public class ChiefDoctorController {
     }
 
     @GetMapping("/chiefdoctor/{id}")
-    public ChiefDoctorDto getChiefDoctorDto(@PathVariable(name="id")  int id) throws ChiefDoctorException {
+    public ChiefDoctorDto getChiefDoctorDto(@PathVariable(name="id")  long id) throws ChiefDoctorException {
         log.info("The end point chiefdoctor with id has been used");
         return chiefDoctorService.readChiefDoctor(id);
     }
@@ -41,7 +41,7 @@ public class ChiefDoctorController {
     }
 
     @DeleteMapping("/chiefdoctor/{id}")
-    public boolean deleteChiefDoctorDto(@PathVariable(name="id")  int id){
+    public boolean deleteChiefDoctorDto(@PathVariable(name="id")  long id){
         log.info("The end point chiefdoctor has been used");
         return chiefDoctorService.deleteChiefDoctor(id);
     }

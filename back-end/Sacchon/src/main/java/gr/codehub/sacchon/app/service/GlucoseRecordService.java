@@ -10,9 +10,9 @@ public interface GlucoseRecordService {
 
     GlucoseRecordDto createGlucoseRecord(GlucoseRecordDto glucoseRecordDto);
     List<GlucoseRecordDto> readGlucoseRecord();
-    GlucoseRecordDto readGlucoseRecordById(int id) throws GlucoseRecordException;
-    BigDecimal readAverageDailyGlucoseByGlucoseId(int id);
-    boolean updateGlucoseRecord(GlucoseRecordDto glucoseRecordDto, int id) throws GlucoseRecordException;
-    boolean deleteGlucoseRecordById(int id) throws GlucoseRecordException;
+    GlucoseRecordDto readGlucoseRecordById(long id) throws GlucoseRecordException;
+    BigDecimal readAverageDailyGlucoseByGlucoseId(long id);
+    boolean updateGlucoseRecord(GlucoseRecordDto glucoseRecordDto, long id) throws GlucoseRecordException;
+    boolean deleteGlucoseRecordById(long id) throws GlucoseRecordException;
 
 }

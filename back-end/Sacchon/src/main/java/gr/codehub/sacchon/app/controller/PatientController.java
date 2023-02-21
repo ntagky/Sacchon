@@ -23,7 +23,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/api")
 public class PatientController {
 
     private PatientService patientService;
@@ -40,7 +39,7 @@ public class PatientController {
 
     @GetMapping("/{id}")
     //http://localhost:9000/api/{{id}}
-    public Patient getPatientById(@PathVariable int id) {
+    public Patient getPatientById(@PathVariable long id) {
         return patientService.getPatientById(id);
     }
 
@@ -53,27 +52,27 @@ public class PatientController {
     }
 
     @DeleteMapping("/{patientId}")   //<?> for generic response, could also be not found
-    public ResponseEntity<?> deletePatientById(@PathVariable("patientId") int patientId) {
+    public ResponseEntity<?> deletePatientById(@PathVariable("patientId") long patientId) {
         patientService.deletePatientById(patientId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/patient/{id}")
     //http://localhost:9000/api/patient/{{id}}
-    public PatientDto getPatientDtoById(@PathVariable(name="id") int id) throws PatientException {
+    public PatientDto getPatientDtoById(@PathVariable(name="id") long id) throws PatientException {
         log.info("The end point PatientDto has been used");
         return patientService.readPatientById(id);
     }
 
     @GetMapping("/patient/{id}/carbs")
-    public List<CarbsFromPersonDto> getCarbsDtoFromPatientById(@PathVariable(name="id") int id) {
+    public List<CarbsFromPersonDto> getCarbsDtoFromPatientById(@PathVariable(name="id") long id) {
         log.info("The end point PatientDto & CarbsDto has been used");
         return carbsService.readCarbsByPatientId(id);
     }
 
     @GetMapping("/patient/{id}/carbs/query")
     public Integer getDailyAverageCarbsByPatientIdOnSpecificDates(
-            @PathVariable(name="id") int patientId,
+            @PathVariable(name="id") long patientId,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
     ) {
@@ -84,7 +83,7 @@ public class PatientController {
 
     @GetMapping("/patient/{id}/glucose/query")
     public List<BigDecimal> getDailyAverageGlucoseByPatientIdOnSpecificDates(
-            @PathVariable(name="id") int patientId,
+            @PathVariable(name="id") long patientId,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
             ) {
@@ -94,13 +93,13 @@ public class PatientController {
     }
 
     @GetMapping("/patient/{id}/glucose")
-    public List<GlucoseFromPersonDto> getGlucoseDtoFromPatientById(@PathVariable(name="id") int id) {
+    public List<GlucoseFromPersonDto> getGlucoseDtoFromPatientById(@PathVariable(name="id") long id) {
         log.info("The end point PatientDto & GlucoseDto has been used");
         return glucoseService.readGlucoseByPatientId(id);
     }
 
     @GetMapping("/patient/{id}/consultation")
-    public List<ConsultationDto> getConsultationOfPatientById(@PathVariable(name="id") int id) {
+    public List<ConsultationDto> getConsultationOfPatientById(@PathVariable(name="id") long id) {
         log.info("The end point patient/{id}/consultation has been used");
         return consultationService.readConsultationByPatientId(id);
     }
@@ -115,14 +114,14 @@ public class PatientController {
     @PutMapping("/patient/{id}")
     //http://localhost:9000/api/patient/{{id}}
     public boolean updatePatientDto(@RequestBody PatientDto PatientDto,
-                                     @PathVariable(name="id") int id){
+                                     @PathVariable(name="id") long id){
         return patientService.updatePatient(PatientDto, id);
     }
 
     @DeleteMapping("/patient/{id}")
     //http://localhost:9000/api/patient/{{id}}
-    public boolean deletePatientDto(@PathVariable(name="id") int id){
-        return patientService.deletePatientById(id);
+    public void deletePatientDto(@PathVariable(name="id") long id){
+        patientService.deletePatientById(id);
     }
 
 }

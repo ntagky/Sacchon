@@ -2,7 +2,6 @@ package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.DoctorDto;
 import gr.codehub.sacchon.app.dto.DoctorNameAndEmailDto;
-import gr.codehub.sacchon.app.dto.GlucoseFromPersonDto;
 import gr.codehub.sacchon.app.exception.DoctorException;
 import gr.codehub.sacchon.app.service.DoctorServices;
 import lombok.AllArgsConstructor;
@@ -25,7 +24,7 @@ public class DoctorController {
     }
 
     @GetMapping("/doctor/{id}")
-    public DoctorDto getDoctorDto(@PathVariable(name="id")  int id) throws DoctorException {
+    public DoctorDto getDoctorDto(@PathVariable(name="id")  long id) throws DoctorException {
         log.info("The end point doctor with id has been used");
         return doctorServices.readDoctor(id);
     }
@@ -37,7 +36,7 @@ public class DoctorController {
     }
 
     @GetMapping("/doctor/{id}/info")
-    public DoctorNameAndEmailDto getDoctorNameAndEmailById(@PathVariable(name="id") int id) {
+    public DoctorNameAndEmailDto getDoctorNameAndEmailById(@PathVariable(name="id") long id) {
         log.info("The end point doctor/id/info has been used");
         return doctorServices.findDoctorNameAndEmailByPatientId(id);
     }
@@ -56,7 +55,7 @@ public class DoctorController {
     }
 
     @DeleteMapping("/doctor/{id}")
-    public boolean deleteDoctorDto(@PathVariable(name="id")  int id){
+    public boolean deleteDoctorDto(@PathVariable(name="id")  long id){
         log.info("The end point doctor with id has been used");
         return doctorServices.deleteDoctor(id);
     }

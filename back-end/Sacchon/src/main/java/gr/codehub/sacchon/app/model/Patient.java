@@ -1,23 +1,22 @@
 package gr.codehub.sacchon.app.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import gr.codehub.sacchon.app.SacchonApplication;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(schema = SacchonApplication.SCHEMA)
+@Table(schema = SacchonApplication.SCHEMA, name = "Patient")
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class Patient extends Person {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private String medicalRecordNumber;
     private String address;
     private String gender;
@@ -46,7 +45,7 @@ public class Patient extends Person {
     // @ManyToOne -> by default: eager loading
     // optional = false -> de mporei na mhn exei doctor. To default einai true
     // @ManyToOne(optional = true, cascade = CascadeType.PERSIST)
-    @ManyToOne(optional = true)
+    @ManyToOne()
     @JoinColumn(name="doctor_id", referencedColumnName = "id")
     private Doctor doctor;
 

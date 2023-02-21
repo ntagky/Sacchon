@@ -2,7 +2,6 @@ package gr.codehub.sacchon.app.service;
 
 import gr.codehub.sacchon.app.dto.DoctorDto;
 import gr.codehub.sacchon.app.dto.DoctorNameAndEmailDto;
-import gr.codehub.sacchon.app.dto.GlucoseFromPersonDto;
 import gr.codehub.sacchon.app.exception.DoctorException;
 import gr.codehub.sacchon.app.model.Doctor;
 import gr.codehub.sacchon.app.repository.DoctorRepository;
@@ -45,17 +44,17 @@ public class DoctorServImpl implements DoctorServices{
     }
 
     @Override
-    public DoctorDto readDoctor(int id) throws DoctorException {
+    public DoctorDto readDoctor(long id) throws DoctorException {
         return new DoctorDto(readDoctorDb(id));
     }
 
     @Override
-    public DoctorNameAndEmailDto findDoctorNameAndEmailByPatientId(int id) {
+    public DoctorNameAndEmailDto findDoctorNameAndEmailByPatientId(long id) {
         return new DoctorNameAndEmailDto(doctorRepository.findDoctorNameAndEmailById(id));
     }
 
     // private method created for internal use
-    private Doctor readDoctorDb(int id) throws DoctorException{
+    private Doctor readDoctorDb(long id) throws DoctorException{
         Optional<Doctor> doctorOptional = doctorRepository.findById(id);
         if (doctorOptional.isPresent())
             return doctorOptional.get();
@@ -63,7 +62,7 @@ public class DoctorServImpl implements DoctorServices{
     }
 
     @Override
-    public boolean updateDoctor(DoctorDto doctor, int id){
+    public boolean updateDoctor(DoctorDto doctor, long id){
         boolean action;
         try {
             Doctor dbDoctor = readDoctorDb(id);
@@ -78,7 +77,7 @@ public class DoctorServImpl implements DoctorServices{
     }
 
     @Override
-    public boolean deleteDoctor(int id) {
+    public boolean deleteDoctor(long id) {
         boolean action;
         try {
             Doctor dbDoctor = readDoctorDb(id);

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 public class CarbsDto implements Measurement<Integer> {
 
-    private int id;
+    private Long id;
     private final String UNITS = "g";
     private LocalDate date;
     private Integer measurement;

@@ -1,6 +1,5 @@
 package gr.codehub.sacchon.app.controller;
 
-import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
 import gr.codehub.sacchon.app.dto.ConsultationDto;
 import gr.codehub.sacchon.app.exception.ConsultationException;
 import gr.codehub.sacchon.app.service.ConsultationService;
@@ -23,13 +22,13 @@ public class ConsultationController {
     }
 
     @GetMapping("/consultation/{id}")
-    public ConsultationDto getConsultationDto(@PathVariable(name="id")  int id) throws ConsultationException {
+    public ConsultationDto getConsultationDto(@PathVariable(name="id") long id) throws ConsultationException {
         log.info("The end point consultation with id has been used");
         return consultationService.readConsultation(id);
     }
 
 //    @GetMapping("/consultation{id}/info")
-//    public ConsultationBasicInfoDto getConsultationInfoByPatientId(@PathVariable(name="id") int id){
+//    public ConsultationBasicInfoDto getConsultationInfoByPatientId(@PathVariable(name="id") long id){
 //        return consultationService.findConsultationInfoByPatientId(id);
 //    }
 
@@ -47,7 +46,7 @@ public class ConsultationController {
     }
 
     @DeleteMapping("/consultation/{id}")
-    public boolean deleteConsultationDto(@PathVariable(name="id")  int id){
+    public boolean deleteConsultationDto(@PathVariable(name="id")  long id){
         log.info("The end point consultation with id has been used");
         return consultationService.deleteConsultation(id);
     }

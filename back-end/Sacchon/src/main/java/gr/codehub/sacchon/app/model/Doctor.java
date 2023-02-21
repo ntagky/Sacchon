@@ -3,6 +3,7 @@ package gr.codehub.sacchon.app.model;
 import gr.codehub.sacchon.app.SacchonApplication;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -27,11 +28,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = SacchonApplication.SCHEMA)
+@Table(schema = SacchonApplication.SCHEMA, name = "Doctor")
+@SuperBuilder
 public class Doctor extends Person{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
     @OneToMany(mappedBy = "doctor") //by default: lazy loading
     private List<Patient> patients;

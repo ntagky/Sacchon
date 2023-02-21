@@ -12,17 +12,17 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 
 @Repository
-public interface PatientRepository extends JpaRepository<Patient, Integer> {
+public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Query("SELECT COUNT(p) FROM Patient p")
     Long countPatients();
 
     @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id = :patientId", nativeQuery = true)
-    Patient DisplayAccountData(@Param("patientId") int patientId);
+    Patient DisplayAccountData(@Param("patientId") long patientId);
 
     @Modifying
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id=:patientId", nativeQuery = true)
-    void deletePatientById(@Param("patientId") Long patientId);
+    void deletePatientById(@Param("patientId") long patientId);
 
     @Query(value = "INSERT INTO " + SacchonApplication.SCHEMA + ".PATIENT (first_name, last_name, password, email, medical_record_number, address, gender, date_of_birth, blood_type, diabetes_type, height, weight) " +
             "VALUES (:firstName, :lastName, :password, :email, :medicalRecordNumber, :address, :gender, :dateOfBirth, :bloodType, :diabetesType, :height, :weight)", nativeQuery = true)

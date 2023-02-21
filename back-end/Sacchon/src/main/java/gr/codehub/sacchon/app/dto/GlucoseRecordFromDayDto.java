@@ -13,7 +13,7 @@ import java.time.LocalTime;
 @Getter
 public class GlucoseRecordFromDayDto {
 
-    private int id;
+    private Long id;
     private LocalTime time;
     private BigDecimal measurement;
 

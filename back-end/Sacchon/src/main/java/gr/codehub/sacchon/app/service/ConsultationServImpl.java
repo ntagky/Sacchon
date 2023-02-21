@@ -2,7 +2,6 @@ package gr.codehub.sacchon.app.service;
 
 import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
 import gr.codehub.sacchon.app.dto.ConsultationDto;
-import gr.codehub.sacchon.app.dto.DoctorNameAndEmailDto;
 import gr.codehub.sacchon.app.exception.ConsultationException;
 import gr.codehub.sacchon.app.model.Consultation;
 import gr.codehub.sacchon.app.repository.ConsultationRepository;
@@ -35,12 +34,12 @@ public class ConsultationServImpl implements ConsultationService {
     }
 
     @Override
-    public ConsultationDto readConsultation(int id) throws ConsultationException {
+    public ConsultationDto readConsultation(long id) throws ConsultationException {
         return new ConsultationDto(readConsultationDb(id));
     }
 
     @Override
-    public List<ConsultationDto> readConsultationByPatientId(int id) {
+    public List<ConsultationDto> readConsultationByPatientId(long id) {
         return consultationRepository
                 .findConsultationByPatientId(id)
                 .stream()
@@ -49,7 +48,7 @@ public class ConsultationServImpl implements ConsultationService {
     }
 
     @Override
-    public List<ConsultationBasicInfoDto> findConsultationInfoByPatientId(int id) {
+    public List<ConsultationBasicInfoDto> findConsultationInfoByPatientId(long id) {
         List<ConsultationBasicInfoDto> test = consultationRepository.
                 findConsultationInfoByPatientId(id)
                 .stream()
@@ -60,7 +59,7 @@ public class ConsultationServImpl implements ConsultationService {
     }
 
     // private method created for internal use
-    private Consultation readConsultationDb(int id) throws ConsultationException{
+    private Consultation readConsultationDb(long id) throws ConsultationException{
         Optional<Consultation> consultationOptional = consultationRepository.findById(id);
         if (consultationOptional.isPresent())
             return consultationOptional.get();
@@ -68,7 +67,7 @@ public class ConsultationServImpl implements ConsultationService {
     }
 
     @Override
-    public boolean updateConsultation(ConsultationDto consultationDto, int id){
+    public boolean updateConsultation(ConsultationDto consultationDto, long id){
         boolean action;
         try {
             Consultation dbConsultation = readConsultationDb(id);
@@ -91,7 +90,7 @@ public class ConsultationServImpl implements ConsultationService {
     }
 
     @Override
-    public boolean deleteConsultation(int id) {
+    public boolean deleteConsultation(long id) {
         boolean action;
         try {
             Consultation dbConsultation = readConsultationDb(id);

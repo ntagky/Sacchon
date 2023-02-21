@@ -16,7 +16,7 @@ public class Carbs implements Measurement<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private final String UNITS = "g";
     private LocalDate date;
     private Integer measurement;

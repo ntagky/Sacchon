@@ -32,7 +32,7 @@ import java.util.List;
 public class Consultation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String doctorFirstName; // in case the doctor leaves the system - referral
     private String doctorLastName; // in case the doctor leaves the system - referral
     private String doctorEmail; // in case the doctor leaves the system  - referral
@@ -41,7 +41,7 @@ public class Consultation {
     @ElementCollection
     private List<String> medications;
     private String details;
-    @ManyToOne(optional = true) // me ti logiki oti to consultation de tha syndeetai pleon me ton giatro, an fygei apo to systima, ara mporei na meinei xwris referenced giatro
+    @ManyToOne() // me ti logiki oti to consultation de tha syndeetai pleon me ton giatro, an fygei apo to systima, ara mporei na meinei xwris referenced giatro
     @JoinColumn(name="doctor_id", referencedColumnName = "id")
     private Doctor doctor;
 

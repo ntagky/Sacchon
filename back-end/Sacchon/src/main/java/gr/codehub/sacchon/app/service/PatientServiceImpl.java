@@ -25,12 +25,12 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void deletePatientById(Long patientId) {
+    public void deletePatientById(long patientId) {
         patientRepository.deletePatientById(patientId);
     }
 
     @Override
-    public Patient getPatientById(int patientId) {
+    public Patient getPatientById(long patientId) {
         return patientRepository.DisplayAccountData(patientId);
     }
 
@@ -50,18 +50,18 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientDto readPatientById(int id) throws PatientException {
+    public PatientDto readPatientById(long id) throws PatientException {
         return new PatientDto( readPatientDb(id));
     }
 
-    private Patient readPatientDb(int id) throws PatientException {
+    private Patient readPatientDb(long id) throws PatientException {
         Optional<Patient> patientOptional = patientRepository.findById(id);
         if (patientOptional.isPresent())
             return   patientOptional.get() ;
         throw new PatientException("Customer not found id= " + id);
     }
     @Override
-    public boolean updatePatient(PatientDto patient, int id) {
+    public boolean updatePatient(PatientDto patient, long id) {
         boolean action;
         try {
             Patient dbpatient = readPatientDb(id);
@@ -75,18 +75,18 @@ public class PatientServiceImpl implements PatientService {
         return action;
     }
 
-    @Override
-    public boolean deletePatientById(int id) {
-        boolean action;
-        try {
-            Patient dbCustomer = readPatientDb(id);
-            patientRepository.delete(dbCustomer);
-            action = true;
-        } catch (PatientException e) {
-            action = false;
-        }
-        return action;
-    }
+//    @Override
+//    public boolean deletePatientById(long id) {
+//        boolean action;
+//        try {
+//            Patient dbCustomer = readPatientDb(id);
+//            patientRepository.delete(dbCustomer);
+//            action = true;
+//        } catch (PatientException e) {
+//            action = false;
+//        }
+//        return action;
+//    }
 
     @Override
     public void registerPatient(PatientDto patientDto) {

@@ -32,24 +32,24 @@ public class GlucoseRecordServImpl implements GlucoseRecordService {
                 .collect(Collectors.toList());
     }
     @Override
-    public GlucoseRecordDto readGlucoseRecordById(int id) throws GlucoseRecordException {
+    public GlucoseRecordDto readGlucoseRecordById(long id) throws GlucoseRecordException {
         return new GlucoseRecordDto(readGlucoseRecordDb(id));
     }
 
     @Override
-    public BigDecimal readAverageDailyGlucoseByGlucoseId(int id) {
+    public BigDecimal readAverageDailyGlucoseByGlucoseId(long id) {
         return glucoseRecordRepository
                 .findGlucoseRecordsByGlucoseId(id);
     }
 
-    private GlucoseRecord readGlucoseRecordDb(int id) throws GlucoseRecordException {
+    private GlucoseRecord readGlucoseRecordDb(long id) throws GlucoseRecordException {
         Optional<GlucoseRecord> glucoseRecordOptional = glucoseRecordRepository.findById(id);
         if (glucoseRecordOptional.isPresent())
             return glucoseRecordOptional.get();
         throw new GlucoseRecordException("Glucose Record with id " + id + " does not exist.");
     }
     @Override
-    public boolean updateGlucoseRecord(GlucoseRecordDto glucoseRecordDto, int id) throws GlucoseRecordException {
+    public boolean updateGlucoseRecord(GlucoseRecordDto glucoseRecordDto, long id) throws GlucoseRecordException {
         GlucoseRecordDto dbGlucoseRecord = readGlucoseRecordById(id);
         dbGlucoseRecord.setId(id);
         dbGlucoseRecord.setMeasurement(glucoseRecordDto.getMeasurement());
@@ -59,7 +59,7 @@ public class GlucoseRecordServImpl implements GlucoseRecordService {
         return true;
     }
     @Override
-    public boolean deleteGlucoseRecordById(int id) throws GlucoseRecordException {
+    public boolean deleteGlucoseRecordById(long id) throws GlucoseRecordException {
         glucoseRecordRepository.delete(readGlucoseRecordDb(id));
         return true;
     }

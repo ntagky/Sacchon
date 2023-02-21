@@ -10,8 +10,8 @@ public interface DoctorServices {
     DoctorDto createDoctor(DoctorDto doctor);
     List<DoctorDto> readDoctor();
     List<DoctorDto> readDoctorByEmailNativeService(String match);
-    DoctorDto readDoctor(int id) throws DoctorException;
-    DoctorNameAndEmailDto findDoctorNameAndEmailByPatientId(int id);
-    boolean updateDoctor(DoctorDto doctor, int id);
-    boolean deleteDoctor(int id);
+    DoctorDto readDoctor(long id) throws DoctorException;
+    DoctorNameAndEmailDto findDoctorNameAndEmailByPatientId(long id);
+    boolean updateDoctor(DoctorDto doctor, long id);
+    boolean deleteDoctor(long id);
 }
