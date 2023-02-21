@@ -19,7 +19,7 @@ import java.util.*;
 @Configuration
 public class InitialConfiguration {
 
-    private final int SEED = 42;
+    private final Random random = new Random(42);
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private final LinkedList<String> namesMaleLinkedList = new LinkedList<>(List.of("Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore"));
     private final LinkedList<String> namesFemaleLinkedList = new LinkedList<>(List.of("Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper"));
@@ -53,8 +53,6 @@ public class InitialConfiguration {
     }
 
     private void createChiefDoctors(ChiefDoctorRepository chiefDoctorRepository, int population) {
-        Random random = new Random(SEED);
-
         ArrayList<ChiefDoctor> chiefDoctorArrayList = new ArrayList<>();
         ChiefDoctor chiefDoctor;
         String firstName;
@@ -80,8 +78,6 @@ public class InitialConfiguration {
     }
 
     private List<Doctor> createDoctors(DoctorRepository doctorRepository, int population) {
-        Random random = new Random(SEED);
-
         ArrayList<Doctor> doctorArrayList = new ArrayList<>();
         Doctor doctor;
         String firstName;
@@ -110,8 +106,6 @@ public class InitialConfiguration {
     }
 
     private List<Patient> createPatients(PatientRepository patientRepository, int population) {
-        Random random = new Random(SEED);
-
         ArrayList<Patient> patientArrayList = new ArrayList<>();
         Patient patient;
         String firstName;
@@ -162,8 +156,6 @@ public class InitialConfiguration {
     }
 
     private void createCarbs(CarbsRepository carbsRepository, int population, Patient assignedPerson) {
-        Random random = new Random(SEED);
-
         ArrayList<Carbs> carbsArrayList = new ArrayList<>();
         Carbs carbs;
 
@@ -200,8 +192,6 @@ public class InitialConfiguration {
     }
 
     private void createGlucoseRecords(GlucoseRecordRepository glucoseRecordRepository, int population, Glucose assignedGlucose) {
-        Random random = new Random(SEED);
-
         ArrayList<GlucoseRecord> glucoseRecordArrayList = new ArrayList<>();
         GlucoseRecord glucoseRecord;
 
@@ -227,8 +217,6 @@ public class InitialConfiguration {
     }
 
     private void createConsultation(ConsultationRepository consultationRepository, int population, Patient assignedPerson, Doctor assignedDoctor, LocalDate[] localDates) {
-        Random random = new Random(SEED);
-
         ArrayList<Consultation> consultationArrayList = new ArrayList<>();
         Consultation consultation;
 
@@ -268,7 +256,6 @@ public class InitialConfiguration {
 
             System.out.println("Saving dummy objects..");
 
-            Random random = new Random(SEED);
             int patientPopulation = 13;
             int doctorPopulation = 4;
             int chiefDoctorPopulation = 1;
