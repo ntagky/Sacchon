@@ -3,10 +3,7 @@ package gr.codehub.sacchon.app.controller;
 import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.PatientException;
 import gr.codehub.sacchon.app.model.Patient;
-import gr.codehub.sacchon.app.service.CarbsService;
-import gr.codehub.sacchon.app.service.ConsultationService;
-import gr.codehub.sacchon.app.service.GlucoseService;
-import gr.codehub.sacchon.app.service.PatientService;
+import gr.codehub.sacchon.app.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,6 +23,7 @@ public class PatientController {
     private CarbsService carbsService;
     private GlucoseService glucoseService;
     private ConsultationService consultationService;
+    private DoctorServices doctorServices;
 
 
     @PostMapping("/signup")
@@ -37,7 +35,8 @@ public class PatientController {
     @GetMapping("/patient/{id}")
     //http://localhost:9000/api/{{id}}
     public List<PatientDto> findPatientById(@PathVariable("id") long id){
-        return patientService.readPatientById(id);}
+        return patientService.readPatientById(id);
+    }
 
     @DeleteMapping("/{patientId}")   //<?> for generic response, could also be not found
     public ResponseEntity<?> deletePatientById(@PathVariable("patientId") long patientId) {
@@ -90,6 +89,12 @@ public class PatientController {
     @GetMapping("/patient/{id}/consultationbasicinfo")
     public List<ConsultationBasicInfoDto> getConsultationInfoByPatientId(@PathVariable(name="id") int id){
         return consultationService.findConsultationInfoByPatientId(id);
+    }
+
+    @GetMapping("/patient/{id}/doctor")
+    public DoctorDto getDoctorByPatientId(@PathVariable("id") long id){
+        long doctorId = patientService.findDoctorIdByPatientId(id);
+        return doctorServices.readDoctorNameAndEmailById(doctorId);
     }
 
     @PostMapping("/patient")

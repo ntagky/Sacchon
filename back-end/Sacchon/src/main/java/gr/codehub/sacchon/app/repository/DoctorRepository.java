@@ -11,9 +11,9 @@ import java.util.List;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long>{
-    @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".DOCTOR WHERE email LIKE CONCAT('%' + ?1 + '%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".DOCTOR WHERE email LIKE CONCAT('%', + ?1, + '%')", nativeQuery = true)
     List<Doctor> findDoctorByEmailNative(String match);
 
-    @Query(value ="SELECT * FROM " + SacchonApplication.SCHEMA + ".DOCTOR WHERE ID = :doctorId", nativeQuery = true)
+    @Query(value ="SELECT * FROM " + SacchonApplication.SCHEMA + ".DOCTOR WHERE id = :doctorId", nativeQuery = true)
     Doctor findDoctorNameAndEmailById(@Param("doctorId") long id);
 }
