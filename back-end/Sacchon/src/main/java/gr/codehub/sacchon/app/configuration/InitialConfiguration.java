@@ -1,19 +1,256 @@
 package gr.codehub.sacchon.app.configuration;
 
+import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.model.*;
 import gr.codehub.sacchon.app.repository.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.ZoneId;
+import java.util.*;
 
 @Configuration
 public class InitialConfiguration {
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private final LinkedList<String> namesMaleLinkedList = new LinkedList<>(List.of("Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore"));
+    private final LinkedList<String> namesFemaleLinkedList = new LinkedList<>(List.of("Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper"));
+    private final List<String> lastNamesLinkedList = new ArrayList<>(List.of("Smith", "Johnson", "William", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", " Wilson", "Anderson", "Thomas", "Taylor", "Jackson", "Martin"));
+    private final List<String> allergiesList = new ArrayList<>(List.of("Grass Pollen", "Dust", "Peanut", "Milk", "Egg", "Animal Fur", "Bee", "Wasp", "Fish", "Crustaceans", "Wheat", "Soy"));
+    private final List<String> medicationsList = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
+    private final List<String> conditionsList = new ArrayList<>(List.of("Heart Disease", "Cancer", "Asthma", "Emphysema", "Alzheimer Disease", "Substance Abuse", "Pneumonia", "Kidney Disease", "Mental Health Conditions"));
+
+    private void createRandomListSequence(List<String> referenceList, List<String> arrayList, double probability, Random random) {
+        if (Math.random() < probability) {
+            int idx = random.nextInt(0, allergiesList.size() - 1);
+            while (idx < referenceList.size()) {
+                arrayList.add(referenceList.get(idx));
+                idx = random.nextInt(idx, referenceList.size() + 5);
+            }
+        }
+    }
+
+    private LocalDate getDateBeforeToday(int minusDays) {
+        Date date;
+        try {
+            date = sdf.parse(LocalDate.now().toString());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DATE, -minusDays);
+            return calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void createChiefDoctors(ChiefDoctorRepository chiefDoctorRepository, int population) {
+        Random random = new Random(42);
+
+        ArrayList<ChiefDoctor> chiefDoctorArrayList = new ArrayList<>();
+        ChiefDoctor chiefDoctor;
+        String firstName;
+        String lastName;
+        int yearBorn;
+
+        for (int i = 0; i < population; i++) {
+            chiefDoctor = new ChiefDoctor();
+            firstName = (namesMaleLinkedList.size() + namesFemaleLinkedList.size()) % 2 == 0 ? namesMaleLinkedList.pop() : namesFemaleLinkedList.pop();
+            lastName = lastNamesLinkedList.get(i);
+            yearBorn = 1985 - random.nextInt(40);
+
+            chiefDoctor.setId(0L);
+            chiefDoctor.setFirstName(firstName);
+            chiefDoctor.setLastName(lastName);
+            chiefDoctor.setEmail("ch." + firstName.charAt(0) + lastName + yearBorn + "@gmail.com");
+            chiefDoctor.setPassword(RandomStringUtils.random(12, true, true));
+
+            chiefDoctorArrayList.add(chiefDoctor);
+        }
+
+        chiefDoctorRepository.saveAll(chiefDoctorArrayList);
+    }
+
+    private List<Doctor> createDoctors(DoctorRepository doctorRepository, int population) {
+        Random random = new Random(42);
+
+        ArrayList<Doctor> doctorArrayList = new ArrayList<>();
+        Doctor doctor;
+        String firstName;
+        String lastName;
+        int yearBorn;
+
+        for (int i = 0; i < population; i++) {
+            doctor = new Doctor();
+            firstName = (namesMaleLinkedList.size() + namesFemaleLinkedList.size()) % 2 == 0 ? namesMaleLinkedList.pop() : namesFemaleLinkedList.pop();
+            lastName = lastNamesLinkedList.get(i);
+            yearBorn = 1995 - random.nextInt(40);
+
+            doctor.setId(0L);
+            doctor.setFirstName(firstName);
+            doctor.setLastName(lastName);
+            doctor.setEmail(firstName.charAt(0) + lastName + yearBorn + "@gmail.com");
+            doctor.setPassword(RandomStringUtils.random(12, true, true));
+
+            doctor.setPatients(null);
+            doctor.setConsultations(null);
+
+            doctorArrayList.add(doctor);
+        }
+
+        return doctorRepository.saveAll(doctorArrayList);
+    }
+
+    private List<Patient> createPatients(PatientRepository patientRepository, int population) {
+        Random random = new Random(42);
+
+        ArrayList<Patient> patientArrayList = new ArrayList<>();
+        Patient patient;
+        String firstName;
+        String lastName;
+        int yearBorn;
+        List<String> allergies;
+        List<String> medications;
+        List<String> conditions;
+
+        for (int i = 0; i < population; i++) {
+            patient = new Patient();
+            firstName = (namesMaleLinkedList.size() + namesFemaleLinkedList.size()) % 2 == 0 ? namesMaleLinkedList.pop() : namesFemaleLinkedList.pop();
+            lastName = lastNamesLinkedList.get(i);
+            yearBorn = 2005 - random.nextInt(50);
+            patient.setId(0L);
+            patient.setFirstName(firstName);
+            patient.setLastName(lastName);
+            patient.setEmail(firstName.charAt(0) + lastName + yearBorn + "@gmail.com");
+            patient.setPassword(RandomStringUtils.random(12, true, true));
+            patient.setAddress(random.nextInt(1000) + " Address St.");
+            patient.setGender(i % 2 == 0 ? "Male" : "Female");
+            patient.setDateOfBirth(LocalDate.of(yearBorn, random.nextInt(12) + 1, random.nextInt(27) + 1));
+            patient.setBloodType(BloodType.values()[random.nextInt(BloodType.values().length - 1)]);
+            patient.setDiabetesType(DiabetesType.values()[random.nextInt(DiabetesType.values().length - 1)]);
+            patient.setHeight(150 + random.nextInt(50));
+            patient.setWeight(50 + random.nextInt(70));
+
+            allergies = new ArrayList<>();
+            createRandomListSequence(allergiesList, allergies, 0.35, random);
+            patient.setAllergies(allergies);
+
+            medications = new ArrayList<>();
+            createRandomListSequence(medicationsList, medications, 0.2, random);
+            patient.setMedications(medications);
+
+            conditions = new ArrayList<>();
+            createRandomListSequence(conditionsList, conditions, 0.1, random);
+            patient.setConditions(conditions);
+
+            patient.setCarbs(null);
+            patient.setGlucose(null);
+            patient.setDoctor(null);
+
+            patientArrayList.add(patient);
+        }
+
+        return patientRepository.saveAll(patientArrayList);
+    }
+
+    private void createCarbs(CarbsRepository carbsRepository, int population, Patient assignedPerson) {
+        Random random = new Random(42);
+
+        ArrayList<Carbs> carbsArrayList = new ArrayList<>();
+        Carbs carbs;
+
+        for (int i = 0; i < population; i++) {
+            carbs = new Carbs();
+
+            carbs.setId(0L);
+            carbs.setDate(getDateBeforeToday(population - i));
+            carbs.setMeasurement(random.nextInt(1500, 3000));
+            carbs.setPatient(assignedPerson);
+
+            carbsArrayList.add(carbs);
+        }
+
+        carbsRepository.saveAll(carbsArrayList);
+    }
+
+    private List<Glucose> createGlucose(GlucoseRepository glucoseRepository, int population, Patient assignedPerson) {
+        ArrayList<Glucose> glucoseArrayList = new ArrayList<>();
+        Glucose glucose;
+
+        for (int i = 0; i < population; i++) {
+            glucose = new Glucose();
+
+            glucose.setId(0L);
+            glucose.setDate(getDateBeforeToday(population - i));
+            glucose.setMeasurement(null);
+            glucose.setPatient(assignedPerson);
+
+            glucoseArrayList.add(glucose);
+        }
+
+        return glucoseRepository.saveAll(glucoseArrayList);
+    }
+
+    private void createGlucoseRecords(GlucoseRecordRepository glucoseRecordRepository, int population, Glucose assignedGlucose) {
+        Random random = new Random(42);
+
+        ArrayList<GlucoseRecord> glucoseRecordArrayList = new ArrayList<>();
+        GlucoseRecord glucoseRecord;
+
+        List<Integer> hours = Arrays
+                .stream(random.ints(population, 8, 23).toArray())
+                .boxed()
+                .distinct()
+                .sorted()
+                .toList();
+
+        for (Integer hour : hours) {
+            glucoseRecord = new GlucoseRecord();
+
+            glucoseRecord.setId(0L);
+            glucoseRecord.setTime(LocalTime.of(hour, random.nextInt(60), random.nextInt(59)));
+            glucoseRecord.setMeasurement(BigDecimal.valueOf(Math.abs(random.nextGaussian()) * 100 + 100));
+            glucoseRecord.setGlucose(assignedGlucose);
+
+            glucoseRecordArrayList.add(glucoseRecord);
+        }
+
+        glucoseRecordRepository.saveAll(glucoseRecordArrayList);
+    }
+
+    private void createConsultation(ConsultationRepository consultationRepository, int population, Patient assignedPerson, Doctor assignedDoctor, LocalDate[] localDates) {
+        ArrayList<Consultation> consultationArrayList = new ArrayList<>();
+        Consultation consultation;
+
+        for (int i = 0; i < population; i++) {
+            consultation = new Consultation();
+
+            consultation.setId(0L);
+            consultation.setDoctorFirstName(assignedDoctor.getFirstName());
+            consultation.setDoctorLastName(assignedDoctor.getLastName());
+            consultation.setDoctorEmail(assignedDoctor.getEmail());
+            consultation.setDateCreated(localDates[i]);
+            consultation.setSeenConsultation(true);
+            consultation.setMedications(null);
+            consultation.setDetails(
+                    "Subscription from dc. " + assignedDoctor.getLastName() +
+                            " for patient " + assignedPerson.getLastName() +
+                            " on " + localDates[i]
+            );
+            consultation.setPatient(assignedPerson);
+            consultation.setDoctor(assignedDoctor);
+
+            consultationArrayList.add(consultation);
+        }
+
+        consultationRepository.saveAll(consultationArrayList);
+    }
 
     @Bean
     CommandLineRunner PatientCommandLineRunner(
@@ -22,189 +259,58 @@ public class InitialConfiguration {
             DoctorRepository doctorRepository,
             ChiefDoctorRepository chiefDoctorRepository, ConsultationRepository consultationRepository){
         return args -> {
-            System.out.println("System dummy saved object");
 
-            Doctor doctor1 = new Doctor();
-            doctor1.setFirstName("Brand");
-            doctor1.setLastName("Red");
-            doctor1.setEmail("dc.brand@gmail.com");
-            doctor1.setId(1);
-            doctor1.setPatients(null);
-            doctor1.setConsultations(null);
-            doctorRepository.saveAll(List.of(doctor1));
+            if (!SacchonApplication.DEBUG_MODE)
+                return;
 
-            Patient patient1 = new Patient();
-            patient1.setFirstName("James");
-            patient1.setLastName("Harden");
-            patient1.setEmail("jh1982@gmail.com");
-            patient1.setId(1);
-            patient1.setAddress("124 Main St.");
-            patient1.setGender("Male");
-            patient1.setDateOfBirth(LocalDate.of(1990, 1, 1));
-            patient1.setBloodType(BloodType.AB_NEGATIVE);
-            patient1.setDiabetesType(DiabetesType.TYPE_1);
-            patient1.setHeight(72);
-            patient1.setWeight(200.0);
-            patientRepository.saveAll(List.of(patient1));
+            System.out.println("Saving dummy objects..");
 
-            List<String> allergies = new ArrayList<>();
-            allergies.add("Peanuts");
-            allergies.add("Eggs");
-            patient1.setAllergies(allergies);
+            Random random = new Random();
+            int patientPopulation = 4;
+            int doctorPopulation = 2;
+            int chiefDoctorPopulation = 1;
+            int[] measurementPersonPopulation = new int[patientPopulation];
+            for (int i = 0; i < patientPopulation; i++)
+                measurementPersonPopulation[i] = random.nextInt(15, 65);
 
-            List<String> medications = new ArrayList<>();
-            medications.add("Ibuprofen");
-            medications.add("Aspirin");
-            patient1.setMedications(medications);
+            Collections.shuffle(namesMaleLinkedList);
+            Collections.shuffle(namesFemaleLinkedList);
+            Collections.shuffle(lastNamesLinkedList);
 
-            List<String> conditions = new ArrayList<>();
-            conditions.add("Asthma");
-            conditions.add("High Blood Pressure");
-            patient1.setConditions(conditions);
+            assert namesMaleLinkedList.size() == namesFemaleLinkedList.size() : "Provide same length of male and female names";
+            assert (patientPopulation + doctorPopulation + chiefDoctorPopulation) <= namesMaleLinkedList.size() + namesFemaleLinkedList.size() ||
+                    (patientPopulation + doctorPopulation + chiefDoctorPopulation) <= lastNamesLinkedList.size()
+                    : "Provided less population.";
 
-            Consultation consultation = new Consultation();
-            consultation.setId(0);
-            consultation.setDoctorFirstName(doctor1.getFirstName());
-            consultation.setDoctorLastName(doctor1.getLastName());
-            consultation.setDoctorEmail(doctor1.getEmail());
-            consultation.setDateCreated(LocalDate.of(2023, 2, 19));
-            consultation.setSeenConsultation(true);
-            consultation.setMedications(medications);
-            consultation.setDetails("blah blah");
-            consultation.setPatient(patient1);
-            consultation.setDoctor(doctor1);
-            consultationRepository.save(consultation);
-//            consultationRepository.saveAll(List.of(consultation));
+            createChiefDoctors(chiefDoctorRepository, chiefDoctorPopulation);
+            List<Doctor> doctorList = createDoctors(doctorRepository, doctorPopulation);
+            List<Patient> patientArrayList = createPatients(patientRepository, patientPopulation);
 
-            patient1.setCarbs(null);
-            patient1.setGlucose(null);
-            patient1.setDoctor(null);
+            int[] idx = {0};
+            patientArrayList.forEach(patient -> {
+                createCarbs(carbsRepository, measurementPersonPopulation[idx[0]], patient);
 
-            Patient patient2 = new Patient();
-            patient2.setId(2);
-            patient2.setAddress("902 Queens");
-            patient2.setGender("Female");
-            patient2.setDateOfBirth(LocalDate.of(1992, 2, 1));
-            patient2.setBloodType(BloodType.O_NEGATIVE);
-            patient2.setDiabetesType(DiabetesType.TYPE_2);
-            patient2.setHeight(52);
-            patient2.setWeight(140.0);
+                List<Glucose> glucoseArrayList = createGlucose(glucoseRepository, measurementPersonPopulation[idx[0]], patient);
+                glucoseArrayList.forEach(glucose -> createGlucoseRecords(glucoseRecordRepository, random.nextInt(1, 6), glucose));
 
-            List<String> allergies2 = new ArrayList<>();
-            allergies2.add("Grapes");
-            allergies2.add("Water");
-            patient2.setAllergies(allergies2);
+                int maxConsultation = measurementPersonPopulation[idx[0]] / 30;
+                if (maxConsultation > 0) {
+                    boolean isWaiting = random.nextInt(0, 1) == 0;
+                    if (isWaiting)
+                        maxConsultation--;
 
-            List<String> medications2 = new ArrayList<>();
-            medications2.add("Medrol");
-            medications2.add("Aspirin");
-            patient2.setDoctor(doctor1);
-            patient2.setMedications(medications2);
-
-            List<String> conditions2 = new ArrayList<>();
-            conditions2.add("Heart disease");
-            patient2.setConditions(conditions2);
-
-            patientRepository.saveAll(List.of(patient1, patient2));
-
-            Carbs carb1 = new Carbs(1,LocalDate.of(2023, 11, 16),1900, patient1);
-            Carbs carb2 = new Carbs(2,LocalDate.of(2022, 11, 17),2300, patient1);
-            Carbs carb3 = new Carbs(3,LocalDate.of(2022, 11, 18),1980, patient1);
-            Carbs carb4 = new Carbs(4,LocalDate.of(2022, 11, 12),2210, patient2);
-            Carbs carb5 = new Carbs(5,LocalDate.of(2022, 11, 12),2830, patient2);
-            carbsRepository.saveAll(List.of(carb1, carb2, carb3, carb4, carb5));
-
-            Glucose glucose1 = new Glucose(
-                    1,
-                    LocalDate.of(2023, 2, 16),
-                    new ArrayList<> (),
-                    patient1
-            );
-            Glucose glucose2 = new Glucose(
-                    2,
-                    LocalDate.of(2023, 11, 17),
-                    new ArrayList<> (),
-                    patient1
-            );
-            glucoseRepository.saveAll(List.of(glucose1, glucose2));
-
-            GlucoseRecord glucoseRecord1 = new GlucoseRecord(
-                    1,
-                    LocalTime.of(18, 30),
-                    new BigDecimal("76.98"),
-                    glucose1
-            );
-            GlucoseRecord glucoseRecord2 = new GlucoseRecord(
-                    2,
-                    LocalTime.of(21, 10),
-                    new BigDecimal("88.10"),
-                    glucose1
-            );
-            GlucoseRecord glucoseRecord3 = new GlucoseRecord(
-                    3,
-                    LocalTime.of(23, 9),
-                    new BigDecimal("120.99"),
-                    glucose1
-            );
-            GlucoseRecord glucoseRecord4 = new GlucoseRecord(
-                    4,
-                    LocalTime.of(14, 10),
-                    new BigDecimal("92.44"),
-                    glucose2
-            );
-            glucoseRecordRepository.saveAll(List.of(
-                    glucoseRecord1,
-                    glucoseRecord2,
-                    glucoseRecord3,
-                    glucoseRecord4)
-            );
-
-//
-//            ChiefDoctor chiefDoctor1 = new ChiefDoctor();
-//            ChiefDoctor chiefDoctor2 = new ChiefDoctor();
-//            chiefDoctorRepository.saveAll(List.of(chiefDoctor1, chiefDoctor2));
-//
+                    if (maxConsultation > 0){
+                        Doctor randomDoctor = doctorList.get(random.nextInt(doctorList.size()-1));
+                        LocalDate[] localDates = new LocalDate[maxConsultation];
+                        for (int i = 0; i < maxConsultation; i++) {
+                            localDates[i] = glucoseArrayList.get((i + 1) * 30).getDate();
+                        }
+                        createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
+                    }
+                }
+                idx[0]++;
+            });
 
         };
     }
-
-
-//    @Bean
-//    CommandLineRunner DoctorCommandLineRunner(
-//            DoctorRepository docRepository, ChiefDoctorRepository chiefDocRepository, ConsultationRepository consultationRepository){
-//        return args -> {
-//            Doctor doctor1 = new Doctor(0, new ArrayList<Patient>(), new ArrayList<Consultation>());
-//            Doctor doctor2 = new Doctor(1, new ArrayList<Patient>(), new ArrayList<Consultation>());
-//            docRepository.saveAll(List.of(doctor1, doctor2));
-//
-//            ChiefDoctor chiefDoctor1 = new ChiefDoctor();
-//            ChiefDoctor chiefDoctor2 = new ChiefDoctor();
-//            chiefDocRepository.saveAll(List.of(chiefDoctor1, chiefDoctor2));
-//        };
-//    }
-
-
-//    @Bean
-//    CommandLineRunner ChiefDoctorCommandLineRunner(
-//            ChiefDoctorRepository chiefDoctorRepository){
-//        return args -> {
-//            ChiefDoctor chiefDoctor1 = new ChiefDoctor();
-//            ChiefDoctor chiefDoctor2 = new ChiefDoctor();
-//           chiefDoctorRepository.saveAll(List.of(chiefDoctor1, chiefDoctor2));
-//        };
-//    }
-
-    //Doctor name maybe should be hard coded in, instead be found from the doctor class
-//    @Bean
-//    CommandLineRunner ConsultationCommandLineRunner(
-//            ConsultationRepository consultationRepository){
-//        return args -> {
-//            Consultation consultation1 = new Consultation(1,"Martinez",LocalDate.of(2023, 2, 16),
-//                                         true,new ArrayList<String>(),"details",new Doctor(),new Patient());
-//            Consultation consultation2 = new Consultation(1,"John",LocalDate.of(2023, 1, 11),
-//                    true,new ArrayList<String>(),"extra details",new Doctor(),new Patient());
-//
-//            consultationRepository.saveAll(List.of(consultation1,consultation2));
-//        };
-//    }
 }
