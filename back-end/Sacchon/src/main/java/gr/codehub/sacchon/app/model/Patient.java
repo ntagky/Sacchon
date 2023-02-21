@@ -23,7 +23,6 @@ public class Patient extends Person {
     private LocalDate dateOfBirth;
     @Enumerated(EnumType.STRING)
     private BloodType bloodType;
-
     @Enumerated(EnumType.STRING)
     private DiabetesType diabetesType;
     private int height;

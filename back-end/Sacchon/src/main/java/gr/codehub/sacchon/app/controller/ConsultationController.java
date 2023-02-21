@@ -1,6 +1,8 @@
 package gr.codehub.sacchon.app.controller;
 
+import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
 import gr.codehub.sacchon.app.dto.ConsultationDto;
+import gr.codehub.sacchon.app.dto.ConsultationReceivedDto;
 import gr.codehub.sacchon.app.exception.ConsultationException;
 import gr.codehub.sacchon.app.service.ConsultationService;
 import lombok.AllArgsConstructor;
@@ -27,19 +29,19 @@ public class ConsultationController {
         return consultationService.readConsultation(id);
     }
 
-//    @GetMapping("/consultation{id}/info")
-//    public ConsultationBasicInfoDto getConsultationInfoByPatientId(@PathVariable(name="id") long id){
-//        return consultationService.findConsultationInfoByPatientId(id);
-//    }
+    @GetMapping("/consultation/{id}/info")
+    public List<ConsultationBasicInfoDto> getConsultationInfoByPatientId(@PathVariable(name="id") long id){
+        return consultationService.findConsultationInfoByPatientId(id);
+    }
 
     @PostMapping("/consultation")
-    public ConsultationDto createConsultationDto(@RequestBody ConsultationDto consultation){
+    public ConsultationDto createConsultationDto(@RequestBody ConsultationReceivedDto consultation){
         log.info("The end point consultation has been used");
         return consultationService.createConsultation(consultation);
     }
 
     @PutMapping("/consultation/{id}")
-    public boolean updateConsultationDto(@RequestBody ConsultationDto consultation,
+    public boolean updateConsultationDto(@RequestBody ConsultationReceivedDto consultation,
                                    @PathVariable(name="id")  int id){
         log.info("The end point consultation with id has been used");
         return consultationService.updateConsultation(consultation, id);

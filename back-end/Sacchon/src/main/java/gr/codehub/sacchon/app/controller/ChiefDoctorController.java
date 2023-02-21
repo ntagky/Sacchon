@@ -5,8 +5,10 @@ import gr.codehub.sacchon.app.exception.ChiefDoctorException;
 import gr.codehub.sacchon.app.service.ChiefDoctorService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -41,6 +43,15 @@ public class ChiefDoctorController {
     }
 
     @DeleteMapping("/chiefdoctor/{id}")
+    public boolean deleteChiefDoctorDto(
+            @PathVariable(name="id")  long id,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="dateBefore") LocalDate dateBefore
+    ){
+        log.info("The end point @chiefDoctor seeking patients waiting consultation has been used.");
+        return chiefDoctorService.deleteChiefDoctor(id);
+    }
+
+    @DeleteMapping("/chiefdoctor/{id}/consultation/query")
     public boolean deleteChiefDoctorDto(@PathVariable(name="id")  long id){
         log.info("The end point chiefdoctor has been used");
         return chiefDoctorService.deleteChiefDoctor(id);

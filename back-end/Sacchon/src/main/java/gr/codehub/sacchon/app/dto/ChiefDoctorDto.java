@@ -1,7 +1,7 @@
 package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.ChiefDoctor;
-import gr.codehub.sacchon.app.model.Doctor;
+import gr.codehub.sacchon.app.model.Person;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class ChiefDoctorDto extends DoctorDto{
+public class ChiefDoctorDto extends Person {
 
     public ChiefDoctorDto(ChiefDoctor chiefDoctor){
 

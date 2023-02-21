@@ -12,15 +12,14 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 @SuperBuilder
 @Table(schema = SacchonApplication.SCHEMA)
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String firstName;
     private String lastName;
     private String password;

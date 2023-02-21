@@ -1,8 +1,6 @@
 package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.DoctorDto;
-import gr.codehub.sacchon.app.dto.DoctorNameAndEmailDto;
-import gr.codehub.sacchon.app.exception.DoctorException;
 import gr.codehub.sacchon.app.service.DoctorServices;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +16,9 @@ public class DoctorController {
     private DoctorServices doctorServices;
 
     @GetMapping("/doctor")
-    public List<DoctorDto> getDoctorDto(){
+    public List<DoctorDto> getDoctorsDto(){
         log.info("The end point doctor has been used");
         return doctorServices.readDoctor();
-    }
-
-    @GetMapping("/doctor/{id}")
-    public DoctorDto getDoctorDto(@PathVariable(name="id")  long id) throws DoctorException {
-        log.info("The end point doctor with id has been used");
-        return doctorServices.readDoctor(id);
     }
 
     @GetMapping("doctor/email/{match}")
@@ -35,10 +27,10 @@ public class DoctorController {
         return doctorServices.readDoctorByEmailNativeService(match);
     }
 
-    @GetMapping("/doctor/{id}/info")
-    public DoctorNameAndEmailDto getDoctorNameAndEmailById(@PathVariable(name="id") long id) {
-        log.info("The end point doctor/id/info has been used");
-        return doctorServices.findDoctorNameAndEmailByPatientId(id);
+    @GetMapping("/doctor/{id}")
+    public DoctorDto getDoctorById(@PathVariable(name="id") long id) {
+        log.info("The end point doctor/id/ has been used");
+        return doctorServices.findDoctorById(id);
     }
 
     @PostMapping("/doctor")
@@ -47,15 +39,15 @@ public class DoctorController {
         return doctorServices.createDoctor(doctor);
     }
 
-    @PutMapping("/doctor/{id}")
+    @PutMapping("/doctor/update/{id}")
     public boolean updateDoctorDto(@RequestBody DoctorDto doctor,
-                                     @PathVariable(name="id")  int id){
+                                     @PathVariable(name="id") int id){
         log.info("The end point doctor with id has been used");
         return doctorServices.updateDoctor(doctor, id);
     }
 
-    @DeleteMapping("/doctor/{id}")
-    public boolean deleteDoctorDto(@PathVariable(name="id")  long id){
+    @DeleteMapping("/doctor/delete/{id}")
+    public boolean deleteDoctorDto(@PathVariable(name="id") long id){
         log.info("The end point doctor with id has been used");
         return doctorServices.deleteDoctor(id);
     }

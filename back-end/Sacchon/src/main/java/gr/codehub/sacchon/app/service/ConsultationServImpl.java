@@ -2,8 +2,10 @@ package gr.codehub.sacchon.app.service;
 
 import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
 import gr.codehub.sacchon.app.dto.ConsultationDto;
+import gr.codehub.sacchon.app.dto.ConsultationReceivedDto;
 import gr.codehub.sacchon.app.exception.ConsultationException;
 import gr.codehub.sacchon.app.model.Consultation;
+import gr.codehub.sacchon.app.repository.CarbsRepository;
 import gr.codehub.sacchon.app.repository.ConsultationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,9 +18,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ConsultationServImpl implements ConsultationService {
     private final ConsultationRepository consultationRepository;
+    private final CarbsRepository carbsRepository;
 
     @Override
-    public ConsultationDto createConsultation(ConsultationDto consultationDto){
+    public ConsultationDto createConsultation(ConsultationReceivedDto consultationDto){
         //validation
         Consultation consultation = consultationDto.asConsultation();
         return new ConsultationDto(consultationRepository.save(consultation));
@@ -65,7 +68,7 @@ public class ConsultationServImpl implements ConsultationService {
     }
 
     @Override
-    public boolean updateConsultation(ConsultationDto consultationDto, long id){
+    public boolean updateConsultation(ConsultationReceivedDto consultationDto, long id){
         boolean action;
         try {
             Consultation dbConsultation = readConsultationDb(id);
@@ -99,4 +102,17 @@ public class ConsultationServImpl implements ConsultationService {
         }
         return action;
     }
+
+//    @Override
+//    public List<Long> findPatientsWaitingForConsultation(LocalDate dateBefore) {
+//        List<Long> patientIds = consultationRepository.findPatientsWaitingForConsultation(dateBefore);
+//
+//        patientIds.forEach(patient -> {
+//            // consultationRepository.findConsultationByPatientId()
+//            carbsRepository.findCarbsByPatientId(patient);
+//        });
+//
+//
+//        return null;
+//    }
 }

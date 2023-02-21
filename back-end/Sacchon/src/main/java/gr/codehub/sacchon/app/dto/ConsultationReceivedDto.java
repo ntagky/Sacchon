@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConsultationDto {
+public class ConsultationReceivedDto {
     private Long id;
     private String doctorFirstName;
     private String doctorLastName;
@@ -22,8 +22,10 @@ public class ConsultationDto {
     private boolean seenConsultation;
     private List<String> medications;
     private String details;
+    private DoctorDto doctorDto;
+    private PatientDto patientDto;
 
-    public ConsultationDto(Consultation consultation){
+    public ConsultationReceivedDto(Consultation consultation){
         if(consultation!=null){
             id = consultation.getId();
             doctorFirstName = consultation.getDoctor().getFirstName();
@@ -33,6 +35,8 @@ public class ConsultationDto {
             seenConsultation = consultation.isSeenConsultation();
             medications = consultation.getMedications();
             details = consultation.getDetails();
+            doctorDto = new DoctorDto(consultation.getDoctor());
+            patientDto = new PatientDto(consultation.getPatient());
         }
     }
 
@@ -43,6 +47,8 @@ public class ConsultationDto {
         consultation.setSeenConsultation(seenConsultation);
         consultation.setMedications(medications);
         consultation.setDetails(details);
+        consultation.setPatient(patientDto.asPatient());
+        consultation.setDoctor(doctorDto.asDoctor());
         return consultation;
     }
 }

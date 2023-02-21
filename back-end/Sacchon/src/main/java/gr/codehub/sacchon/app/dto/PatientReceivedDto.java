@@ -9,11 +9,12 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
 @NoArgsConstructor
-public class PatientDto extends PersonDto {
+public class PatientReceivedDto extends PersonDto {
     private Long id;
     private String medicalRecordNumber;
     private String address;
@@ -27,13 +28,13 @@ public class PatientDto extends PersonDto {
     private List<String> medications;
     private List<String> conditions;
 
-    public PatientDto(Patient patient){
+    private List<ConsultationDto> consultationsDto;
+    private List<CarbsDto> carbsDto;
+    private List<GlucoseDto> glucoseDto;
+
+    public PatientReceivedDto(Patient patient){
         if (patient!= null){
             id = patient.getId();
-            super.setFirstName(patient.getFirstName());
-            super.setLastName(patient.getLastName());
-            super.setEmail(patient.getEmail());
-            super.setPassword(patient.getPassword());
             medicalRecordNumber = patient.getMedicalRecordNumber();
             address = patient.getAddress();
             gender = patient.getGender();
@@ -45,6 +46,19 @@ public class PatientDto extends PersonDto {
             allergies = patient.getAllergies();
             medications = patient.getMedications();
             conditions = patient.getConditions();
+
+            consultationsDto = patient.getConsultations()
+                    .stream()
+                    .map(ConsultationDto::new)
+                    .collect(Collectors.toList());
+            glucoseDto = patient.getGlucose()
+                    .stream()
+                    .map(GlucoseDto::new)
+                    .collect(Collectors.toList());
+            carbsDto = patient.getCarbs()
+                    .stream()
+                    .map(CarbsDto::new)
+                    .collect(Collectors.toList());
         }
     }
     public Patient asPatient() {
@@ -65,6 +79,21 @@ public class PatientDto extends PersonDto {
         patient.setAllergies(allergies);
         patient.setMedications(medications);
         patient.setConditions(conditions);
+        patient.setConsultations(
+                consultationsDto.stream()
+                        .map(ConsultationDto::asConsultation)
+                        .collect(Collectors.toList())
+        );
+        patient.setCarbs(
+                carbsDto.stream()
+                        .map(CarbsDto::asCarbs)
+                        .collect(Collectors.toList())
+        );
+        patient.setGlucose(
+                glucoseDto.stream()
+                        .map(GlucoseDto::asGlucose)
+                        .collect(Collectors.toList())
+        );
         return patient;
     }
 }

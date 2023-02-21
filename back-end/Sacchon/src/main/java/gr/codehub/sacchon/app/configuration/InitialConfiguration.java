@@ -271,7 +271,7 @@ public class InitialConfiguration {
             int chiefDoctorPopulation = 1;
             int[] measurementPersonPopulation = new int[patientPopulation];
             for (int i = 0; i < patientPopulation; i++)
-                measurementPersonPopulation[i] = random.nextInt(15, 65);
+                measurementPersonPopulation[i] = random.nextInt(15, 90);
 
             Collections.shuffle(namesMaleLinkedList);
             Collections.shuffle(namesFemaleLinkedList);

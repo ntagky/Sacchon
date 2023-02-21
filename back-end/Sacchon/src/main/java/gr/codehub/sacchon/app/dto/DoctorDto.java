@@ -5,46 +5,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Setter
 @Getter
 @NoArgsConstructor
 public class DoctorDto extends PersonDto{
-    private Long id;
-    private List<PatientDto> patientsDto;
-    private List<ConsultationDto> consultationsDto;
 
     public DoctorDto(Doctor doctor){
         if(doctor!=null){
-            id = doctor.getId();
-            patientsDto = doctor
-                    .getPatients()
-                    .stream()
-                    .map(PatientDto::new)
-                    .collect(Collectors.toList());
-            consultationsDto = doctor
-                    .getConsultations()
-                    .stream()
-                    .map(ConsultationDto::new)
-                    .collect(Collectors.toList());
+            super.setId(doctor.getId());
+            super.setFirstName(doctor.getFirstName());
+            super.setLastName(doctor.getLastName());
+            super.setEmail(doctor.getEmail());
         }
     }
 
     public Doctor asDoctor(){
         Doctor doctor = new Doctor();
-        doctor.setId(id);
-        doctor.setConsultations(
-                consultationsDto.stream()
-                        .map(ConsultationDto::asConsultation)
-                        .collect(Collectors.toList())
-        );
-        doctor.setPatients(
-                patientsDto.stream()
-                        .map(PatientDto::asPatient)
-                        .collect(Collectors.toList())
-        );
+        doctor.setId(super.getId());
+        doctor.setFirstName(super.getFirstName());
+        doctor.setLastName(super.getLastName());
+        doctor.setEmail(super.getEmail());
         return doctor;
     }
 }
