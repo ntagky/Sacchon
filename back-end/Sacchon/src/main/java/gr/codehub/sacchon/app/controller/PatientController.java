@@ -34,7 +34,6 @@ public class PatientController {
         return ResponseEntity.ok(patientDto);
     }
 
-
     @GetMapping("/patient/{id}")
     //http://localhost:9000/api/{{id}}
     public List<PatientDto> findPatientById(@PathVariable("id") long id){
@@ -45,7 +44,6 @@ public class PatientController {
         patientService.deletePatientById(patientId);
         return ResponseEntity.noContent().build();
     }
-
 
     @GetMapping("/patient/{id}/carbs")
     public List<CarbsFromPersonDto> getCarbsDtoFromPatientById(@PathVariable(name="id") long id) {
@@ -81,13 +79,15 @@ public class PatientController {
         return glucoseService.readGlucoseByPatientId(id);
     }
 
+    // ConsultationDto contains every consultation info
     @GetMapping("/patient/{id}/consultation")
     public List<ConsultationDto> getConsultationOfPatientById(@PathVariable(name="id") long id) {
         log.info("The end point patient/{id}/consultation has been used");
         return consultationService.readConsultationByPatientId(id);
     }
 
-    @GetMapping("/patient/{id}/consultationinfo")
+    // ConsultationBasicInfoDto contains basic consultation info (medication, dosage etc)
+    @GetMapping("/patient/{id}/consultationbasicinfo")
     public List<ConsultationBasicInfoDto> getConsultationInfoByPatientId(@PathVariable(name="id") int id){
         return consultationService.findConsultationInfoByPatientId(id);
     }

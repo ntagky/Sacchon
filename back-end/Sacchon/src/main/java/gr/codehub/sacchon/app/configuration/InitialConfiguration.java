@@ -26,10 +26,12 @@ public class InitialConfiguration {
     private final List<String> allergiesList = new ArrayList<>(List.of("Grass Pollen", "Dust", "Peanut", "Milk", "Egg", "Animal Fur", "Bee", "Wasp", "Fish", "Crustaceans", "Wheat", "Soy"));
     private final List<String> medicationsList = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
     private final List<String> conditionsList = new ArrayList<>(List.of("Heart Disease", "Cancer", "Asthma", "Emphysema", "Alzheimer Disease", "Substance Abuse", "Pneumonia", "Kidney Disease", "Mental Health Conditions"));
+    private final List<String> detailsList = new ArrayList<>(List.of("Take 2 pills per day", "Don't mix with alcohol!"));
+
 
     private void createRandomListSequence(List<String> referenceList, List<String> arrayList, double probability, Random random) {
         if (Math.random() < probability) {
-            int idx = random.nextInt(0, allergiesList.size() - 1);
+            int idx = random.nextInt(0, referenceList.size() - 1);
             while (idx < referenceList.size()) {
                 arrayList.add(referenceList.get(idx));
                 idx = random.nextInt(idx, referenceList.size() + 5);
@@ -228,7 +230,19 @@ public class InitialConfiguration {
         ArrayList<Consultation> consultationArrayList = new ArrayList<>();
         Consultation consultation;
 
+        List<String> medications;
+        medications = new ArrayList<>();
+        Random randomMed = new Random(42);
+        createRandomListSequence(medicationsList, medications, 2, randomMed);
+
+        Random randomDet = new Random();
+        Random randomSeenCons = new Random();
+
         for (int i = 0; i < population; i++) {
+
+            int det = randomDet.nextInt(detailsList.size());
+            boolean seen = randomSeenCons.nextBoolean();
+
             consultation = new Consultation();
 
             consultation.setId(0L);
@@ -236,13 +250,9 @@ public class InitialConfiguration {
             consultation.setDoctorLastName(assignedDoctor.getLastName());
             consultation.setDoctorEmail(assignedDoctor.getEmail());
             consultation.setDateCreated(localDates[i]);
-            consultation.setSeenConsultation(true);
-            consultation.setMedications(null);
-            consultation.setDetails(
-                    "Subscription from dc. " + assignedDoctor.getLastName() +
-                            " for patient " + assignedPerson.getLastName() +
-                            " on " + localDates[i]
-            );
+            consultation.setSeenConsultation(seen);
+            consultation.setMedications(medications);
+            consultation.setDetails(detailsList.get(det));
             consultation.setPatient(assignedPerson);
             consultation.setDoctor(assignedDoctor);
 
