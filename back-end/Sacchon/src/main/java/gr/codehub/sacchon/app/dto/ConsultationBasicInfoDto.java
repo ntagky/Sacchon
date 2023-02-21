@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConsultationBasicInfoDto {
-    private DoctorDto doctorDto;
     private String doctorFirstName;
     private String doctorLastName;
     private String doctorEmail;
@@ -24,7 +23,6 @@ public class ConsultationBasicInfoDto {
 
     public ConsultationBasicInfoDto(Consultation consultation){
         if(consultation!=null){
-            doctorDto = new DoctorDto(consultation.getDoctor());
             doctorFirstName = consultation.getDoctor().getFirstName();
             doctorLastName = consultation.getDoctor().getLastName();
             doctorEmail = consultation.getDoctor().getEmail();
@@ -37,7 +35,6 @@ public class ConsultationBasicInfoDto {
 
     public Consultation asConsultation(){
         Consultation consultation = new Consultation();
-        consultation.setDoctor(doctorDto.asDoctor());
         consultation.setDoctorFirstName(getDoctorFirstName());
         consultation.setDoctorFirstName(getDoctorLastName());
         consultation.setDateCreated(dateCreated);

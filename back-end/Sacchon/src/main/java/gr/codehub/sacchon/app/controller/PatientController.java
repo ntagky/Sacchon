@@ -1,9 +1,6 @@
 package gr.codehub.sacchon.app.controller;
 
-import gr.codehub.sacchon.app.dto.CarbsFromPersonDto;
-import gr.codehub.sacchon.app.dto.ConsultationDto;
-import gr.codehub.sacchon.app.dto.GlucoseFromPersonDto;
-import gr.codehub.sacchon.app.dto.PatientDto;
+import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.PatientException;
 import gr.codehub.sacchon.app.model.Patient;
 import gr.codehub.sacchon.app.service.CarbsService;
@@ -88,6 +85,11 @@ public class PatientController {
     public List<ConsultationDto> getConsultationOfPatientById(@PathVariable(name="id") long id) {
         log.info("The end point patient/{id}/consultation has been used");
         return consultationService.readConsultationByPatientId(id);
+    }
+
+    @GetMapping("/patient/{id}/consultationinfo")
+    public List<ConsultationBasicInfoDto> getConsultationInfoByPatientId(@PathVariable(name="id") int id){
+        return consultationService.findConsultationInfoByPatientId(id);
     }
 
     @PostMapping("/patient")

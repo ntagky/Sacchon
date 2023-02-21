@@ -49,13 +49,11 @@ public class ConsultationServImpl implements ConsultationService {
 
     @Override
     public List<ConsultationBasicInfoDto> findConsultationInfoByPatientId(long id) {
-        List<ConsultationBasicInfoDto> test = consultationRepository.
-                findConsultationInfoByPatientId(id)
+        return consultationRepository
+                .findConsultationInfoByPatientId(id)
                 .stream()
                 .map(ConsultationBasicInfoDto::new)
                 .collect(Collectors.toList());
-
-        return test;
     }
 
     // private method created for internal use

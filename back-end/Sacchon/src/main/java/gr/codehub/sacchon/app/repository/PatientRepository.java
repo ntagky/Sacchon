@@ -2,6 +2,7 @@ package gr.codehub.sacchon.app.repository;
 
 import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.model.BloodType;
+import gr.codehub.sacchon.app.model.DiabetesType;
 import gr.codehub.sacchon.app.model.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -29,7 +30,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
             "VALUES (:firstName, :lastName, :password, :email, :medicalRecordNumber, :address, :gender, :dateOfBirth, :bloodType, :diabetesType, :height, :weight)", nativeQuery = true)
     void registerPatient(@Param("firstName") String firstName, @Param("lastName") String lastName, @Param("password") String password, @Param("email") String email,
                          @Param("medicalRecordNumber") String medicalRecordNumber, @Param("address") String address, @Param("gender") String gender, @Param("dateOfBirth") LocalDate dateOfBirth,
-                         @Param("bloodType") BloodType bloodType, @Param("diabetesType") String diabetesType, @Param("height") int height, @Param("weight") double weight);
+                         @Param("bloodType") BloodType bloodType, @Param("diabetesType") DiabetesType diabetesType, @Param("height") int height, @Param("weight") double weight);
 
 
 }
