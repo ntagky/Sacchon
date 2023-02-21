@@ -24,7 +24,8 @@ public class Patient extends Person {
     @Enumerated(EnumType.STRING)
     private BloodType bloodType;
 
-    private String diabetesType;
+    @Enumerated(EnumType.STRING)
+    private DiabetesType diabetesType;
     private int height;
     private double weight;
 

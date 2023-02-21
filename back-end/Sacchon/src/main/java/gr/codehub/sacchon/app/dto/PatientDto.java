@@ -1,6 +1,7 @@
 package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.BloodType;
+import gr.codehub.sacchon.app.model.DiabetesType;
 import gr.codehub.sacchon.app.model.Patient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class PatientDto extends PersonDto {
     private String gender;
     private LocalDate dateOfBirth;
     private String bloodType;
-    private String diabetesType;
+    private DiabetesType diabetesType;
     private int height;
     private double weight;
     private List<String> allergies;
@@ -74,7 +75,7 @@ public class PatientDto extends PersonDto {
         patient.setGender(gender);
         patient.setDateOfBirth(dateOfBirth);
         patient.setBloodType(BloodType.AB_NEGATIVE);
-        patient.setDiabetesType("Type 1");
+        patient.setDiabetesType(DiabetesType.TYPE_1);
         patient.setHeight(height);
         patient.setWeight(weight);
         patient.setAllergies(allergies);

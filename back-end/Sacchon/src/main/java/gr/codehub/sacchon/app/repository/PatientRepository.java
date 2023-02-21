@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
@@ -18,7 +19,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     Long countPatients();
 
     @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id = :patientId", nativeQuery = true)
-    Patient DisplayAccountData(@Param("patientId") long patientId);
+    List<Patient> DisplayAccountData(@Param("patientId") long patientId);
 
     @Modifying
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id=:patientId", nativeQuery = true)

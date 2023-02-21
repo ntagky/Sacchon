@@ -44,12 +44,10 @@ public class PatientController {
     }
 
 
-    @GetMapping("/patient")
-    //http://localhost:9000/api/patient
-    public List<PatientDto> getPatientDto(){
-        log.info("The end point PatientDto has been used");
-        return patientService.readPatient();
-    }
+    @GetMapping("/patient/{id}")
+    //http://localhost:9000/api/{{id}}
+    public List<PatientDto> findPatientById(@PathVariable("id") int id){
+        return patientService.readPatientById(id);}
 
     @DeleteMapping("/{patientId}")   //<?> for generic response, could also be not found
     public ResponseEntity<?> deletePatientById(@PathVariable("patientId") long patientId) {
@@ -57,12 +55,6 @@ public class PatientController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/patient/{id}")
-    //http://localhost:9000/api/patient/{{id}}
-    public PatientDto getPatientDtoById(@PathVariable(name="id") long id) throws PatientException {
-        log.info("The end point PatientDto has been used");
-        return patientService.readPatientById(id);
-    }
 
     @GetMapping("/patient/{id}/carbs")
     public List<CarbsFromPersonDto> getCarbsDtoFromPatientById(@PathVariable(name="id") long id) {

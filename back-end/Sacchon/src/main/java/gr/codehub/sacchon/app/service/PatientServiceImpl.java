@@ -29,10 +29,6 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.deletePatientById(patientId);
     }
 
-    @Override
-    public Patient getPatientById(long patientId) {
-        return patientRepository.DisplayAccountData(patientId);
-    }
 
     @Override
     public PatientDto createPatient(PatientDto patientDto) {
@@ -50,9 +46,8 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientDto readPatientById(long id) throws PatientException {
-        return new PatientDto( readPatientDb(id));
-    }
+    public List<PatientDto> readPatientById(int id)  {
+        return patientRepository.DisplayAccountData(id).stream().map(PatientDto::new)            .collect(Collectors.toList());}
 
     private Patient readPatientDb(long id) throws PatientException {
         Optional<Patient> patientOptional = patientRepository.findById(id);
