@@ -19,7 +19,8 @@ import java.util.*;
 @Configuration
 public class InitialConfiguration {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private final int SEED = 42;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private final LinkedList<String> namesMaleLinkedList = new LinkedList<>(List.of("Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore"));
     private final LinkedList<String> namesFemaleLinkedList = new LinkedList<>(List.of("Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper"));
     private final List<String> lastNamesLinkedList = new ArrayList<>(List.of("Smith", "Johnson", "William", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", " Wilson", "Anderson", "Thomas", "Taylor", "Jackson", "Martin"));
@@ -27,7 +28,6 @@ public class InitialConfiguration {
     private final List<String> medicationsList = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
     private final List<String> conditionsList = new ArrayList<>(List.of("Heart Disease", "Cancer", "Asthma", "Emphysema", "Alzheimer Disease", "Substance Abuse", "Pneumonia", "Kidney Disease", "Mental Health Conditions"));
     private final List<String> detailsList = new ArrayList<>(List.of("Take 2 pills per day", "Don't mix with alcohol!"));
-
 
     private void createRandomListSequence(List<String> referenceList, List<String> arrayList, double probability, Random random) {
         if (Math.random() < probability) {
@@ -53,7 +53,7 @@ public class InitialConfiguration {
     }
 
     private void createChiefDoctors(ChiefDoctorRepository chiefDoctorRepository, int population) {
-        Random random = new Random(42);
+        Random random = new Random(SEED);
 
         ArrayList<ChiefDoctor> chiefDoctorArrayList = new ArrayList<>();
         ChiefDoctor chiefDoctor;
@@ -80,7 +80,7 @@ public class InitialConfiguration {
     }
 
     private List<Doctor> createDoctors(DoctorRepository doctorRepository, int population) {
-        Random random = new Random(42);
+        Random random = new Random(SEED);
 
         ArrayList<Doctor> doctorArrayList = new ArrayList<>();
         Doctor doctor;
@@ -110,7 +110,7 @@ public class InitialConfiguration {
     }
 
     private List<Patient> createPatients(PatientRepository patientRepository, int population) {
-        Random random = new Random(42);
+        Random random = new Random(SEED);
 
         ArrayList<Patient> patientArrayList = new ArrayList<>();
         Patient patient;
@@ -162,7 +162,7 @@ public class InitialConfiguration {
     }
 
     private void createCarbs(CarbsRepository carbsRepository, int population, Patient assignedPerson) {
-        Random random = new Random(42);
+        Random random = new Random(SEED);
 
         ArrayList<Carbs> carbsArrayList = new ArrayList<>();
         Carbs carbs;
@@ -200,7 +200,7 @@ public class InitialConfiguration {
     }
 
     private void createGlucoseRecords(GlucoseRecordRepository glucoseRecordRepository, int population, Glucose assignedGlucose) {
-        Random random = new Random(42);
+        Random random = new Random(SEED);
 
         ArrayList<GlucoseRecord> glucoseRecordArrayList = new ArrayList<>();
         GlucoseRecord glucoseRecord;
@@ -227,22 +227,15 @@ public class InitialConfiguration {
     }
 
     private void createConsultation(ConsultationRepository consultationRepository, int population, Patient assignedPerson, Doctor assignedDoctor, LocalDate[] localDates) {
+        Random random = new Random(SEED);
+
         ArrayList<Consultation> consultationArrayList = new ArrayList<>();
         Consultation consultation;
 
-        List<String> medications;
-        medications = new ArrayList<>();
-        Random randomMed = new Random(42);
-        createRandomListSequence(medicationsList, medications, 2, randomMed);
-
-        Random randomDet = new Random();
-        Random randomSeenCons = new Random();
+        List<String> medications = new ArrayList<>();
+        createRandomListSequence(medicationsList, medications, 2, random);
 
         for (int i = 0; i < population; i++) {
-
-            int det = randomDet.nextInt(detailsList.size());
-            boolean seen = randomSeenCons.nextBoolean();
-
             consultation = new Consultation();
 
             consultation.setId(0L);
@@ -250,9 +243,9 @@ public class InitialConfiguration {
             consultation.setDoctorLastName(assignedDoctor.getLastName());
             consultation.setDoctorEmail(assignedDoctor.getEmail());
             consultation.setDateCreated(localDates[i]);
-            consultation.setSeenConsultation(seen);
+            consultation.setSeenConsultation(random.nextBoolean());
             consultation.setMedications(medications);
-            consultation.setDetails(detailsList.get(det));
+            consultation.setDetails(detailsList.get(random.nextInt(detailsList.size())));
             consultation.setPatient(assignedPerson);
             consultation.setDoctor(assignedDoctor);
 
@@ -275,13 +268,13 @@ public class InitialConfiguration {
 
             System.out.println("Saving dummy objects..");
 
-            Random random = new Random();
-            int patientPopulation = 4;
-            int doctorPopulation = 2;
+            Random random = new Random(SEED);
+            int patientPopulation = 13;
+            int doctorPopulation = 4;
             int chiefDoctorPopulation = 1;
             int[] measurementPersonPopulation = new int[patientPopulation];
             for (int i = 0; i < patientPopulation; i++)
-                measurementPersonPopulation[i] = random.nextInt(15, 90);
+                measurementPersonPopulation[i] = random.nextInt(15, 125);
 
             Collections.shuffle(namesMaleLinkedList);
             Collections.shuffle(namesFemaleLinkedList);
