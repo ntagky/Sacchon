@@ -14,7 +14,7 @@ public interface CarbsService {
     CarbsDto readCarbsById(long id) throws CarbsException;
     List<CarbsFromPersonDto> readCarbsByPatientId(long id);
     Integer readAverageCarbsIntakeByPatientIdOnSpecificDates(long id, LocalDate startingDate, LocalDate endingDate);
-    boolean updateCarbs(CarbsDto carbsDto, long id) throws CarbsException;
+    boolean updateCarbsById(long id, int measurement);
     boolean deleteCarbsById(long id) throws CarbsException;
-
+    long createCarbsByPatientId(long patientId, CarbsFromPersonDto carbsDto);
 }

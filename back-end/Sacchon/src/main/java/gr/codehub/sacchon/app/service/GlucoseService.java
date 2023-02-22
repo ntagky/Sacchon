@@ -1,8 +1,8 @@
 package gr.codehub.sacchon.app.service;
 
-import gr.codehub.sacchon.app.dto.ConsultationReceivedDto;
 import gr.codehub.sacchon.app.dto.GlucoseDto;
 import gr.codehub.sacchon.app.dto.GlucoseFromPersonDto;
+import gr.codehub.sacchon.app.dto.GlucoseInitiatorDto;
 import gr.codehub.sacchon.app.exception.GlucoseException;
 
 import java.math.BigDecimal;
@@ -19,5 +19,6 @@ public interface GlucoseService {
     GlucoseDto readGlucoseById(long id) throws GlucoseException;
     boolean updateGlucose(GlucoseDto glucoseDto, long id) throws GlucoseException;
     boolean deleteGlucoseById(long id) throws GlucoseException;
+    long createGlucoseByPatientId(long id, GlucoseInitiatorDto glucoseInitiatorDto);
 
 }

@@ -2,10 +2,12 @@ package gr.codehub.sacchon.app.service;
 
 import gr.codehub.sacchon.app.dto.GlucoseDto;
 import gr.codehub.sacchon.app.dto.GlucoseFromPersonDto;
+import gr.codehub.sacchon.app.dto.GlucoseInitiatorDto;
 import gr.codehub.sacchon.app.exception.GlucoseException;
 import gr.codehub.sacchon.app.model.Glucose;
 import gr.codehub.sacchon.app.repository.GlucoseRecordRepository;
 import gr.codehub.sacchon.app.repository.GlucoseRepository;
+import gr.codehub.sacchon.app.repository.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class GlucoseServImpl implements GlucoseService {
+    private final PatientRepository patientRepository;
     private final GlucoseRepository glucoseRepository;
     private final GlucoseRecordRepository glucoseRecordRepository;
 
@@ -55,7 +58,7 @@ public class GlucoseServImpl implements GlucoseService {
         glucoseIds.forEach(glId ->
             averageDailyGlucose.add(
                     glucoseRecordRepository
-                        .findGlucoseRecordsByGlucoseId(glId)
+                        .findAverageGlucoseRecordsByGlucoseId(glId)
             )
         );
         return averageDailyGlucose;
@@ -85,5 +88,15 @@ public class GlucoseServImpl implements GlucoseService {
     public boolean deleteGlucoseById(long id) throws GlucoseException {
         glucoseRepository.delete(readGlucoseDb(id));
         return true;
+    }
+
+    @Override
+    public long createGlucoseByPatientId(long id, GlucoseInitiatorDto glucoseInitiatorDto) {
+        Glucose glucose = glucoseRepository.save(
+                glucoseInitiatorDto.asGlucose(patientRepository.findById(id).get())
+        );
+
+        glucoseRecordRepository.save(glucoseInitiatorDto.asGlucoseRecord(glucose));
+        return glucose.getId();
     }
 }

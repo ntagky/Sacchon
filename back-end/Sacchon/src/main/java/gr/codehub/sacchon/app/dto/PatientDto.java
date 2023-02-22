@@ -1,7 +1,6 @@
 package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class PatientDto extends PersonDto {
-//    private Long id;
     private String medicalRecordNumber;
     private String address;
     private String gender;
@@ -27,12 +25,12 @@ public class PatientDto extends PersonDto {
     private List<String> conditions;
 
     public PatientDto(Patient patient){
-        if (patient!= null){
+        if (patient != null){
             super.setId(patient.getId());
             super.setFirstName(patient.getFirstName());
             super.setLastName(patient.getLastName());
             super.setEmail(patient.getEmail());
-            super.setPassword(patient.getPassword());
+            super.setSignedDate(patient.getSignedDate());
             medicalRecordNumber = patient.getMedicalRecordNumber();
             address = patient.getAddress();
             gender = patient.getGender();
@@ -46,16 +44,13 @@ public class PatientDto extends PersonDto {
             conditions = patient.getConditions();
         }
     }
-
-
     public Patient asPatient() {
-
         Patient patient = new Patient();
         patient.setId(super.getId());
         patient.setFirstName(super.getFirstName());
         patient.setLastName(super.getLastName());
         patient.setEmail(super.getEmail());
-        patient.setPassword(super.getPassword());
+        patient.setSignedDate(super.getSignedDate());
         patient.setMedicalRecordNumber(medicalRecordNumber);
         patient.setAddress(address);
         patient.setGender(gender);

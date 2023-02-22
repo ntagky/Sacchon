@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
+import java.time.LocalDate;
+
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 public class PersonDto {
@@ -17,6 +19,7 @@ public class PersonDto {
     private String lastName;
     private String password;
     private String email;
+    private LocalDate signedDate;
 
     public PersonDto(Person person) {
         if (person == null)
@@ -26,10 +29,11 @@ public class PersonDto {
         lastName = person.getLastName();
         password = person.getPassword();
         email = person.getEmail();
+        signedDate = person.getSignedDate();
     }
 
     public Person asPerson() {
-        return new Person(id, firstName, lastName, password, email);
+        return new Person(id, firstName, lastName, password, email, signedDate);
     }
 
 }

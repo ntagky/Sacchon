@@ -2,6 +2,7 @@ package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.Carbs;
 import gr.codehub.sacchon.app.model.Measurement;
+import gr.codehub.sacchon.app.model.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,12 +27,12 @@ public class CarbsFromPersonDto implements Measurement<Integer> {
         measurement = carbs.getMeasurement();
     }
 
-    public Carbs asCarbs() {
+    public Carbs asCarbs(Patient patient) {
         return new Carbs(
                 id,
                 date,
                 measurement,
-                null
+                patient
         );
     }
 }

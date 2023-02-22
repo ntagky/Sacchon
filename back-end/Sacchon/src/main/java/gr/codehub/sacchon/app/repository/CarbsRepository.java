@@ -1,10 +1,11 @@
 package gr.codehub.sacchon.app.repository;
 
 import gr.codehub.sacchon.app.SacchonApplication;
-import gr.codehub.sacchon.app.dto.ConsultationsGivenByDoctor;
 import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.model.Carbs;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -40,6 +41,28 @@ public interface CarbsRepository extends JpaRepository<Carbs, Long> {
             @Param("patientId") long patientId,
             @Param("startingDate") LocalDate startingDate,
             @Param("endingDate") LocalDate endingDate
+    );
+
+    @Query(value = "SELECT COUNT(*) FROM " + SacchonApplication.SCHEMA + ".CARBS " +
+            "WHERE CARBS.PATIENT_ID = :patientId AND CARBS.DATE > :localDate",
+            nativeQuery = true)
+    Long findCountOfCarbsByPatientIdAfterDate(@Param("patientId") long patientId, LocalDate localDate);
+
+    @Query(value = "SELECT PATIENT_ID FROM " + SacchonApplication.SCHEMA + ".CARBS " +
+            "WHERE CARBS.DATE >= :startingDate AND CARBS.DATE <= :endingDate",
+            nativeQuery = true)
+    List<Long> findCarbsWithinRangeFromPatientId(
+            @Param("startingDate") LocalDate startingDate,
+            @Param("endingDate") LocalDate endingDate
+    );
+
+    @Transactional
+    @Modifying
+    @Query(value ="UPDATE " + SacchonApplication.SCHEMA + ".CARBS SET CARBS.MEASUREMENT = :measurement" +
+            " WHERE CARBS.ID = :carbsId", nativeQuery = true)
+    void updateCarbsById(
+            @Param("carbsId") long carbsId,
+            @Param("measurement") int measurement
     );
 
 }

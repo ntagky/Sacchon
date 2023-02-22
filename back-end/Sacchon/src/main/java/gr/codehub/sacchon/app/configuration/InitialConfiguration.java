@@ -72,6 +72,7 @@ public class InitialConfiguration {
             chiefDoctor.setLastName(lastName);
             chiefDoctor.setEmail("ch." + firstName.toLowerCase().charAt(0) + lastName.toLowerCase() + yearBorn + "@gmail.com");
             chiefDoctor.setPassword(RandomStringUtils.random(12, true, true));
+            chiefDoctor.setSignedDate(getDateBeforeToday(random.nextInt(150)));
 
             chiefDoctorArrayList.add(chiefDoctor);
         }
@@ -79,7 +80,7 @@ public class InitialConfiguration {
         chiefDoctorRepository.saveAll(chiefDoctorArrayList);
     }
 
-    private List<Doctor> createDoctors(DoctorRepository doctorRepository, int population) {
+    private List<Doctor> createDoctors(DoctorRepository doctorRepository, int population, int assignedBefore) {
         ArrayList<Doctor> doctorArrayList = new ArrayList<>();
         Doctor doctor;
         String firstName;
@@ -97,6 +98,7 @@ public class InitialConfiguration {
             doctor.setLastName(lastName);
             doctor.setEmail(firstName.toLowerCase().charAt(0) + lastName.toLowerCase() + yearBorn + "@gmail.com");
             doctor.setPassword(RandomStringUtils.random(12, true, true));
+            doctor.setSignedDate(getDateBeforeToday(random.nextInt(assignedBefore, assignedBefore + 30)));
 
             doctor.setPatients(null);
             doctor.setConsultations(null);
@@ -107,7 +109,7 @@ public class InitialConfiguration {
         return doctorRepository.saveAll(doctorArrayList);
     }
 
-    private List<Patient> createPatients(PatientRepository patientRepository, int population) {
+    private List<Patient> createPatients(PatientRepository patientRepository, int population, int[] assignedBefore) {
         ArrayList<Patient> patientArrayList = new ArrayList<>();
         Patient patient;
         String firstName;
@@ -126,10 +128,13 @@ public class InitialConfiguration {
             yearBorn = 2005 - random.nextInt(50);
             monthBorn = random.nextInt(12) + 1;
             dayBorn = random.nextInt(27) + 1;
+
             patient.setId(0L);
             patient.setFirstName(firstName);
             patient.setLastName(lastName);
             patient.setEmail(firstName.toLowerCase().charAt(0) + lastName.toLowerCase() + yearBorn + "@gmail.com");
+            patient.setSignedDate(getDateBeforeToday(assignedBefore[i]));
+
             patient.setMedicalRecordNumber(convertToTens(dayBorn) + convertToTens(monthBorn) + yearBorn + "" + RandomStringUtils.random(5, false, true));
             patient.setPassword(RandomStringUtils.random(12, true, true));
             patient.setAddress(random.nextInt(1000) + " Address St.");
@@ -263,25 +268,27 @@ public class InitialConfiguration {
 
             System.out.println("Saving dummy objects..");
 
-            int patientPopulation = 12;
-            int doctorPopulation = 4;
+            int patientPopulation = 5;
+            int doctorPopulation = 3;
             int chiefDoctorPopulation = 1;
             int[] measurementPersonPopulation = new int[patientPopulation];
+            int measurementBound = 125;
             for (int i = 0; i < patientPopulation; i++)
-                measurementPersonPopulation[i] = random.nextInt(15, 125);
+                measurementPersonPopulation[i] = random.nextInt(15, measurementBound);
 
             Collections.shuffle(namesMaleLinkedList);
             Collections.shuffle(namesFemaleLinkedList);
             Collections.shuffle(lastNamesLinkedList);
 
-            assert namesMaleLinkedList.size() == namesFemaleLinkedList.size() : "Provide same length of male and female names";
-            assert (patientPopulation + doctorPopulation + chiefDoctorPopulation) <= namesMaleLinkedList.size() + namesFemaleLinkedList.size() ||
-                    (patientPopulation + doctorPopulation + chiefDoctorPopulation) <= lastNamesLinkedList.size()
+            assert namesMaleLinkedList.size() == namesFemaleLinkedList.size()
+                    : "Provide same length of male and female names";
+            assert patientPopulation + doctorPopulation + chiefDoctorPopulation <= namesMaleLinkedList.size() + namesFemaleLinkedList.size() ||
+                    patientPopulation + doctorPopulation + chiefDoctorPopulation <= lastNamesLinkedList.size()
                     : "Provided less population.";
 
             createChiefDoctors(chiefDoctorRepository, chiefDoctorPopulation);
-            List<Doctor> doctorList = createDoctors(doctorRepository, doctorPopulation);
-            List<Patient> patientArrayList = createPatients(patientRepository, patientPopulation);
+            List<Doctor> doctorList = createDoctors(doctorRepository, doctorPopulation, measurementBound);
+            List<Patient> patientArrayList = createPatients(patientRepository, patientPopulation, measurementPersonPopulation);
 
             int[] idx = {0};
             patientArrayList.forEach(patient -> {

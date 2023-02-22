@@ -1,5 +1,8 @@
 package gr.codehub.sacchon.app.controller;
 
+import gr.codehub.sacchon.app.dto.ChiefDoctorDto;
+import gr.codehub.sacchon.app.dto.PatientConsultationCountDto;
+import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.ChiefDoctorException;
 import gr.codehub.sacchon.app.service.ChiefDoctorService;
@@ -8,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -53,18 +55,29 @@ public class ChiefDoctorController {
         return chiefDoctorService.updateChiefDoctor(chiefDoctor, id);
     }
 
-    @DeleteMapping("/chiefdoctor/{id}")
-    public boolean deleteChiefDoctorDto(
-            @PathVariable(name="id")  long id,
+    @GetMapping("/chief/consultation/waiting/query")
+    public List<PatientDto> readPatientsWaitingConsultationDto(
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="dateBefore") LocalDate dateBefore
     ){
         log.info("The end point @chiefDoctor seeking patients waiting consultation has been used.");
-        return chiefDoctorService.deleteChiefDoctor(id);
+        return chiefDoctorService.readPatientsIdWaitingForConsultation(dateBefore);
     }
 
-    @DeleteMapping("/chiefdoctor/{id}/consultation/query")
-    public boolean deleteChiefDoctorDto(@PathVariable(name="id")  long id){
-        log.info("The end point chiefdoctor has been used");
-        return chiefDoctorService.deleteChiefDoctor(id);
+    @GetMapping("/chief/consultation/range/query")
+    public List<PatientConsultationCountDto> readPatientsWithConsultationWithinRange(
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
+    ){
+        log.info("The end point @chiefDoctor seeking patients with the number of consultations within range has been used.");
+        return chiefDoctorService.readPatientsWithConsultationBetween(startingDate, endingDate);
+    }
+
+    @GetMapping("/chief/patient/absence/query")
+    public List<PatientDto> readInactivePatientsWithinRange(
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
+    ){
+        log.info("The end point @chiefDoctor seeking inactive patients has been used.");
+        return chiefDoctorService.readInactivePatientsWithinRange(startingDate, endingDate);
     }
 }

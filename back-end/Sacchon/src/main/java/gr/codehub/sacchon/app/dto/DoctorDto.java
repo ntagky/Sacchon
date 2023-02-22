@@ -17,6 +17,7 @@ public class DoctorDto extends PersonDto{
             super.setFirstName(doctor.getFirstName());
             super.setLastName(doctor.getLastName());
             super.setEmail(doctor.getEmail());
+            super.setSignedDate(doctor.getSignedDate());
         }
     }
 
@@ -26,6 +27,7 @@ public class DoctorDto extends PersonDto{
         doctor.setFirstName(super.getFirstName());
         doctor.setLastName(super.getLastName());
         doctor.setEmail(super.getEmail());
+        doctor.setSignedDate(super.getSignedDate());
         return doctor;
     }
 }

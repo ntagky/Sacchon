@@ -30,7 +30,7 @@ import java.util.List;
 @Entity
 @Table(schema = SacchonApplication.SCHEMA, name = "Doctor")
 @SuperBuilder
-public class Doctor extends Person{
+public class Doctor extends Person {
 
     @OneToMany(mappedBy = "doctor") //by default: lazy loading
     private List<Patient> patients;

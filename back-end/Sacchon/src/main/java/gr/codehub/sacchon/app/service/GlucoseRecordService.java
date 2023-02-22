@@ -1,6 +1,7 @@
 package gr.codehub.sacchon.app.service;
 
 import gr.codehub.sacchon.app.dto.GlucoseRecordDto;
+import gr.codehub.sacchon.app.dto.GlucoseRecordUpdaterDto;
 import gr.codehub.sacchon.app.exception.GlucoseRecordException;
 
 import java.math.BigDecimal;
@@ -14,5 +15,6 @@ public interface GlucoseRecordService {
     BigDecimal readAverageDailyGlucoseByGlucoseId(long id);
     boolean updateGlucoseRecord(GlucoseRecordDto glucoseRecordDto, long id) throws GlucoseRecordException;
     boolean deleteGlucoseRecordById(long id) throws GlucoseRecordException;
+    boolean updateRecordById(long id, GlucoseRecordUpdaterDto glucoseRecordUpdaterDto);
 
 }

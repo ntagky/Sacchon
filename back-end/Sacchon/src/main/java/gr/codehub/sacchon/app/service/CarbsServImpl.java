@@ -5,6 +5,7 @@ import gr.codehub.sacchon.app.dto.CarbsFromPersonDto;
 import gr.codehub.sacchon.app.exception.CarbsException;
 import gr.codehub.sacchon.app.model.Carbs;
 import gr.codehub.sacchon.app.repository.CarbsRepository;
+import gr.codehub.sacchon.app.repository.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CarbsServImpl implements CarbsService {
     private final CarbsRepository carbsRepository;
+    private final PatientRepository patientRepository;
 
     @Override
     public CarbsDto createCarbsIntake(CarbsDto carbsDto) {
@@ -59,17 +61,19 @@ public class CarbsServImpl implements CarbsService {
         throw new CarbsException("Carbs with id " + id + " does not exist.");
     }
     @Override
-    public boolean updateCarbs(CarbsDto carbsDto, long id) throws CarbsException {
-        CarbsDto dbCarbs = readCarbsById(id);
-        dbCarbs.setDate(carbsDto.getDate());
-        dbCarbs.setMeasurement(carbsDto.getMeasurement());
-        dbCarbs.setPatientDto(carbsDto.getPatientDto());
-        carbsRepository.save(dbCarbs.asCarbs());
+    public boolean updateCarbsById(long id, int measurement) {
+        carbsRepository.updateCarbsById(id, measurement);
         return true;
     }
     @Override
     public boolean deleteCarbsById(long id) throws CarbsException {
         carbsRepository.delete(readCarbsDb(id));
         return true;
+    }
+    @Override
+    public long createCarbsByPatientId(long patientId, CarbsFromPersonDto carbsDto) {
+        return carbsRepository.save(
+                carbsDto.asCarbs(patientRepository.findById(patientId).get())
+        ).getId();
     }
 }

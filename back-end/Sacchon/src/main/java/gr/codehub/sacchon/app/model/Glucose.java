@@ -20,9 +20,10 @@ public class Glucose implements Measurement<List<GlucoseRecord>> {
     private Long id;
     private final String UNITS = "mg/dL";
     private LocalDate date;
-    @OneToMany(mappedBy = "glucose")
+    @OneToMany(mappedBy = "glucose", cascade = CascadeType.ALL)
     private List<GlucoseRecord> measurement;
     @ManyToOne(optional = false)
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
-    private Patient patient; // ???
+    private Patient patient;
+
 }

@@ -19,5 +19,4 @@ public interface ConsultationService {
     List<Long> findPatientWithActiveConsultation(LocalDate dateGiven);
     boolean updateConsultation(ConsultationReceivedDto consultation, long id);
     boolean deleteConsultation(long id);
-    // List<Long> findPatientsWaitingForConsultation(LocalDate dateBefore);
 }

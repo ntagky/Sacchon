@@ -1,10 +1,6 @@
 package gr.codehub.sacchon.app.repository;
 
 import gr.codehub.sacchon.app.SacchonApplication;
-import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
-import gr.codehub.sacchon.app.dto.PatientDto;
-import gr.codehub.sacchon.app.model.BloodType;
-import gr.codehub.sacchon.app.model.DiabetesType;
 import gr.codehub.sacchon.app.model.Patient;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -44,5 +40,9 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query(value ="UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET DOCTOR_ID = :doctorId WHERE ID = :patientId", nativeQuery = true)
     void updateDoctorIdFromPatient(@Param("patientId") long patientId, @Param("doctorId") long doctorId);
 
-
+    @Query(value ="SELECT ID FROM " + SacchonApplication.SCHEMA + ".PATIENT " +
+            "WHERE PATIENT.SIGNED_DATE < :endingDate", nativeQuery = true)
+    List<Long> readPatientsBySignedDateBefore(
+            @Param("endingDate") LocalDate endingDate
+    );
 }

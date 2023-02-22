@@ -1,6 +1,9 @@
 package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.*;
+import gr.codehub.sacchon.app.exception.CarbsException;
+import gr.codehub.sacchon.app.exception.GlucoseException;
+import gr.codehub.sacchon.app.exception.GlucoseRecordException;
 import gr.codehub.sacchon.app.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +23,7 @@ public class PatientController {
     private PatientService patientService;
     private CarbsService carbsService;
     private GlucoseService glucoseService;
+    private GlucoseRecordService glucoseRecordService;
     private ConsultationService consultationService;
     private DoctorServices doctorServices;
 
@@ -38,9 +42,60 @@ public class PatientController {
     }
 
     @GetMapping("/patient/{id}/carbs")
-    public List<CarbsFromPersonDto> getCarbsDtoFromPatientById(@PathVariable(name="id") long id) {
+    public List<CarbsFromPersonDto> writeCarbsToPatientById(@PathVariable(name="id") long id) {
         log.info("The end point PatientDto & CarbsDto has been used");
         return carbsService.readCarbsByPatientId(id);
+    }
+
+    @PostMapping("/patient/{id}/carbs")
+    public Long createCarbsDtoFromPatientById(
+            @PathVariable(name="id") long id,
+            @RequestBody CarbsFromPersonDto carbsFromPersonDto
+    ) {
+        log.info("The end point PatientDto & CarbsDto has been used");
+        return carbsService.createCarbsByPatientId(id, carbsFromPersonDto);
+    }
+
+    @PostMapping("/patient/carbs/{carbsId}/update/{measurement}")
+    public boolean updateCarbsDtoFromCarbsId(
+            @PathVariable(name="carbsId") long id,
+            @PathVariable(name="measurement") int measurement
+    ) {
+        log.info("The end point PatientDto & CarbsDto has been used");
+        return carbsService.updateCarbsById(id, measurement);
+    }
+
+    @DeleteMapping("/patient/carbs/{id}/delete")
+    public void deleteCarbsById(@PathVariable(name="id") long id) throws CarbsException {
+        carbsService.deleteCarbsById(id);
+    }
+
+    @PostMapping("/patient/glucose/record/{recordId}/update")
+    public boolean updateGlucoseRecordDtoFromGlucoseId(
+            @PathVariable(name="recordId") long recordId,
+            @RequestBody GlucoseRecordUpdaterDto glucoseRecordUpdaterDto
+    ) {
+        log.info("The end point PatientDto & CarbsDto has been used");
+        return glucoseRecordService.updateRecordById(recordId, glucoseRecordUpdaterDto);
+    }
+
+    @PostMapping("/patient/{id}/glucose")
+    public Long createGlucoseDtoFromPatientById(
+            @PathVariable(name="id") long id,
+            @RequestBody GlucoseInitiatorDto glucoseInitiatorDto
+    ) {
+        log.info("The end point PatientDto & CarbsDto has been used");
+        return glucoseService.createGlucoseByPatientId(id, glucoseInitiatorDto);
+    }
+
+    @DeleteMapping("/patient/glucose/record/{id}/delete")
+    public void deleteGlucoseRecordById(@PathVariable(name="id") long id) throws GlucoseRecordException {
+        glucoseRecordService.deleteGlucoseRecordById(id);
+    }
+
+    @DeleteMapping("/patient/glucose/{id}/delete")
+    public void deleteGlucoseById(@PathVariable(name="id") long id) throws GlucoseException {
+        glucoseService.deleteGlucoseById(id);
     }
 
     @GetMapping("/patient/{id}/carbs/query")

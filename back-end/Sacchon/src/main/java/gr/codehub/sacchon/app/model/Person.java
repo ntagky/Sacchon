@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -24,5 +26,6 @@ public class Person {
     private String lastName;
     private String password;
     private String email;
+    private LocalDate signedDate;
 
 }
