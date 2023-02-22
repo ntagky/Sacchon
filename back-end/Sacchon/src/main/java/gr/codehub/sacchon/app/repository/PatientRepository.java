@@ -3,7 +3,6 @@ package gr.codehub.sacchon.app.repository;
 import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.model.BloodType;
 import gr.codehub.sacchon.app.model.DiabetesType;
-import gr.codehub.sacchon.app.model.Doctor;
 import gr.codehub.sacchon.app.model.Patient;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,5 +37,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
                          @Param("medicalRecordNumber") String medicalRecordNumber, @Param("address") String address, @Param("gender") String gender, @Param("dateOfBirth") LocalDate dateOfBirth,
                          @Param("bloodType") BloodType bloodType, @Param("diabetesType") DiabetesType diabetesType, @Param("height") int height, @Param("weight") double weight);
 
-
+    @Transactional
+    @Modifying
+    @Query(value ="UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET DOCTOR_ID = :doctorId WHERE ID = :patientId", nativeQuery = true)
+    void updateDoctorIdFromPatient(@Param("patientId") long patientId, @Param("doctorId") long doctorId);
 }
