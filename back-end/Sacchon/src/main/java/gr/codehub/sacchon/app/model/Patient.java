@@ -49,4 +49,6 @@ public class Patient extends Person {
     @JoinColumn(name="doctor_id", referencedColumnName = "id")
     private Doctor doctor;
 
+
+
 }

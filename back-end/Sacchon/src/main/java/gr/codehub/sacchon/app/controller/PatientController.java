@@ -28,11 +28,6 @@ public class PatientController {
     private ConsultationService consultationService;
 
 
-    @PostMapping("/signup")
-    public ResponseEntity<PatientDto> signUp(@RequestBody PatientDto patientDto) {
-        patientService.registerPatient(patientDto);
-        return ResponseEntity.ok(patientDto);
-    }
 
 
     @GetMapping("/patient/{id}")
@@ -92,11 +87,12 @@ public class PatientController {
         return consultationService.findConsultationInfoByPatientId(id);
     }
 
-    @PostMapping("/patient")
-    //http://localhost:9000/api/patient]
-    public  PatientDto createPatientDto(@RequestBody PatientDto PatientDto){
+    @PostMapping("/signup/patient")
+    //http://localhost:9000/api/signup/patient]
+    public ResponseEntity<?> createPatientDto(@RequestBody PatientDto PatientDto){
         log.info("The end point PatientDto has been used");
-        return patientService.createPatient(PatientDto);
+         patientService.registerPatient(PatientDto);
+         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/patient/{id}")

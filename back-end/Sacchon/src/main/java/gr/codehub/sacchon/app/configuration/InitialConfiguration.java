@@ -3,6 +3,7 @@ package gr.codehub.sacchon.app.configuration;
 import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.model.*;
 import gr.codehub.sacchon.app.repository.*;
+import gr.codehub.sacchon.app.service.PatientServiceImpl;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,9 @@ import java.util.*;
 
 @Configuration
 public class InitialConfiguration {
+
+
+
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private final LinkedList<String> namesMaleLinkedList = new LinkedList<>(List.of("Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore"));

@@ -1,8 +1,7 @@
 package gr.codehub.sacchon.app.dto;
 
-import gr.codehub.sacchon.app.model.BloodType;
-import gr.codehub.sacchon.app.model.DiabetesType;
-import gr.codehub.sacchon.app.model.Patient;
+import gr.codehub.sacchon.app.model.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +18,7 @@ public class PatientDto extends PersonDto {
     private String address;
     private String gender;
     private LocalDate dateOfBirth;
-    private String bloodType;
+    private BloodType bloodType;
     private DiabetesType diabetesType;
     private int height;
     private double weight;
@@ -38,7 +37,7 @@ public class PatientDto extends PersonDto {
             address = patient.getAddress();
             gender = patient.getGender();
             dateOfBirth = patient.getDateOfBirth();
-            bloodType = patient.getBloodType().name();
+            bloodType = patient.getBloodType();
             diabetesType = patient.getDiabetesType();
             height = patient.getHeight();
             weight = patient.getWeight();
@@ -47,13 +46,16 @@ public class PatientDto extends PersonDto {
             conditions = patient.getConditions();
         }
     }
+
+
     public Patient asPatient() {
+
         Patient patient = new Patient();
-        patient.setId(id);
-        patient.setFirstName("James");
-        patient.setLastName("Pfizer");
-        patient.setEmail("james999@gmail.com");
-        patient.setPassword("MyPassw0rD");
+        patient.setId(7);
+        patient.setFirstName("chris");
+        patient.setLastName("tzis");
+        patient.setEmail("dfdfdf");
+        patient.setPassword("asdads");
         patient.setMedicalRecordNumber(medicalRecordNumber);
         patient.setAddress(address);
         patient.setGender(gender);

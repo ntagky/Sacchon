@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PatientService {
 
-    PatientDto createPatient(PatientDto patient);
+
     List<PatientDto> readPatient();
     List<PatientDto> readPatientById(long id);
     boolean updatePatient(PatientDto patient, long id);
@@ -18,5 +18,6 @@ public interface PatientService {
     void deletePatientById(long patientId);
 
     public void registerPatient(PatientDto patientDto);
+
 
 }
