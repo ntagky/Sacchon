@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.service;
 
+import gr.codehub.sacchon.app.dto.AllConsultationsReceivedForOnePatientDto;
 import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
 import gr.codehub.sacchon.app.dto.ConsultationDto;
 import gr.codehub.sacchon.app.dto.ConsultationReceivedDto;
@@ -10,6 +11,7 @@ import gr.codehub.sacchon.app.repository.ConsultationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -101,6 +103,22 @@ public class ConsultationServImpl implements ConsultationService {
             action = false;
         }
         return action;
+    }
+
+    @Override
+    public List<AllConsultationsReceivedForOnePatientDto> getAllConsultationsReceivedForPatient(long patientId) {
+        List<Object[]> results = consultationRepository.findAllConsultationsReceivedForPatient(patientId);
+        List<AllConsultationsReceivedForOnePatientDto> dtos = new ArrayList<>();
+        for (Object[] result : results) {
+            AllConsultationsReceivedForOnePatientDto dto = new AllConsultationsReceivedForOnePatientDto();
+            dto.setDoctor_first_name((String) result[0]);
+            dto.setDoctor_last_name((String) result[1]);
+            dto.setDoctor_email((String) result[2]);
+            dto.setDate_created(((java.sql.Date) result[3]).toLocalDate());
+            dto.setDetails((String) result[4]);
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
 //    @Override

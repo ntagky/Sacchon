@@ -1,13 +1,16 @@
 package gr.codehub.sacchon.app.service;
 
+import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.exception.PatientException;
 import gr.codehub.sacchon.app.model.Patient;
+import gr.codehub.sacchon.app.repository.CarbsRepository;
 import gr.codehub.sacchon.app.repository.DoctorRepository;
 import gr.codehub.sacchon.app.repository.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,6 +22,8 @@ public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
+
+    private final CarbsRepository carbsRepository;
 
 
 
@@ -36,8 +41,10 @@ public class PatientServiceImpl implements PatientService {
     }
 
 
-
-
+    @Override
+    public List<PastCarbReadingsDto> getPreviousCarbReadingsByPatientIdBetweenDates(long id, LocalDate startingDate, LocalDate endingDate) {
+        return carbsRepository.getCarbsReadingsBetweenDatesByPatientId(id,startingDate,endingDate);
+    }
 
     @Override
     public List<PatientDto> readPatient() {

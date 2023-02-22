@@ -1,6 +1,6 @@
 package gr.codehub.sacchon.app.controller;
 
-import gr.codehub.sacchon.app.dto.ChiefDoctorDto;
+import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.ChiefDoctorException;
 import gr.codehub.sacchon.app.service.ChiefDoctorService;
 import lombok.AllArgsConstructor;
@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,6 +22,16 @@ public class ChiefDoctorController {
     public List<ChiefDoctorDto> getChiefDoctorDto(){
         log.info("The end point chiefdoctor has been used");
         return chiefDoctorService.readChiefDoctor();
+    }
+
+    @GetMapping("/doctor/consultations/{id}/dates")
+    public List<ConsultationsGivenByDoctor> getConsultationsByDoctorIdOnSpecificDates(
+            @PathVariable(name="id") long doctorId,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
+    ) {
+
+        return chiefDoctorService.getConsultationsBetweenDatesGiven(doctorId,startingDate,endingDate);
     }
 
     @GetMapping("/chiefdoctor/{id}")

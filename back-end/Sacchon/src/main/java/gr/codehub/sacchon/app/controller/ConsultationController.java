@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.controller;
 
+import gr.codehub.sacchon.app.dto.AllConsultationsReceivedForOnePatientDto;
 import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
 import gr.codehub.sacchon.app.dto.ConsultationDto;
 import gr.codehub.sacchon.app.dto.ConsultationReceivedDto;
@@ -16,6 +17,12 @@ import java.util.List;
 @Slf4j
 public class ConsultationController {
     private ConsultationService consultationService;
+
+    @GetMapping("/patient/{id}/consultations")
+    public List<AllConsultationsReceivedForOnePatientDto> getConsultationsByPatientId
+            (@PathVariable("id") long id){
+        return consultationService.getAllConsultationsReceivedForPatient(id);
+    }
 
     @GetMapping("/consultation")
     public List<ConsultationDto> getConsultationDto(){

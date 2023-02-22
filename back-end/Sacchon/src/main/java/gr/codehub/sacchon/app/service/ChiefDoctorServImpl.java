@@ -1,12 +1,13 @@
 package gr.codehub.sacchon.app.service;
 
-import gr.codehub.sacchon.app.dto.ChiefDoctorDto;
+import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.ChiefDoctorException;
 import gr.codehub.sacchon.app.model.ChiefDoctor;
 import gr.codehub.sacchon.app.repository.ChiefDoctorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,6 +16,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ChiefDoctorServImpl implements ChiefDoctorService {
     private final ChiefDoctorRepository doctorRepository;
+
+    @Override
+    public List<ConsultationsGivenByDoctor>
+    getConsultationsBetweenDatesGiven(long id, LocalDate startingDate, LocalDate endingDate){
+       return doctorRepository.findConsultationsBetweenGivenDates(id,startingDate,endingDate);
+    }
 
     @Override
     public ChiefDoctorDto createChiefDoctor(ChiefDoctorDto doctorDto){

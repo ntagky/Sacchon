@@ -1,15 +1,14 @@
 package gr.codehub.sacchon.app.service;
 
-import gr.codehub.sacchon.app.dto.DoctorDto;
+import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
-import gr.codehub.sacchon.app.exception.PatientException;
-import gr.codehub.sacchon.app.model.Patient;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PatientService {
 
-
+    public List<PastCarbReadingsDto> getPreviousCarbReadingsByPatientIdBetweenDates(long id, LocalDate startingDate, LocalDate endingDate);
     List<PatientDto> readPatient();
     List<PatientDto> readPatientById(long id);
     long findDoctorIdByPatientId(long id);

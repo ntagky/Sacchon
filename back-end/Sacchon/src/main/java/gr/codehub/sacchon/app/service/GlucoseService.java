@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.service;
 
+import gr.codehub.sacchon.app.dto.ConsultationReceivedDto;
 import gr.codehub.sacchon.app.dto.GlucoseDto;
 import gr.codehub.sacchon.app.dto.GlucoseFromPersonDto;
 import gr.codehub.sacchon.app.exception.GlucoseException;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface GlucoseService {
+
 
     GlucoseDto createGlucose(GlucoseDto glucoseDto);
     List<GlucoseDto> readGlucose();

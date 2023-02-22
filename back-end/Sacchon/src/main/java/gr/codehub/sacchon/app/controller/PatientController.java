@@ -1,8 +1,6 @@
 package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.*;
-import gr.codehub.sacchon.app.exception.PatientException;
-import gr.codehub.sacchon.app.model.Patient;
 import gr.codehub.sacchon.app.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,6 +65,18 @@ public class PatientController {
                 patientId, startingDate, endingDate);
     }
 
+    @GetMapping("/patient/{id}/carbs/query/all")
+    public List<PastCarbReadingsDto> getPastCarbReadingsByPatientIdOnSpecificDates(
+            @PathVariable(name="id") long patientId,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
+    ) {
+        return patientService.getPreviousCarbReadingsByPatientIdBetweenDates(
+                patientId, startingDate, endingDate);
+    }
+
+
+
     @GetMapping("/patient/{id}/glucose")
     public List<GlucoseFromPersonDto> getGlucoseDtoFromPatientById(@PathVariable(name="id") long id) {
         log.info("The end point PatientDto & GlucoseDto has been used");
@@ -87,19 +97,16 @@ public class PatientController {
     @PostMapping("/signup/patient")
     //http://localhost:9000/api/signup/patient]
     public ResponseEntity<?> createPatientDto(@RequestBody PatientDto PatientDto){
-    @GetMapping("/patient/{id}/doctor")
-    public DoctorDto getDoctorByPatientId(@PathVariable("id") long id){
-        long doctorId = patientService.findDoctorIdByPatientId(id);
-        return doctorServices.readDoctorNameAndEmailById(doctorId);
+        log.info("The end point PatientDto has been used");
+        patientService.registerPatient(PatientDto);
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/patient")
-    //http://localhost:9000/api/patient]
-    public  PatientDto createPatientDto(@RequestBody PatientDto PatientDto){
-        log.info("The end point PatientDto has been used");
-         patientService.registerPatient(PatientDto);
-         return ResponseEntity.ok().build();
-    }
+    @GetMapping("/patient/{id}/doctor")
+    public DoctorDto getDoctorByPatientId(@PathVariable("id") long id){
+    long doctorId = patientService.findDoctorIdByPatientId(id);
+    return doctorServices.readDoctorNameAndEmailById(doctorId);
+     }
 
     @PutMapping("/patient/{id}")
     //http://localhost:9000/api/patient/{{id}}

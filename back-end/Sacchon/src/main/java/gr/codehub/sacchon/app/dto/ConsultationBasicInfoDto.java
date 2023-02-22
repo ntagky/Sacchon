@@ -26,7 +26,6 @@ public class ConsultationBasicInfoDto {
             doctorFirstName = consultation.getDoctor().getFirstName();
             doctorLastName = consultation.getDoctor().getLastName();
             doctorEmail = consultation.getDoctor().getEmail();
-
             dateCreated = consultation.getDateCreated();
             medications = consultation.getMedications();
             details = consultation.getDetails();

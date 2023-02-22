@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.repository;
 import gr.codehub.sacchon.app.SacchonApplication;
+import gr.codehub.sacchon.app.dto.AllConsultationsReceivedForOnePatientDto;
 import gr.codehub.sacchon.app.model.Consultation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +24,8 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
     List<Long> findPatientsWaitingForConsultation(
             @Param("dateBefore") LocalDate startingDate
     );
+
+    @Query(value = "SELECT doctor_first_name,doctor_last_name,doctor_email,date_created,details FROM " + SacchonApplication.SCHEMA + ".CONSULTATION WHERE CONSULTATION.PATIENT_ID = :patientId",
+            nativeQuery = true)
+    List<Object[]> findAllConsultationsReceivedForPatient(@Param("patientId") long patientId);
 }

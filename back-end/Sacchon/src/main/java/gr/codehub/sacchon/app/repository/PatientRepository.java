@@ -1,6 +1,7 @@
 package gr.codehub.sacchon.app.repository;
 
 import gr.codehub.sacchon.app.SacchonApplication;
+import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.model.BloodType;
 import gr.codehub.sacchon.app.model.DiabetesType;
@@ -42,4 +43,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Modifying
     @Query(value ="UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET DOCTOR_ID = :doctorId WHERE ID = :patientId", nativeQuery = true)
     void updateDoctorIdFromPatient(@Param("patientId") long patientId, @Param("doctorId") long doctorId);
+
+
 }

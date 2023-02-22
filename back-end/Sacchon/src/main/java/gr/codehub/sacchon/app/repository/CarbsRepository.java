@@ -1,6 +1,8 @@
 package gr.codehub.sacchon.app.repository;
 
 import gr.codehub.sacchon.app.SacchonApplication;
+import gr.codehub.sacchon.app.dto.ConsultationsGivenByDoctor;
+import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.model.Carbs;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +23,20 @@ public interface CarbsRepository extends JpaRepository<Carbs, Long> {
             "WHERE (CARBS.PATIENT_ID = :patientId AND CARBS.DATE >= :startingDate AND CARBS.DATE <= :endingDate)",
             nativeQuery = true)
     Integer findAverageCarbsByPatientIdOnSpecificDates(
+            @Param("patientId") long patientId,
+            @Param("startingDate") LocalDate startingDate,
+            @Param("endingDate") LocalDate endingDate
+    );
+
+//    @Query(value = "SELECT CARBS.DATE,CARBS.MEASUREMENT FROM " + SacchonApplication.SCHEMA + ".CARBS WHERE CARBS.PATIENT_ID= :patientId AND CARBS.DATE >= :startingDate AND CARBS.DATE <= :endingDate",nativeQuery = true)
+//    List<PastCarbReadingsDto> getCarbsReadingsBetweenDatesByPatientId(
+//            @Param("patientId") long patientId,
+//            @Param("startingDate") LocalDate startingDate,
+//            @Param("endingDate") LocalDate endingDate
+//    );
+
+    @Query(value = "SELECT new gr.codehub.sacchon.app.dto.PastCarbReadingsDto(c.date, c.measurement) FROM Carbs c WHERE c.patient.id = :patientId AND c.date BETWEEN :startingDate AND :endingDate")
+    List<PastCarbReadingsDto> getCarbsReadingsBetweenDatesByPatientId(
             @Param("patientId") long patientId,
             @Param("startingDate") LocalDate startingDate,
             @Param("endingDate") LocalDate endingDate
