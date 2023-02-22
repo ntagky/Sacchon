@@ -48,7 +48,7 @@ public class DoctorServImpl implements DoctorServices{
     }
 
     @Override
-    public DoctorDto findDoctorById(long id) {
+    public DoctorDto readDoctorNameAndEmailById(long id) {
         return new DoctorDto(doctorRepository.findDoctorNameAndEmailById(id));
     }
 

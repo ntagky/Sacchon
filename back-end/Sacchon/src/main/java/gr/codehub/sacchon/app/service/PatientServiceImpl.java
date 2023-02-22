@@ -1,8 +1,11 @@
 package gr.codehub.sacchon.app.service;
 
+import gr.codehub.sacchon.app.dto.DoctorDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.exception.PatientException;
+import gr.codehub.sacchon.app.model.Doctor;
 import gr.codehub.sacchon.app.model.Patient;
+import gr.codehub.sacchon.app.repository.DoctorRepository;
 import gr.codehub.sacchon.app.repository.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
 
 
 
@@ -49,6 +53,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public List<PatientDto> readPatientById(long id)  {
         return patientRepository.DisplayAccountData(id).stream().map(PatientDto::new)            .collect(Collectors.toList());}
+
+    @Override
+    public long findDoctorIdByPatientId(long id) {
+        return patientRepository.findDoctorIdByPatientId(id);
+    }
 
     private Patient readPatientDb(long id) throws PatientException {
         Optional<Patient> patientOptional = patientRepository.findById(id);

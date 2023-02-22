@@ -3,10 +3,7 @@ package gr.codehub.sacchon.app.controller;
 import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.PatientException;
 import gr.codehub.sacchon.app.model.Patient;
-import gr.codehub.sacchon.app.service.CarbsService;
-import gr.codehub.sacchon.app.service.ConsultationService;
-import gr.codehub.sacchon.app.service.GlucoseService;
-import gr.codehub.sacchon.app.service.PatientService;
+import gr.codehub.sacchon.app.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,21 +23,21 @@ public class PatientController {
     private CarbsService carbsService;
     private GlucoseService glucoseService;
     private ConsultationService consultationService;
-
+    private DoctorServices doctorServices;
 
 
 
     @GetMapping("/patient/{id}")
     //http://localhost:9000/api/{{id}}
     public List<PatientDto> findPatientById(@PathVariable("id") long id){
-        return patientService.readPatientById(id);}
+        return patientService.readPatientById(id);
+    }
 
     @DeleteMapping("/{patientId}")   //<?> for generic response, could also be not found
     public ResponseEntity<?> deletePatientById(@PathVariable("patientId") long patientId) {
         patientService.deletePatientById(patientId);
         return ResponseEntity.noContent().build();
     }
-
 
     @GetMapping("/patient/{id}/carbs")
     public List<CarbsFromPersonDto> getCarbsDtoFromPatientById(@PathVariable(name="id") long id) {
@@ -90,6 +87,15 @@ public class PatientController {
     @PostMapping("/signup/patient")
     //http://localhost:9000/api/signup/patient]
     public ResponseEntity<?> createPatientDto(@RequestBody PatientDto PatientDto){
+    @GetMapping("/patient/{id}/doctor")
+    public DoctorDto getDoctorByPatientId(@PathVariable("id") long id){
+        long doctorId = patientService.findDoctorIdByPatientId(id);
+        return doctorServices.readDoctorNameAndEmailById(doctorId);
+    }
+
+    @PostMapping("/patient")
+    //http://localhost:9000/api/patient]
+    public  PatientDto createPatientDto(@RequestBody PatientDto PatientDto){
         log.info("The end point PatientDto has been used");
          patientService.registerPatient(PatientDto);
          return ResponseEntity.ok().build();

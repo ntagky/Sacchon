@@ -3,7 +3,6 @@ package gr.codehub.sacchon.app.configuration;
 import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.model.*;
 import gr.codehub.sacchon.app.repository.*;
-import gr.codehub.sacchon.app.service.PatientServiceImpl;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -20,20 +19,19 @@ import java.util.*;
 @Configuration
 public class InitialConfiguration {
 
-
-
-
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private final Random random = new Random(42);
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private final LinkedList<String> namesMaleLinkedList = new LinkedList<>(List.of("Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore"));
     private final LinkedList<String> namesFemaleLinkedList = new LinkedList<>(List.of("Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper"));
     private final List<String> lastNamesLinkedList = new ArrayList<>(List.of("Smith", "Johnson", "William", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", " Wilson", "Anderson", "Thomas", "Taylor", "Jackson", "Martin"));
     private final List<String> allergiesList = new ArrayList<>(List.of("Grass Pollen", "Dust", "Peanut", "Milk", "Egg", "Animal Fur", "Bee", "Wasp", "Fish", "Crustaceans", "Wheat", "Soy"));
     private final List<String> medicationsList = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
     private final List<String> conditionsList = new ArrayList<>(List.of("Heart Disease", "Cancer", "Asthma", "Emphysema", "Alzheimer Disease", "Substance Abuse", "Pneumonia", "Kidney Disease", "Mental Health Conditions"));
+    private final List<String> detailsList = new ArrayList<>(List.of("Take 2 pills per day", "Don't mix with alcohol!"));
 
     private void createRandomListSequence(List<String> referenceList, List<String> arrayList, double probability, Random random) {
         if (Math.random() < probability) {
-            int idx = random.nextInt(0, allergiesList.size() - 1);
+            int idx = random.nextInt(0, referenceList.size() - 1);
             while (idx < referenceList.size()) {
                 arrayList.add(referenceList.get(idx));
                 idx = random.nextInt(idx, referenceList.size() + 5);
@@ -55,8 +53,6 @@ public class InitialConfiguration {
     }
 
     private void createChiefDoctors(ChiefDoctorRepository chiefDoctorRepository, int population) {
-        Random random = new Random(42);
-
         ArrayList<ChiefDoctor> chiefDoctorArrayList = new ArrayList<>();
         ChiefDoctor chiefDoctor;
         String firstName;
@@ -82,8 +78,6 @@ public class InitialConfiguration {
     }
 
     private List<Doctor> createDoctors(DoctorRepository doctorRepository, int population) {
-        Random random = new Random(42);
-
         ArrayList<Doctor> doctorArrayList = new ArrayList<>();
         Doctor doctor;
         String firstName;
@@ -112,8 +106,6 @@ public class InitialConfiguration {
     }
 
     private List<Patient> createPatients(PatientRepository patientRepository, int population) {
-        Random random = new Random(42);
-
         ArrayList<Patient> patientArrayList = new ArrayList<>();
         Patient patient;
         String firstName;
@@ -164,8 +156,6 @@ public class InitialConfiguration {
     }
 
     private void createCarbs(CarbsRepository carbsRepository, int population, Patient assignedPerson) {
-        Random random = new Random(42);
-
         ArrayList<Carbs> carbsArrayList = new ArrayList<>();
         Carbs carbs;
 
@@ -202,8 +192,6 @@ public class InitialConfiguration {
     }
 
     private void createGlucoseRecords(GlucoseRecordRepository glucoseRecordRepository, int population, Glucose assignedGlucose) {
-        Random random = new Random(42);
-
         ArrayList<GlucoseRecord> glucoseRecordArrayList = new ArrayList<>();
         GlucoseRecord glucoseRecord;
 
@@ -232,6 +220,9 @@ public class InitialConfiguration {
         ArrayList<Consultation> consultationArrayList = new ArrayList<>();
         Consultation consultation;
 
+        List<String> medications = new ArrayList<>();
+        createRandomListSequence(medicationsList, medications, 2, random);
+
         for (int i = 0; i < population; i++) {
             consultation = new Consultation();
 
@@ -240,13 +231,9 @@ public class InitialConfiguration {
             consultation.setDoctorLastName(assignedDoctor.getLastName());
             consultation.setDoctorEmail(assignedDoctor.getEmail());
             consultation.setDateCreated(localDates[i]);
-            consultation.setSeenConsultation(true);
-            consultation.setMedications(null);
-            consultation.setDetails(
-                    "Subscription from dc. " + assignedDoctor.getLastName() +
-                            " for patient " + assignedPerson.getLastName() +
-                            " on " + localDates[i]
-            );
+            consultation.setSeenConsultation(random.nextBoolean());
+            consultation.setMedications(medications);
+            consultation.setDetails(detailsList.get(random.nextInt(detailsList.size())));
             consultation.setPatient(assignedPerson);
             consultation.setDoctor(assignedDoctor);
 
@@ -269,13 +256,12 @@ public class InitialConfiguration {
 
             System.out.println("Saving dummy objects..");
 
-            Random random = new Random();
-            int patientPopulation = 4;
-            int doctorPopulation = 2;
+            int patientPopulation = 13;
+            int doctorPopulation = 4;
             int chiefDoctorPopulation = 1;
             int[] measurementPersonPopulation = new int[patientPopulation];
             for (int i = 0; i < patientPopulation; i++)
-                measurementPersonPopulation[i] = random.nextInt(15, 90);
+                measurementPersonPopulation[i] = random.nextInt(15, 125);
 
             Collections.shuffle(namesMaleLinkedList);
             Collections.shuffle(namesFemaleLinkedList);
@@ -317,4 +303,5 @@ public class InitialConfiguration {
 
         };
     }
+
 }

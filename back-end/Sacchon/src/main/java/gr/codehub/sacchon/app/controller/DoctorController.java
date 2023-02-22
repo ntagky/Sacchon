@@ -23,14 +23,14 @@ public class DoctorController {
 
     @GetMapping("doctor/email/{match}")
     public List<DoctorDto> readDoctorByEmailNative(@PathVariable("match") String match){
-        log.info("The end point email/{match} has been used");
+        log.info("The end point doctor/email/{match} has been used");
         return doctorServices.readDoctorByEmailNativeService(match);
     }
 
-    @GetMapping("/doctor/{id}")
-    public DoctorDto getDoctorById(@PathVariable(name="id") long id) {
+    @GetMapping("/doctor/{id}/basicinfo")
+    public DoctorDto getDoctorNameAndEmailById(@PathVariable(name="id") long id) {
         log.info("The end point doctor/id/ has been used");
-        return doctorServices.findDoctorById(id);
+        return doctorServices.readDoctorNameAndEmailById(id);
     }
 
     @PostMapping("/doctor")
