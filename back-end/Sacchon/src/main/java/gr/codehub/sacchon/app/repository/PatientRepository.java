@@ -4,7 +4,6 @@ import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.model.BloodType;
 import gr.codehub.sacchon.app.model.DiabetesType;
-import gr.codehub.sacchon.app.model.Doctor;
 import gr.codehub.sacchon.app.model.Patient;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,5 +38,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     void createPatient(@Param("firstName") String firstName, @Param("lastName") String lastName, @Param("password") String password, @Param("email") String email, @Param("medicalRecordNumber") String medicalRecordNumber, @Param("address") String address, @Param("gender") String gender, @Param("dateOfBirth") LocalDate dateOfBirth, @Param("bloodType") String bloodType, @Param("diabetesType") String diabetesType, @Param("height") int height, @Param("weight") Double weight);
 
 
-
+    @Transactional
+    @Modifying
+    @Query(value ="UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET DOCTOR_ID = :doctorId WHERE ID = :patientId", nativeQuery = true)
+    void updateDoctorIdFromPatient(@Param("patientId") long patientId, @Param("doctorId") long doctorId);
 }

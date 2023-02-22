@@ -1,9 +1,7 @@
 package gr.codehub.sacchon.app.service;
 
-import gr.codehub.sacchon.app.dto.DoctorDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.exception.PatientException;
-import gr.codehub.sacchon.app.model.Doctor;
 import gr.codehub.sacchon.app.model.Patient;
 import gr.codehub.sacchon.app.repository.DoctorRepository;
 import gr.codehub.sacchon.app.repository.PatientRepository;
@@ -101,6 +99,11 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.createPatient(patient.getFirstName(), patient.getLastName(), patient.getPassword(), patient.getEmail(),
                 patient.getMedicalRecordNumber(), patient.getAddress(), patient.getGender(), patient.getDateOfBirth(),
                 patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight());
+    }
+
+    @Override
+    public void updateDoctorIdFromPatient(long patientId, long doctorId) {
+        patientRepository.updateDoctorIdFromPatient(patientId, doctorId);
     }
 
 

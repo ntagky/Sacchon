@@ -21,5 +21,5 @@ public interface PatientService {
 
     public void registerPatient(PatientDto patientDto);
 
-
+    void updateDoctorIdFromPatient(long patientId, long doctorId);
 }
