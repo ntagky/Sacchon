@@ -80,4 +80,13 @@ public class ChiefDoctorController {
         log.info("The end point @chiefDoctor seeking inactive patients has been used.");
         return chiefDoctorService.readInactivePatientsWithinRange(startingDate, endingDate);
     }
+
+    @GetMapping("/chief/doctor/absence/query")
+    public List<DoctorDto> readInactiveDoctorsWithinRange(
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
+    ){
+        log.info("The end point @chiefDoctor seeking inactive patients has been used.");
+        return chiefDoctorService.readInactiveDoctorsWithinRange(startingDate, endingDate);
+    }
 }

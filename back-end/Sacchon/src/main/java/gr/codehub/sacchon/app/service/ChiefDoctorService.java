@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ChiefDoctorService {
-    public List<ConsultationsGivenByDoctor>
+    List<ConsultationsGivenByDoctor>
     getConsultationsBetweenDatesGiven(long id, LocalDate startingDate, LocalDate endingDate);
     ChiefDoctorDto createChiefDoctor(ChiefDoctorDto chiefDoctor);
     List<ChiefDoctorDto> readChiefDoctor();
@@ -20,4 +20,5 @@ public interface ChiefDoctorService {
     List<PatientDto> readPatientsIdWaitingForConsultation(LocalDate dateBefore);
     List<PatientConsultationCountDto> readPatientsWithConsultationBetween(LocalDate startingDate, LocalDate endingDate);
     List<PatientDto> readInactivePatientsWithinRange(LocalDate startingDate, LocalDate endingDate);
+    List<DoctorDto> readInactiveDoctorsWithinRange(LocalDate startingDate, LocalDate endingDate);
 }

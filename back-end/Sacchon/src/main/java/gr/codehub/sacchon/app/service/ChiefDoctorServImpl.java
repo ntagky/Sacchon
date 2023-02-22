@@ -6,10 +6,7 @@ import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.ChiefDoctorException;
 import gr.codehub.sacchon.app.model.ChiefDoctor;
-import gr.codehub.sacchon.app.repository.CarbsRepository;
-import gr.codehub.sacchon.app.repository.ChiefDoctorRepository;
-import gr.codehub.sacchon.app.repository.ConsultationRepository;
-import gr.codehub.sacchon.app.repository.PatientRepository;
+import gr.codehub.sacchon.app.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,27 +19,28 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class ChiefDoctorServImpl implements ChiefDoctorService {
-    private final ChiefDoctorRepository doctorRepository;
+    private final ChiefDoctorRepository chiefDoctorRepository;
     private final ConsultationRepository consultationRepository;
     private final CarbsRepository carbsRepository;
     private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
 
     @Override
     public List<ConsultationsGivenByDoctor>
     getConsultationsBetweenDatesGiven(long id, LocalDate startingDate, LocalDate endingDate){
-       return doctorRepository.findConsultationsBetweenGivenDates(id,startingDate,endingDate);
+       return chiefDoctorRepository.findConsultationsBetweenGivenDates(id,startingDate,endingDate);
     }
 
     @Override
     public ChiefDoctorDto createChiefDoctor(ChiefDoctorDto doctorDto){
         //validation
         ChiefDoctor doctor = doctorDto.asChiefDoctor();
-        return new ChiefDoctorDto(doctorRepository.save(doctor));
+        return new ChiefDoctorDto(chiefDoctorRepository.save(doctor));
     }
 
     @Override
     public List<ChiefDoctorDto> readChiefDoctor(){
-        return doctorRepository
+        return chiefDoctorRepository
                 .findAll()
                 .stream()
                 .map(ChiefDoctorDto::new)
@@ -56,7 +54,7 @@ public class ChiefDoctorServImpl implements ChiefDoctorService {
 
     // private method created for internal use
     private ChiefDoctor readChiefDoctorDb(long id) throws ChiefDoctorException{
-        Optional<ChiefDoctor> chiefDoctorOptional = doctorRepository.findById(id);
+        Optional<ChiefDoctor> chiefDoctorOptional = chiefDoctorRepository.findById(id);
         if (chiefDoctorOptional.isPresent())
             return chiefDoctorOptional.get();
         throw new ChiefDoctorException("ChiefDoctor with id " + id + "is not found!");
@@ -68,7 +66,7 @@ public class ChiefDoctorServImpl implements ChiefDoctorService {
         boolean action;
         try {
             ChiefDoctor dbChiefDoctor = readChiefDoctorDb(id);
-            doctorRepository.save(dbChiefDoctor);
+            chiefDoctorRepository.save(dbChiefDoctor);
             action = true;
         } catch (ChiefDoctorException e){
             action = false;
@@ -81,7 +79,7 @@ public class ChiefDoctorServImpl implements ChiefDoctorService {
         boolean action;
         try {
             ChiefDoctor dbChiefDoctor = readChiefDoctorDb(id);
-            doctorRepository.delete(dbChiefDoctor);
+            chiefDoctorRepository.delete(dbChiefDoctor);
             action = true;
         } catch (ChiefDoctorException e) {
             action = false;
@@ -144,6 +142,24 @@ public class ChiefDoctorServImpl implements ChiefDoctorService {
         );
 
         return inactivePatients;
+    }
+
+    @Override
+    public List<DoctorDto> readInactiveDoctorsWithinRange(LocalDate startingDate, LocalDate endingDate) {
+        List<Long> doctorIdsWithActivity = consultationRepository.findDoctorsIdWithConsultationWithinRange(startingDate, endingDate);
+        List<Long> doctorIdsWithAccount = doctorRepository.readDoctorsBySignedDateBefore(endingDate);
+
+        List<DoctorDto> inactiveDoctors = new ArrayList<>();
+        doctorIdsWithAccount.forEach(
+                idWithAccount -> {
+                    if (doctorIdsWithActivity.stream().noneMatch(id -> id.equals(idWithAccount)))
+                        inactiveDoctors.add(
+                                new DoctorDto(doctorRepository.findById(idWithAccount).get())
+                        );
+                }
+        );
+
+        return inactiveDoctors;
     }
 
 }

@@ -36,9 +36,16 @@ public class DoctorController {
         return doctorServices.readDoctorNameAndEmailById(id);
     }
 
+//    @GetMapping("/doctor/patients/waiting/query")
+//    public List<PatientDto> getPatientsWithNoConsultation
+//            (@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="dateGiven") LocalDate dateGiven) {
+//        log.info("The end point doctor/patients/waiting/query has been used");
+//        return doctorServices.readPatientsWithNoConsultation(dateGiven);
+//    }
+
     @GetMapping("/doctor/patients/waiting/query")
-    public List<PatientDto> getPatientsWithNoConsultation
-            (@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="dateGiven") LocalDate dateGiven) {
+    public List<PatientDto> getPatientsWithNoConsultation() {
+        LocalDate dateGiven = LocalDate.now().minusMonths(1).plusDays(1);
         log.info("The end point doctor/patients/waiting/query has been used");
         return doctorServices.readPatientsWithNoConsultation(dateGiven);
     }

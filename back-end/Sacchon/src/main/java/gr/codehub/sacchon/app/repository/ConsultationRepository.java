@@ -33,6 +33,13 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
             @Param("endingDate") LocalDate endingDate
     );
 
+    @Query(value = "SELECT DOCTOR_ID FROM " + SacchonApplication.SCHEMA + ".CONSULTATION " + " " +
+            "WHERE CONSULTATION.DATE_CREATED >= :startingDate AND CONSULTATION.DATE_CREATED <= :endingDate",
+            nativeQuery = true)
+    List<Long> findDoctorsIdWithConsultationWithinRange(
+            @Param("startingDate") LocalDate startingDate,
+            @Param("endingDate") LocalDate endingDate
+    );
 
     @Query(value = "SELECT doctor_first_name,doctor_last_name,doctor_email,date_created,details FROM " + SacchonApplication.SCHEMA + ".CONSULTATION WHERE CONSULTATION.PATIENT_ID = :patientId",
             nativeQuery = true)
