@@ -2,6 +2,7 @@ package gr.codehub.sacchon.app.service;
 
 import gr.codehub.sacchon.app.dto.GlucoseRecordDto;
 import gr.codehub.sacchon.app.dto.GlucoseRecordUpdaterDto;
+import gr.codehub.sacchon.app.dto.PastGlucoseMeasurementDto;
 import gr.codehub.sacchon.app.exception.GlucoseRecordException;
 import gr.codehub.sacchon.app.model.GlucoseRecord;
 import gr.codehub.sacchon.app.repository.GlucoseRecordRepository;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -82,5 +84,9 @@ public class GlucoseRecordServImpl implements GlucoseRecordService {
                         glucoseRecordUpdaterDto.getSecond())
         );
         return true;
+    }
+
+    public List<PastGlucoseMeasurementDto> getGlucoseReadingsBetweenDatesByPatientId(long patientId, LocalDate startingDate, LocalDate endingDate) {
+        return glucoseRecordRepository.getGlucoseMeasurementsBetweenDatesByPatientId(patientId, startingDate, endingDate);
     }
 }

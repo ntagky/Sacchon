@@ -6,8 +6,11 @@ import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.ChiefDoctorException;
 import gr.codehub.sacchon.app.service.ChiefDoctorService;
+import gr.codehub.sacchon.app.service.GlucoseRecordService;
+import gr.codehub.sacchon.app.service.GlucoseService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +22,9 @@ import java.util.List;
 @Slf4j
 public class ChiefDoctorController {
     private ChiefDoctorService chiefDoctorService;
+
+    private final GlucoseRecordService glucoseRecordService;
+
 
     @GetMapping("/chiefdoctor")
     public List<ChiefDoctorDto> getChiefDoctorDto(){
@@ -88,5 +94,15 @@ public class ChiefDoctorController {
     ){
         log.info("The end point @chiefDoctor seeking inactive patients has been used.");
         return chiefDoctorService.readInactiveDoctorsWithinRange(startingDate, endingDate);
+    }
+
+
+
+    @GetMapping("/readings/glucose/{patientId}")
+    public List<PastGlucoseMeasurementDto> getGlucoseReadingsByPatientId(
+            @PathVariable long patientId,
+            @RequestParam(name = "start_date") LocalDate startDate,
+            @RequestParam(name = "end_date") LocalDate endDate) {
+        return glucoseRecordService.getGlucoseReadingsBetweenDatesByPatientId(patientId, startDate, endDate);
     }
 }
