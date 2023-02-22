@@ -1,7 +1,9 @@
 package gr.codehub.sacchon.app.repository;
 import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.model.Consultation;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -47,4 +49,16 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
 
     @Query(value = "SELECT patient_id FROM " + SacchonApplication.SCHEMA + ".CONSULTATION WHERE date_created >= :dateGiven", nativeQuery = true)
     List<Long> findPatientWithActiveConsultation(@Param("dateGiven") LocalDate dateGiven);
+
+//    @Transactional
+//    @Modifying
+//    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".CONSULTATION SET date_created = :dateCreated, " +
+//            "seen_consultation = :seenConsultation, details = :details  WHERE patient_id = :patientId " +
+//            "AND UPDATE DBO.CONSULTATION_MEDICATIONS SET medications = :medications  WHERE consultation_id = :consultationId", nativeQuery = true)
+//    void updateConsultationFromDoctorByPatientId(@Param("dateCreated") LocalDate dateCreated,
+//                                                 @Param("seenConsultation") boolean seenConsultation,
+//                                                 @Param("details") String details,
+//                                                 @Param("patientId") long patientId,
+//                                                 @Param("medications") List<String> medications);
+
 }

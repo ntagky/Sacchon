@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ConsultationService {
-    public List<AllConsultationsReceivedForOnePatientDto> getAllConsultationsReceivedForPatient(long patientId);
+    List<AllConsultationsReceivedForOnePatientDto> getAllConsultationsReceivedForPatient(long patientId);
     ConsultationDto createConsultation(ConsultationReceivedDto consultation);
     List<ConsultationDto> readConsultation();
     ConsultationDto readConsultation(long id) throws ConsultationException;
