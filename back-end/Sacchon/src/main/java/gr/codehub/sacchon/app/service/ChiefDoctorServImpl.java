@@ -22,6 +22,7 @@ public class ChiefDoctorServImpl implements ChiefDoctorService {
     private final ChiefDoctorRepository chiefDoctorRepository;
     private final ConsultationRepository consultationRepository;
     private final CarbsRepository carbsRepository;
+    private final GlucoseRepository glucoseRepository;
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
 
@@ -128,7 +129,10 @@ public class ChiefDoctorServImpl implements ChiefDoctorService {
 
     @Override
     public List<PatientDto> readInactivePatientsWithinRange(LocalDate startingDate, LocalDate endingDate) {
-        List<Long> patientIdsWithActivity = carbsRepository.findCarbsWithinRangeFromPatientId(startingDate, endingDate);
+        Set<Long> patientIdsWithActivity = new HashSet<>();
+        patientIdsWithActivity.addAll(carbsRepository.findPatientIdsWithinRange(startingDate, endingDate).stream().toList());
+        patientIdsWithActivity.addAll(glucoseRepository.findPatientIdsWithinRange(startingDate, endingDate).stream().toList());
+
         List<Long> patientIdsWithAccount = patientRepository.readPatientsBySignedDateBefore(endingDate);
 
         List<PatientDto> inactivePatients = new ArrayList<>();

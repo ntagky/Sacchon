@@ -51,7 +51,7 @@ public interface CarbsRepository extends JpaRepository<Carbs, Long> {
     @Query(value = "SELECT PATIENT_ID FROM " + SacchonApplication.SCHEMA + ".CARBS " +
             "WHERE CARBS.DATE >= :startingDate AND CARBS.DATE <= :endingDate",
             nativeQuery = true)
-    List<Long> findCarbsWithinRangeFromPatientId(
+    List<Long> findPatientIdsWithinRange(
             @Param("startingDate") LocalDate startingDate,
             @Param("endingDate") LocalDate endingDate
     );

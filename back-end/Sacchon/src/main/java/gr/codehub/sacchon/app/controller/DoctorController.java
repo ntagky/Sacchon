@@ -1,11 +1,11 @@
 package gr.codehub.sacchon.app.controller;
 
+import gr.codehub.sacchon.app.dto.ConsultationWriterDto;
 import gr.codehub.sacchon.app.dto.DoctorDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.service.DoctorServices;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -67,5 +67,13 @@ public class DoctorController {
     public boolean deleteDoctorDto(@PathVariable(name="id") long id){
         log.info("The end point doctor with id has been used");
         return doctorServices.deleteDoctor(id);
+    }
+
+    @PostMapping("/doctor/consultation/new")
+    public Long createConsultation(
+            @RequestBody ConsultationWriterDto consultationWriterDto)
+    {
+        log.info("The end point /doctor/consultation/new has been used.");
+        return doctorServices.createConsultation(consultationWriterDto);
     }
 }

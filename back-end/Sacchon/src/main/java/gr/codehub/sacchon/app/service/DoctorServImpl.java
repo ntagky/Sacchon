@@ -1,9 +1,12 @@
 package gr.codehub.sacchon.app.service;
 
+import gr.codehub.sacchon.app.dto.ConsultationWriterDto;
 import gr.codehub.sacchon.app.dto.DoctorDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.exception.DoctorException;
+import gr.codehub.sacchon.app.model.Consultation;
 import gr.codehub.sacchon.app.model.Doctor;
+import gr.codehub.sacchon.app.model.Patient;
 import gr.codehub.sacchon.app.repository.ConsultationRepository;
 import gr.codehub.sacchon.app.repository.DoctorRepository;
 import gr.codehub.sacchon.app.repository.PatientRepository;
@@ -117,6 +120,29 @@ public class DoctorServImpl implements DoctorServices{
             action = false;
         }
         return action;
+    }
+
+    @Override
+    public long createConsultation(ConsultationWriterDto consultationWriterDto) {
+        Optional<Doctor> doctor = doctorRepository.findById(consultationWriterDto.getDoctorId());
+        Optional<Patient> patient = patientRepository.findById(consultationWriterDto.getPatientId());
+        if (doctor.isEmpty() || patient.isEmpty())
+            return -1;
+
+        return consultationRepository.save(
+                new Consultation(
+                        0L,
+                        doctor.get().getFirstName(),
+                        doctor.get().getLastName(),
+                        doctor.get().getEmail(),
+                        consultationWriterDto.getDateCreated(),
+                        false,
+                        consultationWriterDto.getMedications(),
+                        consultationWriterDto.getDetails(),
+                        doctor.get(),
+                        patient.get()
+                )
+        ).getId();
     }
 
 }
