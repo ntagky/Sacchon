@@ -20,9 +20,8 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString
 @AllArgsConstructor
-//@NoArgsConstructor
 @Entity
 @Table(schema = SacchonApplication.SCHEMA, name = "ChiefDoctor")
 @SuperBuilder
-public class ChiefDoctor extends Doctor {
+public class ChiefDoctor extends Person {
 }

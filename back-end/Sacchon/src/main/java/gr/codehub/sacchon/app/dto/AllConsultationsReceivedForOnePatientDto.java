@@ -18,7 +18,6 @@ public class AllConsultationsReceivedForOnePatientDto {
     private String doctor_last_name;
     private String doctor_email;
     private LocalDate date_created;
-
     private String details;
 
 

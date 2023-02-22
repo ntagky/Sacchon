@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class PatientDto extends PersonDto {
-    private Long id;
+//    private Long id;
     private String medicalRecordNumber;
     private String address;
     private String gender;
@@ -28,7 +28,7 @@ public class PatientDto extends PersonDto {
 
     public PatientDto(Patient patient){
         if (patient!= null){
-            id = patient.getId();
+            super.setId(patient.getId());
             super.setFirstName(patient.getFirstName());
             super.setLastName(patient.getLastName());
             super.setEmail(patient.getEmail());
@@ -51,17 +51,17 @@ public class PatientDto extends PersonDto {
     public Patient asPatient() {
 
         Patient patient = new Patient();
-        patient.setId(7);
-        patient.setFirstName("chris");
-        patient.setLastName("tzis");
-        patient.setEmail("dfdfdf");
-        patient.setPassword("asdads");
+        patient.setId(super.getId());
+        patient.setFirstName(super.getFirstName());
+        patient.setLastName(super.getLastName());
+        patient.setEmail(super.getEmail());
+        patient.setPassword(super.getPassword());
         patient.setMedicalRecordNumber(medicalRecordNumber);
         patient.setAddress(address);
         patient.setGender(gender);
         patient.setDateOfBirth(dateOfBirth);
-        patient.setBloodType(BloodType.AB_NEGATIVE);
-        patient.setDiabetesType(DiabetesType.TYPE_1);
+        patient.setBloodType(bloodType);
+        patient.setDiabetesType(diabetesType);
         patient.setHeight(height);
         patient.setWeight(weight);
         patient.setAllergies(allergies);

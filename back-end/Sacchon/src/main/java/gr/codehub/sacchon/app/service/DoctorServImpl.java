@@ -1,12 +1,17 @@
 package gr.codehub.sacchon.app.service;
 
 import gr.codehub.sacchon.app.dto.DoctorDto;
+import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.exception.DoctorException;
 import gr.codehub.sacchon.app.model.Doctor;
+import gr.codehub.sacchon.app.repository.ConsultationRepository;
 import gr.codehub.sacchon.app.repository.DoctorRepository;
+import gr.codehub.sacchon.app.repository.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,6 +21,8 @@ import java.util.stream.Collectors;
 public class DoctorServImpl implements DoctorServices{
 
     private final DoctorRepository doctorRepository;
+    private final ConsultationRepository consultationRepository;
+    private final PatientRepository patientRepository;
 
     @Override
     public DoctorDto createDoctor(DoctorDto doctorDto){
@@ -43,6 +50,28 @@ public class DoctorServImpl implements DoctorServices{
     }
 
     @Override
+    public List<PatientDto> readPatientsWithNoConsultation(LocalDate dateGiven) {
+
+        List<Long> allPatients = patientRepository.findAll()
+                .stream()
+                .map(p -> p.getId())
+                .collect(Collectors.toList());
+
+        List<Long> patientsActiveConsultation = consultationRepository.findPatientWithActiveConsultation(dateGiven);
+
+        List<PatientDto> inactivePatients = new ArrayList<>();
+        allPatients.forEach(
+                idAll -> {
+                    if (patientsActiveConsultation.stream().noneMatch(id -> id.equals(idAll)))
+                        inactivePatients.add(
+                                new PatientDto(patientRepository.findById(idAll).get())
+                        );
+                }
+        );
+        return inactivePatients;
+    }
+
+    @Override
     public DoctorDto readDoctor(long id) throws DoctorException {
         return new DoctorDto(readDoctorDb(id));
     }
@@ -59,6 +88,8 @@ public class DoctorServImpl implements DoctorServices{
             return doctorOptional.get();
         throw new DoctorException("Doctor with id " + id + "is not found!");
     }
+
+
 
     @Override
     public boolean updateDoctor(DoctorDto doctor, long id){

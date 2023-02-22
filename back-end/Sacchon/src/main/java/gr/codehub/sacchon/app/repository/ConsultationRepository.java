@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -24,8 +25,10 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
     List<Long> findPatientsWaitingForConsultation(
             @Param("dateBefore") LocalDate startingDate
     );
-
     @Query(value = "SELECT doctor_first_name,doctor_last_name,doctor_email,date_created,details FROM " + SacchonApplication.SCHEMA + ".CONSULTATION WHERE CONSULTATION.PATIENT_ID = :patientId",
             nativeQuery = true)
     List<Object[]> findAllConsultationsReceivedForPatient(@Param("patientId") long patientId);
+
+    @Query(value = "SELECT patient_id FROM " + SacchonApplication.SCHEMA + ".CONSULTATION WHERE date_created >= :dateGiven", nativeQuery = true)
+    List<Long> findPatientWithActiveConsultation(@Param("dateGiven") LocalDate dateGiven);
 }

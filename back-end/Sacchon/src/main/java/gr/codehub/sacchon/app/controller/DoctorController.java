@@ -1,11 +1,14 @@
 package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.DoctorDto;
+import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.service.DoctorServices;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,8 +36,15 @@ public class DoctorController {
         return doctorServices.readDoctorNameAndEmailById(id);
     }
 
+    @GetMapping("/doctor/patients/waiting/query")
+    public List<PatientDto> getPatientsWithNoConsultation
+            (@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="dateGiven") LocalDate dateGiven) {
+        log.info("The end point doctor/patients/waiting/query has been used");
+        return doctorServices.readPatientsWithNoConsultation(dateGiven);
+    }
+
     @PostMapping("/doctor")
-    public  DoctorDto  createDoctorDto(@RequestBody DoctorDto doctor){
+    public DoctorDto createDoctorDto(@RequestBody DoctorDto doctor){
         log.info("The end point doctor has been used");
         return doctorServices.createDoctor(doctor);
     }

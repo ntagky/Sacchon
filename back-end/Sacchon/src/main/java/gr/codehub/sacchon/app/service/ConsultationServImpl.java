@@ -11,6 +11,7 @@ import gr.codehub.sacchon.app.repository.ConsultationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +60,11 @@ public class ConsultationServImpl implements ConsultationService {
                 .stream()
                 .map(ConsultationBasicInfoDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Long> findPatientWithActiveConsultation(LocalDate dateGiven) {
+        return consultationRepository.findPatientWithActiveConsultation(dateGiven);
     }
 
     // private method created for internal use

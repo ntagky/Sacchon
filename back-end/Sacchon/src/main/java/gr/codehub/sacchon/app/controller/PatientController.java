@@ -95,7 +95,7 @@ public class PatientController {
     }
 
     @PostMapping("/signup/patient")
-    //http://localhost:9000/api/signup/patient]
+    //http://localhost:9000/api/signup/patient
     public ResponseEntity<?> createPatientDto(@RequestBody PatientDto PatientDto){
         log.info("The end point PatientDto has been used");
         patientService.registerPatient(PatientDto);
