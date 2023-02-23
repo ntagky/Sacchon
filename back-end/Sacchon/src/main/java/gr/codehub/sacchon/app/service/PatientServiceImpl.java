@@ -95,7 +95,7 @@ public class PatientServiceImpl implements PatientService {
 //    }
 
     @Override
-    public void registerPatient(PatientDto patientDto) {
+    public long registerPatient(PatientDto patientDto) {
 
         Patient patient = patientDto.asPatient();
 
@@ -103,7 +103,7 @@ public class PatientServiceImpl implements PatientService {
                 patient.getMedicalRecordNumber(), patient.getAddress(), patient.getGender(), patient.getDateOfBirth(),
                 patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight(), patient.getSignedDate());
 
-//        return patient.getId();
+        return patientRepository.save(patient).getId();
     }
 
     @Override

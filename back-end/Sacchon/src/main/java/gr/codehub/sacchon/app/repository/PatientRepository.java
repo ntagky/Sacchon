@@ -62,4 +62,10 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     List<Long> readPatientsBySignedDateBefore(
             @Param("endingDate") LocalDate endingDate
     );
+
+    // query for table Patient (set doctor_id to null when doctor is deleted)
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET doctor_id = null WHERE doctor_id = :doctorId" , nativeQuery = true)
+    void makeDoctorIdNullOnDoctorDelete(@Param("doctorId") long doctorId);
 }

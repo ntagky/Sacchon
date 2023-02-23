@@ -43,7 +43,7 @@ public class DoctorServImpl implements DoctorService {
                 doctor.getPassword(),
                 doctor.getEmail(),
                 doctor.getSignedDate());
-        return doctor.getId();
+        return doctorRepository.save(doctor).getId();
     }
 
     @Override
@@ -138,10 +138,12 @@ public class DoctorServImpl implements DoctorService {
         return action;
     }
 
-//    @Override
-//    public void deleteDoctorById(long id) {
-//        doctorRepository.deleteDoctorById(id);
-//    }
+    @Override
+    public void deleteDoctorById(long id) {
+        patientRepository.makeDoctorIdNullOnDoctorDelete(id);
+        consultationRepository.makeDoctorIdNullOnDoctorDelete(id);
+        doctorRepository.deleteDoctorById(id);
+    }
 
     @Override
     public long createConsultation(ConsultationWriterDto consultationWriterDto) {

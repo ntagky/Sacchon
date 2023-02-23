@@ -157,12 +157,13 @@ public class PatientController {
 //    }
 
     @PostMapping("/signup/patient")
-    public ResponseEntity<PatientDto> signUp(@RequestBody PatientDto patientDto) {
+    public long signUp(@RequestBody PatientDto patientDto) {
         LocalDate curDate = LocalDate.now();
         patientDto.setSignedDate(curDate);
         log.info("The end point signup/patient has been used");
         patientService.registerPatient(patientDto);
-        return ResponseEntity.ok(patientDto);
+        return patientService.registerPatient(patientDto);
+//        return ResponseEntity.ok(patientDto);
     }
 
     @GetMapping("/patient/{id}/doctor")

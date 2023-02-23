@@ -50,6 +50,12 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
     @Query(value = "SELECT patient_id FROM " + SacchonApplication.SCHEMA + ".CONSULTATION WHERE date_created >= :dateGiven", nativeQuery = true)
     List<Long> findPatientWithActiveConsultation(@Param("dateGiven") LocalDate dateGiven);
 
+    // query for table Consultation (set doctor_id to null when doctor is deleted)
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".CONSULTATION SET doctor_id = null WHERE doctor_id = :doctorId" , nativeQuery = true)
+    void makeDoctorIdNullOnDoctorDelete(@Param("doctorId") long doctorId);
+
 //    @Transactional
 //    @Modifying
 //    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".CONSULTATION SET date_created = :dateCreated, " +

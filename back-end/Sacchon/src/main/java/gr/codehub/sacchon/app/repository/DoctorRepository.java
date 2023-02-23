@@ -39,10 +39,9 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long>{
                         @Param("email") String email,
                         @Param("signedDate") LocalDate signedDate);
 
-    // query: delete a doctor
-//    @Transactional
-//    @Modifying
-//    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET doctor_id = null WHERE doctor_id = :doctorId " +
-//            "AND DELETE FROM " + SacchonApplication.SCHEMA + ".DOCTOR WHERE id = :doctorId", nativeQuery = true)
-//    void deleteDoctorById(@Param("doctorId") long doctorId);
+//     query: delete a doctor
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".DOCTOR WHERE id = :doctorId", nativeQuery = true)
+    void deleteDoctorById(@Param("doctorId") long doctorId);
 }

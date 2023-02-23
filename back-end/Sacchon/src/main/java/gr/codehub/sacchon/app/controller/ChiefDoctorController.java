@@ -7,10 +7,8 @@ import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.ChiefDoctorException;
 import gr.codehub.sacchon.app.service.ChiefDoctorService;
 import gr.codehub.sacchon.app.service.GlucoseRecordService;
-import gr.codehub.sacchon.app.service.GlucoseService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +20,6 @@ import java.util.List;
 @Slf4j
 public class ChiefDoctorController {
     private ChiefDoctorService chiefDoctorService;
-
     private final GlucoseRecordService glucoseRecordService;
 
 

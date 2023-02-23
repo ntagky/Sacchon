@@ -78,16 +78,14 @@ public class DoctorController {
         return doctorService.updateDoctor(doctor, id);
     }
 
-//    @DeleteMapping("/doctor/delete/{id}")
-//    public void deleteDoctorDto(@PathVariable(name="id") long id){
-//        log.info("The end point doctor with id has been used");
-//        doctorService.deleteDoctorById(id);
-//    }
+    @DeleteMapping("/doctor/delete/{id}")
+    public void deleteDoctorDto(@PathVariable(name="id") long id){
+        log.info("The end point doctor/delete/{id} with id has been used");
+        doctorService.deleteDoctorById(id);
+    }
 
     @PostMapping("/doctor/consultation/new")
-    public Long createConsultation(
-            @RequestBody ConsultationWriterDto consultationWriterDto)
-    {
+    public long createConsultation(@RequestBody ConsultationWriterDto consultationWriterDto) {
         log.info("The end point /doctor/consultation/new has been used.");
         return doctorService.createConsultation(consultationWriterDto);
     }

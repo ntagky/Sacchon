@@ -16,8 +16,8 @@ public interface DoctorService {
     List<PatientDto> readPatientsWithNoConsultation(LocalDate dateGiven);
     DoctorDto readDoctor(long id) throws DoctorException;
     boolean updateDoctor(DoctorDto doctor, long id);
-    boolean deleteDoctor(long id);
-//    void deleteDoctorById(long id);
+    boolean deleteDoctor(long id); //old
+    void deleteDoctorById(long id);
     long createConsultation(ConsultationWriterDto consultationWriterDto);
     long registerDoctor(DoctorDto doctorDto);
     DoctorDto readDoctorById(long id);
