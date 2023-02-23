@@ -25,8 +25,7 @@ public class PatientController {
     private GlucoseService glucoseService;
     private GlucoseRecordService glucoseRecordService;
     private ConsultationService consultationService;
-    private DoctorServices doctorServices;
-
+    private DoctorService doctorService;
 
 
     @GetMapping("/patient/{id}")
@@ -130,38 +129,47 @@ public class PatientController {
                 patientId, startingDate, endingDate);
     }
 
-
-
     @GetMapping("/patient/{id}/glucose")
     public List<GlucoseFromPersonDto> getGlucoseDtoFromPatientById(@PathVariable(name="id") long id) {
         log.info("The end point PatientDto & GlucoseDto has been used");
         return glucoseService.readGlucoseByPatientId(id);
     }
 
+    // ConsultationDto contains every consultation info
     @GetMapping("/patient/{id}/consultation")
     public List<ConsultationDto> getConsultationOfPatientById(@PathVariable(name="id") long id) {
         log.info("The end point patient/{id}/consultation has been used");
         return consultationService.readConsultationByPatientId(id);
     }
 
+    // ConsultationBasicInfoDto contains basic consultation info (medication, dosage etc)
     @GetMapping("/patient/{id}/consultationinfo")
     public List<ConsultationBasicInfoDto> getConsultationInfoByPatientId(@PathVariable(name="id") int id){
         return consultationService.findConsultationInfoByPatientId(id);
     }
 
+//    @PostMapping("/signup/patient")
+//    //http://localhost:9000/api/signup/patient
+//    public ResponseEntity<?> createPatientDto(@RequestBody PatientDto PatientDto){
+//        log.info("The end point PatientDto has been used");
+//        patientService.registerPatient(PatientDto);
+//        return ResponseEntity.ok().build();
+//    }
+
     @PostMapping("/signup/patient")
-    //http://localhost:9000/api/signup/patient
-    public ResponseEntity<?> createPatientDto(@RequestBody PatientDto PatientDto){
-        log.info("The end point PatientDto has been used");
-        patientService.registerPatient(PatientDto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<PatientDto> signUp(@RequestBody PatientDto patientDto) {
+        LocalDate curDate = LocalDate.now();
+        patientDto.setSignedDate(curDate);
+        log.info("The end point signup/patient has been used");
+        patientService.registerPatient(patientDto);
+        return ResponseEntity.ok(patientDto);
     }
 
     @GetMapping("/patient/{id}/doctor")
     public DoctorDto getDoctorByPatientId(@PathVariable("id") long id){
-    long doctorId = patientService.findDoctorIdByPatientId(id);
-    return doctorServices.readDoctorNameAndEmailById(doctorId);
-     }
+        long doctorId = patientService.findDoctorIdByPatientId(id);
+        return doctorService.readDoctorNameAndEmailById(doctorId);
+    }
 
     @PutMapping("/patient/{id}")
     //http://localhost:9000/api/patient/{{id}}

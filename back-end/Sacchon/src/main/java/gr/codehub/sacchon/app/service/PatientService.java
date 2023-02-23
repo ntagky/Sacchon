@@ -8,9 +8,10 @@ import java.util.List;
 
 public interface PatientService {
 
+//    PatientDto createPatient(PatientDto patient);
     List<PastCarbReadingsDto> getPreviousCarbReadingsByPatientIdBetweenDates(long id, LocalDate startingDate, LocalDate endingDate);
     List<PatientDto> readPatient();
-    List<PatientDto> readPatientById(long id);
+    List<PatientDto> readPatientById(long id); // giati List ???
     long findDoctorIdByPatientId(long id);
     boolean updatePatient(PatientDto patient, long id);
 

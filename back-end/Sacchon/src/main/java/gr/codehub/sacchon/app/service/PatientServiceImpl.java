@@ -22,9 +22,7 @@ public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
-
     private final CarbsRepository carbsRepository;
-
 
 
     @Override
@@ -33,10 +31,8 @@ public class PatientServiceImpl implements PatientService {
         return patientOptional;
     }
 
-
     @Override
     public void deletePatientById(long patientId) {
-
         patientRepository.deletePatientById(patientId);
     }
 
@@ -105,7 +101,9 @@ public class PatientServiceImpl implements PatientService {
 
         patientRepository.createPatient(patient.getFirstName(), patient.getLastName(), patient.getPassword(), patient.getEmail(),
                 patient.getMedicalRecordNumber(), patient.getAddress(), patient.getGender(), patient.getDateOfBirth(),
-                patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight());
+                patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight(), patient.getSignedDate());
+
+//        return patient.getId();
     }
 
     @Override

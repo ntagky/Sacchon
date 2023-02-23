@@ -7,9 +7,9 @@ import gr.codehub.sacchon.app.exception.DoctorException;
 
 import java.time.LocalDate;
 import java.util.List;
-public interface DoctorServices {
+public interface DoctorService {
 
-    DoctorDto createDoctor(DoctorDto doctor);
+    DoctorDto createDoctor(DoctorDto doctorDto);
     List<DoctorDto> readDoctor();
     DoctorDto readDoctorNameAndEmailById(long id);
     List<DoctorDto> readDoctorByEmailNativeService(String match);
@@ -17,5 +17,8 @@ public interface DoctorServices {
     DoctorDto readDoctor(long id) throws DoctorException;
     boolean updateDoctor(DoctorDto doctor, long id);
     boolean deleteDoctor(long id);
+//    void deleteDoctorById(long id);
     long createConsultation(ConsultationWriterDto consultationWriterDto);
+    long registerDoctor(DoctorDto doctorDto);
+    DoctorDto readDoctorById(long id);
 }

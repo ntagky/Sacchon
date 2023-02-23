@@ -29,10 +29,28 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id=:patientId", nativeQuery = true)
     void deletePatientById(@Param("patientId") long patientId);
 
+//    @Query(value = "INSERT INTO " + SacchonApplication.SCHEMA + ".PATIENT (first_name, last_name, password, email, medical_record_number, address, gender, date_of_birth, blood_type, diabetes_type, height, weight) " +
+//            "VALUES (:firstName, :lastName, :password, :email, :medicalRecordNumber, :address, :gender, :dateOfBirth, :bloodType, :diabetesType, :height, :weight)", nativeQuery = true)
+//    void registerPatient(@Param("firstName") String firstName, @Param("lastName") String lastName, @Param("password") String password, @Param("email") String email,
+//                         @Param("medicalRecordNumber") String medicalRecordNumber, @Param("address") String address, @Param("gender") String gender, @Param("dateOfBirth") LocalDate dateOfBirth,
+//                         @Param("bloodType") BloodType bloodType, @Param("diabetesType") DiabetesType diabetesType, @Param("height") int height, @Param("weight") double weight);
+
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO " + SacchonApplication.SCHEMA + ".PATIENT (first_name, last_name, password, email, medical_record_number, address, gender, date_of_birth, blood_type, diabetes_type, height, weight) VALUES (:firstName, :lastName, :password, :email, :medicalRecordNumber, :address, :gender, :dateOfBirth, :bloodType, :diabetesType, :height, :weight)", nativeQuery = true)
-    void createPatient(@Param("firstName") String firstName, @Param("lastName") String lastName, @Param("password") String password, @Param("email") String email, @Param("medicalRecordNumber") String medicalRecordNumber, @Param("address") String address, @Param("gender") String gender, @Param("dateOfBirth") LocalDate dateOfBirth, @Param("bloodType") String bloodType, @Param("diabetesType") String diabetesType, @Param("height") int height, @Param("weight") Double weight);
+    @Query(value = "INSERT INTO " + SacchonApplication.SCHEMA + ".PATIENT (first_name, last_name, password, email, medical_record_number, address, gender, date_of_birth, blood_type, diabetes_type, height, weight, signed_date) VALUES (:firstName, :lastName, :password, :email, :medicalRecordNumber, :address, :gender, :dateOfBirth, :bloodType, :diabetesType, :height, :weight, :signedDate)", nativeQuery = true)
+    void createPatient(@Param("firstName") String firstName,
+                       @Param("lastName") String lastName,
+                       @Param("password") String password,
+                       @Param("email") String email,
+                       @Param("medicalRecordNumber") String medicalRecordNumber,
+                       @Param("address") String address,
+                       @Param("gender") String gender,
+                       @Param("dateOfBirth") LocalDate dateOfBirth,
+                       @Param("bloodType") String bloodType,
+                       @Param("diabetesType") String diabetesType,
+                       @Param("height") int height,
+                       @Param("weight") Double weight,
+                       @Param("signedDate") LocalDate signedDate);
 
     @Transactional
     @Modifying

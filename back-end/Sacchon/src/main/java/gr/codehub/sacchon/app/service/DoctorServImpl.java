@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class DoctorServImpl implements DoctorServices{
+public class DoctorServImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
     private final ConsultationRepository consultationRepository;
@@ -32,6 +32,18 @@ public class DoctorServImpl implements DoctorServices{
         //validation
         Doctor doctor = doctorDto.asDoctor();
         return new DoctorDto(doctorRepository.save(doctor));
+    }
+
+    @Override
+    public long registerDoctor(DoctorDto doctorDto) {
+        Doctor doctor = doctorDto.asDoctor();
+        doctorRepository.registerDoctor(
+                doctor.getFirstName(),
+                doctor.getLastName(),
+                doctor.getPassword(),
+                doctor.getEmail(),
+                doctor.getSignedDate());
+        return doctor.getId();
     }
 
     @Override
@@ -84,6 +96,11 @@ public class DoctorServImpl implements DoctorServices{
         return new DoctorDto(doctorRepository.findDoctorNameAndEmailById(id));
     }
 
+    @Override
+    public DoctorDto readDoctorById(long id) {
+        return new DoctorDto(doctorRepository.DisplayAccountData(id));
+    }
+
     // private method created for internal use
     private Doctor readDoctorDb(long id) throws DoctorException{
         Optional<Doctor> doctorOptional = doctorRepository.findById(id);
@@ -91,7 +108,6 @@ public class DoctorServImpl implements DoctorServices{
             return doctorOptional.get();
         throw new DoctorException("Doctor with id " + id + "is not found!");
     }
-
 
 
     @Override
@@ -121,6 +137,11 @@ public class DoctorServImpl implements DoctorServices{
         }
         return action;
     }
+
+//    @Override
+//    public void deleteDoctorById(long id) {
+//        doctorRepository.deleteDoctorById(id);
+//    }
 
     @Override
     public long createConsultation(ConsultationWriterDto consultationWriterDto) {
