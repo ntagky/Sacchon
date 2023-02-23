@@ -1,8 +1,9 @@
 package gr.codehub.sacchon.app.controller;
 
-import gr.codehub.sacchon.app.dto.ConsultationWriterDto;
-import gr.codehub.sacchon.app.dto.DoctorDto;
-import gr.codehub.sacchon.app.dto.PatientDto;
+import gr.codehub.sacchon.app.dto.*;
+import gr.codehub.sacchon.app.exception.ConsultationException;
+import gr.codehub.sacchon.app.repository.ConsultationRepository;
+import gr.codehub.sacchon.app.service.ConsultationService;
 import gr.codehub.sacchon.app.service.DoctorService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,8 @@ import java.util.List;
 public class DoctorController {
 
     private DoctorService doctorService;
+    private ConsultationService consultationService;
+    private ConsultationRepository consultationRepository;
 
     @GetMapping("/doctor")
     public List<DoctorDto> getDoctorsDto(){
@@ -88,5 +91,26 @@ public class DoctorController {
     public long createConsultation(@RequestBody ConsultationWriterDto consultationWriterDto) {
         log.info("The end point /doctor/consultation/new has been used.");
         return doctorService.createConsultation(consultationWriterDto);
+    }
+
+    @PutMapping("/doctor/consultation/{id}/modify")
+    public ConsultationModifiedDto modifyConsultation(@RequestBody ConsultationReceivedDto consultationReceivedDto,
+                                                      @PathVariable(name="id") long id) throws ConsultationException {
+
+        ConsultationModifiedDto consultation = consultationService.readConsultationModified(id);
+
+        consultation.setSeenConsultation(false);
+        consultation.setDoctorFirstName(consultation.getDoctorFirstName());
+        consultation.setDoctorLastName(consultation.getDoctorLastName());
+        consultation.setDoctorEmail(consultation.getDoctorEmail());
+
+        consultation.setDetails(consultationReceivedDto.getDetails());
+        consultationService.updateConsultationFromDoctorByPatientId(consultationReceivedDto);
+
+        // error cannot insert null to patient_id - INSERT FAILS
+        consultationRepository.save(consultation.asConsultation());
+
+        log.info("The end point /doctor/consultation/{id}/modify has been used.");
+        return consultation;
     }
 }
