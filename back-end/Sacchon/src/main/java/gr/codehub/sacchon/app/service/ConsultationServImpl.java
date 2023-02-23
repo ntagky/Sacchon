@@ -1,9 +1,6 @@
 package gr.codehub.sacchon.app.service;
 
-import gr.codehub.sacchon.app.dto.AllConsultationsReceivedForOnePatientDto;
-import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
-import gr.codehub.sacchon.app.dto.ConsultationDto;
-import gr.codehub.sacchon.app.dto.ConsultationReceivedDto;
+import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.ConsultationException;
 import gr.codehub.sacchon.app.model.Consultation;
 import gr.codehub.sacchon.app.repository.CarbsRepository;
@@ -45,6 +42,11 @@ public class ConsultationServImpl implements ConsultationService {
     }
 
     @Override
+    public ConsultationModifiedDto readConsultationModified(long id) throws ConsultationException {
+        return new ConsultationModifiedDto(readConsultationDb(id));
+    }
+
+    @Override
     public List<ConsultationDto> readConsultationByPatientId(long id) {
         return consultationRepository
                 .findConsultationByPatientId(id)
@@ -80,16 +82,16 @@ public class ConsultationServImpl implements ConsultationService {
         boolean action;
         try {
             Consultation dbConsultation = readConsultationDb(id);
-            dbConsultation.setDoctorFirstName(consultationDto.getDoctorDto().asDoctor().getFirstName());
-            dbConsultation.setDoctorLastName(consultationDto.getDoctorDto().asDoctor().getLastName());
-            dbConsultation.setDoctorEmail(consultationDto.getDoctorDto().asDoctor().getEmail());
-            dbConsultation.setDateCreated(consultationDto.getDateCreated());
+//            dbConsultation.setDoctorFirstName(consultationDto.getDoctorDto().asDoctor().getFirstName());
+//            dbConsultation.setDoctorLastName(consultationDto.getDoctorDto().asDoctor().getLastName());
+//            dbConsultation.setDoctorEmail(consultationDto.getDoctorDto().asDoctor().getEmail());
+//            dbConsultation.setDateCreated(consultationDto.getDateCreated());
             dbConsultation.setSeenConsultation(consultationDto.isSeenConsultation());
             dbConsultation.setMedications(consultationDto.getMedications());
             dbConsultation.setDetails(consultationDto.getDetails());
-            dbConsultation.setDoctor(consultationDto.getDoctorDto().asDoctor());
+//            dbConsultation.setDoctor(consultationDto.getDoctorDto().asDoctor());
 //            dbConsultation.setDoctorDto(consultationDto.getDoctorDto()); // how??
-            dbConsultation.setPatient(consultationDto.getPatientDto().asPatient());
+//            dbConsultation.setPatient(consultationDto.getPatientDto().asPatient());
             consultationRepository.save(dbConsultation);
             action = true;
         } catch (ConsultationException e){
@@ -109,6 +111,22 @@ public class ConsultationServImpl implements ConsultationService {
             action = false;
         }
         return action;
+    }
+
+    @Override
+    public ConsultationReceivedDto updateConsultationFromDoctorByPatientId(ConsultationReceivedDto consultationReceivedDto) {
+
+        consultationReceivedDto.asConsultation();
+
+//        consultationRepository.deleteMedicationsByConsultationId(consultationReceivedDto.getId());
+//        consultationRepository.addMedicationsByConsultationId(consultationReceivedDto.getId(), ??? );
+
+        consultationRepository.updateConsultationFromDoctorByPatientId(
+                consultationReceivedDto.getId(),
+                consultationReceivedDto.getDetails(),
+                consultationReceivedDto.isSeenConsultation());
+
+        return consultationReceivedDto;
     }
 
     @Override

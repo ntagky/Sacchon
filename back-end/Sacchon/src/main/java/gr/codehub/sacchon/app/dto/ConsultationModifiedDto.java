@@ -12,15 +12,21 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConsultationReceivedDto {
+public class ConsultationModifiedDto {
     private Long id;
+    private String doctorFirstName;
+    private String doctorLastName;
+    private String doctorEmail;
     private boolean seenConsultation;
     private List<String> medications;
     private String details;
 
-    public ConsultationReceivedDto(Consultation consultation){
+    public ConsultationModifiedDto(Consultation consultation){
         if(consultation!=null){
             id = consultation.getId();
+            doctorFirstName = consultation.getDoctor().getFirstName();
+            doctorLastName = consultation.getDoctor().getLastName();
+            doctorEmail = consultation.getDoctor().getEmail();
             seenConsultation = consultation.isSeenConsultation();
             medications = consultation.getMedications();
             details = consultation.getDetails();

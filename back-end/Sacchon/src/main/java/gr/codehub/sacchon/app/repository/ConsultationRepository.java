@@ -56,15 +56,26 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
     @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".CONSULTATION SET doctor_id = null WHERE doctor_id = :doctorId" , nativeQuery = true)
     void makeDoctorIdNullOnDoctorDelete(@Param("doctorId") long doctorId);
 
-//    @Transactional
-//    @Modifying
-//    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".CONSULTATION SET date_created = :dateCreated, " +
-//            "seen_consultation = :seenConsultation, details = :details  WHERE patient_id = :patientId " +
-//            "AND UPDATE DBO.CONSULTATION_MEDICATIONS SET medications = :medications  WHERE consultation_id = :consultationId", nativeQuery = true)
-//    void updateConsultationFromDoctorByPatientId(@Param("dateCreated") LocalDate dateCreated,
-//                                                 @Param("seenConsultation") boolean seenConsultation,
-//                                                 @Param("details") String details,
-//                                                 @Param("patientId") long patientId,
-//                                                 @Param("medications") List<String> medications);
+    // Queries for Use Case: Doctor modifies a consultation to a patient
+    // query: deletes medications from consultation_medications table (to re-write at modification)
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM DBO.CONSULTATION_MEDICATIONS WHERE consultation_id = :consultationId", nativeQuery = true)
+    void deleteMedicationsByConsultationId(@Param("consultationId") long consultationId);
 
+    // query: deletes medications from consultation_medications table (to re-write at modification)
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO DBO.CONSULTATION_MEDICATIONS(consultation_id, medications) VALUES (:consultationId, :medications)", nativeQuery = true)
+    void addMedicationsByConsultationId(@Param("consultationId") long consultationId,
+                                        @Param("medications") List<String> medications);
+
+    // query: doctor modifies a consultation to a patient
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".CONSULTATION SET details = :details, " +
+            "seen_consultation = :seenConsultation WHERE id = :consultationId", nativeQuery = true)
+    void updateConsultationFromDoctorByPatientId(@Param("consultationId") long consultationId,
+                                                 @Param("details") String details,
+                                                 @Param("seenConsultation") boolean seenConsultation);
 }

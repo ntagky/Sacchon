@@ -66,7 +66,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id=:patientId", nativeQuery = true)
     void deletePatientById(@Param("patientId") long patientId);
 
-
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".carbs WHERE patient_id=:patientId", nativeQuery = true)
@@ -76,6 +75,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Modifying
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".glucose WHERE patient_id=:patientId", nativeQuery = true)
     void deleteGlucoseByPatientId(@Param("patientId") long patientId);
+
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".consultation WHERE patient_id=:patientId", nativeQuery = true)
@@ -110,10 +110,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Modifying
     @Query(value = "DELETE FROM DBO.PATIENT_CONDITIONS  WHERE patient_id=:patientId", nativeQuery = true)
     void deleteDboPatientMedications(@Param("patientId") long patientId);
-
-
-
-
 
 
     // query for table Patient (set doctor_id to null when doctor is deleted)
