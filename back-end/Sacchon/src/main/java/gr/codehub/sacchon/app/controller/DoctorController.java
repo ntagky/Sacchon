@@ -93,24 +93,10 @@ public class DoctorController {
         return doctorService.createConsultation(consultationWriterDto);
     }
 
-    @PutMapping("/doctor/consultation/{id}/modify")
-    public ConsultationModifiedDto modifyConsultation(@RequestBody ConsultationReceivedDto consultationReceivedDto,
-                                                      @PathVariable(name="id") long id) throws ConsultationException {
+    @PutMapping("/doctor/consultation/modify")
+    public void modifyConsultation(@RequestBody ConsultationReceivedDto consultationReceivedDto) {
 
-        ConsultationModifiedDto consultation = consultationService.readConsultationModified(id);
-
-        consultation.setSeenConsultation(false);
-        consultation.setDoctorFirstName(consultation.getDoctorFirstName());
-        consultation.setDoctorLastName(consultation.getDoctorLastName());
-        consultation.setDoctorEmail(consultation.getDoctorEmail());
-
-        consultation.setDetails(consultationReceivedDto.getDetails());
         consultationService.updateConsultationFromDoctorByPatientId(consultationReceivedDto);
-
-        // error cannot insert null to patient_id - INSERT FAILS
-        consultationRepository.save(consultation.asConsultation());
-
         log.info("The end point /doctor/consultation/{id}/modify has been used.");
-        return consultation;
     }
 }
