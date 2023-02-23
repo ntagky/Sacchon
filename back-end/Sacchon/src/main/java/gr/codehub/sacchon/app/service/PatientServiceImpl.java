@@ -3,9 +3,11 @@ package gr.codehub.sacchon.app.service;
 import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.exception.PatientException;
+import gr.codehub.sacchon.app.model.Glucose;
 import gr.codehub.sacchon.app.model.Patient;
 import gr.codehub.sacchon.app.repository.CarbsRepository;
 import gr.codehub.sacchon.app.repository.DoctorRepository;
+import gr.codehub.sacchon.app.repository.GlucoseRepository;
 import gr.codehub.sacchon.app.repository.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,8 @@ public class PatientServiceImpl implements PatientService {
     private final DoctorRepository doctorRepository;
     private final CarbsRepository carbsRepository;
 
+    private final GlucoseRepository glucoseRepository;
+
 
     @Override
     public long getPatientCount(){
@@ -33,7 +37,22 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void deletePatientById(long patientId) {
+
+        //DBO REMOVAL
+
+        patientRepository.deleteDboPatientAllergies(patientId);
+        patientRepository.deleteDboPatientMedications(patientId);
+        patientRepository.deleteDboPatientConditions(patientId);
+        patientRepository.deleteDboConsultationMedications(patientId);
+
+        //SCHEMA REMOVAL
+
+        patientRepository.deleteCarbsByPatientId(patientId);
+        patientRepository.deleteConsultationsByPatientId(patientId);
+        patientRepository.deleteGlucoseRecordByPatientId(patientId);
+        patientRepository.deleteGlucoseByPatientId(patientId);
         patientRepository.deletePatientById(patientId);
+
     }
 
 

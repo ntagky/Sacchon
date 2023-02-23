@@ -22,7 +22,7 @@ public class Glucose implements Measurement<List<GlucoseRecord>> {
     private LocalDate date;
     @OneToMany(mappedBy = "glucose", cascade = CascadeType.ALL)
     private List<GlucoseRecord> measurement;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     private Patient patient;
 

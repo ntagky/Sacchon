@@ -24,10 +24,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query(value ="SELECT doctor_id FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id = :patientId", nativeQuery = true)
     long findDoctorIdByPatientId(@Param("patientId") long id);
 
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id=:patientId", nativeQuery = true)
-    void deletePatientById(@Param("patientId") long patientId);
 
 //    @Query(value = "INSERT INTO " + SacchonApplication.SCHEMA + ".PATIENT (first_name, last_name, password, email, medical_record_number, address, gender, date_of_birth, blood_type, diabetes_type, height, weight) " +
 //            "VALUES (:firstName, :lastName, :password, :email, :medicalRecordNumber, :address, :gender, :dateOfBirth, :bloodType, :diabetesType, :height, :weight)", nativeQuery = true)
@@ -62,6 +58,63 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     List<Long> readPatientsBySignedDateBefore(
             @Param("endingDate") LocalDate endingDate
     );
+
+
+    //PATIENT/GLUCOSE/CARBS/CONSULTATION DELETION
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id=:patientId", nativeQuery = true)
+    void deletePatientById(@Param("patientId") long patientId);
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".carbs WHERE patient_id=:patientId", nativeQuery = true)
+    void deleteCarbsByPatientId(@Param("patientId") long patientId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".glucose WHERE patient_id=:patientId", nativeQuery = true)
+    void deleteGlucoseByPatientId(@Param("patientId") long patientId);
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".consultation WHERE patient_id=:patientId", nativeQuery = true)
+    void deleteConsultationsByPatientId(@Param("patientId") long patientId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".Glucose_Record WHERE glucose_id IN (SELECT id FROM " + SacchonApplication.SCHEMA + ".Glucose WHERE patient_id=:patientId)", nativeQuery = true)
+    void deleteGlucoseRecordByPatientId(@Param("patientId") long patientId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".consultation SET medications = NULL WHERE patient_id = :patientId", nativeQuery = true)
+    void deleteMedicationsByPatientId(@Param("patientId") long patientId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM DBO.CONSULTATION_MEDICATIONS WHERE CONSULTATION_ID IN (SELECT ID FROM " +SacchonApplication.SCHEMA + ".CONSULTATION WHERE patient_id=:patientId)", nativeQuery = true)
+    void deleteDboConsultationMedications(@Param("patientId") long patientId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM DBO.PATIENT_ALLERGIES  WHERE patient_id=:patientId", nativeQuery = true)
+    void deleteDboPatientAllergies(@Param("patientId") long patientId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM DBO.PATIENT_CONDITIONS  WHERE patient_id=:patientId", nativeQuery = true)
+    void deleteDboPatientConditions(@Param("patientId") long patientId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM DBO.PATIENT_CONDITIONS  WHERE patient_id=:patientId", nativeQuery = true)
+    void deleteDboPatientMedications(@Param("patientId") long patientId);
+
+
+
+
+
 
     // query for table Patient (set doctor_id to null when doctor is deleted)
     @Transactional
