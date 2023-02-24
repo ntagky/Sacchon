@@ -1,0 +1,63 @@
+.main_title{
+    color:#0B436C; 
+    margin: auto; 
+    width: 60%; 
+    width: fit-content;
+    font-weight: bold;
+    margin-top: 35px;
+    font-size: 56px;
+}
+
+.main_motto{
+    color:#35B9BA; 
+    margin: auto; 
+    width: 60%; 
+    width: fit-content;
+    margin-top: 25px;
+    margin-bottom: 40px;
+    font-size: 42px;
+    font-style: italic;
+}
+
+.vl_sidebar{
+    border-left: 2px solid #BCBCBC;
+    height: 100vh;
+    margin: auto; 
+    width: fit-content;
+}
+
+.cards {
+    flex-wrap: nowrap;
+    display: flex;
+}
+
+.card{
+    margin-top: 40px!important;
+    width: 50%;
+    margin: auto;
+}
+
+.card_body{
+    margin: auto;
+    padding: 25px;
+    width: 100%;
+    justify-content: center;
+}
+
+.card_title{
+    font-size: 34px;
+    color: #0B436C;
+}
+
+.card_text{
+    margin-top: 10px;
+    font-size: 22px;
+    color: #0B436C;
+    display: table-caption;
+    width: 100%;
+}
+
+.card_bold{
+    font-size: 28px;
+    font-weight: 600;
+}

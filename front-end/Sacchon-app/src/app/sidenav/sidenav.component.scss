@@ -1,0 +1,22 @@
+.sidebar {
+    padding-top: 0;
+    display: inline-flex;
+};
+
+.sidebar_menu{
+    width: 250px;
+    border-right: none;
+    background: white;
+    color: black;
+    padding-top: 16px;
+    padding-left: 26px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 400;
+    
+}
+
+.vl_sidebar{
+    border-left: 2px solid #BCBCBC;
+    height: 100vh;
+}

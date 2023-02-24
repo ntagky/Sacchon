@@ -1,0 +1,52 @@
+<div class="main_content">
+    <h1 class="main_title">{{ welcomeMessage }}</h1>
+    <h1 class="main_motto">{{ mottoMessage }}</h1>
+    <div style="background-color: #ffe7f2; display: block; max-height: fit-content;">
+        <hr style="width: 100%; margin-top: 30px;">
+        <div class="cards">
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card_body">
+                  <h5 class="card_title">Active Consultation</h5>
+                  <hr>
+                  <ul class="card_text" style="list-style: none;">
+                    <div style="display: inline-flex;">
+                        <li class="mt-1">Medication</li>
+                        <p class="card_bold" style="color: #D22B74;">&nbsp;{{ medication }}</p>
+                    </div>
+                    <div style="display: inline-flex;">
+                        <li class="mt-1">Dosage</li>
+                        <p class="card_bold" style="color: #D22B74;">&nbsp;{{ dosage }}</p>
+                    </div>
+                    <div style="display: inline-flex;">
+                        <li class="mt-1">Details</li>
+                        <p class="card_bold">&nbsp;{{ details }}</p>
+                    </div>
+                  </ul>
+                    <hr style="margin-top: 0px;">
+                    <ul class="card_text" style="list-style: none;">
+                        <div style="display: inline-flex;">
+                            <li class="mt-1">Active untill</li>
+                            <p class="card_bold">&nbsp;{{ medication }}</p>
+                        </div>
+                        <div style="display: inline-flex;">
+                            <li class="mt-1">Prescribed by</li>
+                            <p class="card_bold">&nbsp;{{ dosage }}</p>
+                        </div>
+                    </ul>
+                </div>
+              </div>
+            </div>
+            <div class="vl_sidebar"></div>
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card_body">
+                  <h5 class="card_title">Personal Doctor</h5>
+                  <p class="card_text">dsfv</p>
+                  <a href="#" class="btn btn-primary">Contcact your doctor</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</div>
