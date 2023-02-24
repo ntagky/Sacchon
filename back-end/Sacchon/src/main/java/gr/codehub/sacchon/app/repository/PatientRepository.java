@@ -117,4 +117,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Modifying
     @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET doctor_id = null WHERE doctor_id = :doctorId" , nativeQuery = true)
     void makeDoctorIdNullOnDoctorDelete(@Param("doctorId") long doctorId);
+
+    @Query(value = "SELECT SIGNED_DATE FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    LocalDate findDateAssignedFromPatientId(@Param("patientId") long patientId);
 }

@@ -89,4 +89,12 @@ public class GlucoseRecordServImpl implements GlucoseRecordService {
     public List<PastGlucoseMeasurementDto> getGlucoseReadingsBetweenDatesByPatientId(long patientId, LocalDate startingDate, LocalDate endingDate) {
         return glucoseRecordRepository.getGlucoseMeasurementsBetweenDatesByPatientId(patientId, startingDate, endingDate);
     }
+
+    @Override
+    public Integer readGlucoseRecordCountByGlucoseId(Long glucoseId) {
+        if (glucoseId == null)
+            return 0;
+        Integer count = glucoseRecordRepository.findGlucoseRecordsCountByGlucoseId(glucoseId);
+        return count != null ? count : 0;
+    }
 }

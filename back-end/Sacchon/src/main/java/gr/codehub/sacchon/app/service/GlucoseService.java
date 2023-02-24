@@ -20,5 +20,6 @@ public interface GlucoseService {
     boolean updateGlucose(GlucoseDto glucoseDto, long id) throws GlucoseException;
     boolean deleteGlucoseById(long id) throws GlucoseException;
     long createGlucoseByPatientId(long id, GlucoseInitiatorDto glucoseInitiatorDto);
+    Long findGlucoseIdInSpecificDate(long patientId, LocalDate givenDate);
 
 }

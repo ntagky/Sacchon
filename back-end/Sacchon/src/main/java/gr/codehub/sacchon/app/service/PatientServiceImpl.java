@@ -3,7 +3,6 @@ package gr.codehub.sacchon.app.service;
 import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.exception.PatientException;
-import gr.codehub.sacchon.app.model.Glucose;
 import gr.codehub.sacchon.app.model.Patient;
 import gr.codehub.sacchon.app.repository.CarbsRepository;
 import gr.codehub.sacchon.app.repository.DoctorRepository;
@@ -130,6 +129,10 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.updateDoctorIdFromPatient(patientId, doctorId);
     }
 
+    @Override
+    public LocalDate findDateAssignedFromPatientId(long id) {
+        return patientRepository.findDateAssignedFromPatientId(id);
+    }
 
 
 }

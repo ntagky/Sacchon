@@ -99,4 +99,10 @@ public class GlucoseServImpl implements GlucoseService {
         glucoseRecordRepository.save(glucoseInitiatorDto.asGlucoseRecord(glucose));
         return glucose.getId();
     }
+
+    @Override
+    public Long findGlucoseIdInSpecificDate(long patientId, LocalDate givenDate) {
+        return glucoseRepository.findGlucoseIdInSpecificDate(patientId, givenDate);
+    }
+
 }

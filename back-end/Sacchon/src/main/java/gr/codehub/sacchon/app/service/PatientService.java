@@ -22,4 +22,6 @@ public interface PatientService {
     long registerPatient(PatientDto patientDto);
 
     void updateDoctorIdFromPatient(long patientId, long doctorId);
+
+    LocalDate findDateAssignedFromPatientId(long id);
 }

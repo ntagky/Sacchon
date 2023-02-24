@@ -29,10 +29,13 @@ public class Patient extends Person {
     private double weight;
 
     @ElementCollection
+    @CollectionTable(schema = SacchonApplication.SCHEMA)
     private List<String> allergies;
     @ElementCollection
+    @CollectionTable(schema = SacchonApplication.SCHEMA)
     private List<String> medications;
     @ElementCollection
+    @CollectionTable(schema = SacchonApplication.SCHEMA)
     private List<String> conditions;
 
     @OneToMany(mappedBy = "patient")

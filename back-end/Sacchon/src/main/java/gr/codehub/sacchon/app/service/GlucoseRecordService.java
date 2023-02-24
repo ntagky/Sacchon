@@ -19,5 +19,5 @@ public interface GlucoseRecordService {
     boolean deleteGlucoseRecordById(long id) throws GlucoseRecordException;
     boolean updateRecordById(long id, GlucoseRecordUpdaterDto glucoseRecordUpdaterDto);
     public List<PastGlucoseMeasurementDto> getGlucoseReadingsBetweenDatesByPatientId(long patientId, LocalDate startingDate, LocalDate endingDate);
-
+    Integer readGlucoseRecordCountByGlucoseId(Long glucoseId);
 }

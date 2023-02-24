@@ -65,4 +65,11 @@ public interface CarbsRepository extends JpaRepository<Carbs, Long> {
             @Param("measurement") int measurement
     );
 
+    @Query(value = "SELECT CARBS.MEASUREMENT FROM " + SacchonApplication.SCHEMA + ".CARBS " +
+            "WHERE CARBS.DATE = :givenDate AND CARBS.PATIENT_ID = :patientId",
+            nativeQuery = true)
+    Integer readCarbsByPatientIdInSpecificDate(
+            @Param("patientId") long patientId,
+            @Param("givenDate") LocalDate givenDate
+    );
 }

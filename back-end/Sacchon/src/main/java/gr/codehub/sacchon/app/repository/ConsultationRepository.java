@@ -78,4 +78,17 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
     void updateConsultationFromDoctorByPatientId(@Param("consultationId") long consultationId,
                                                  @Param("details") String details,
                                                  @Param("seenConsultation") boolean seenConsultation);
+
+    @Query(value = "SELECT CONSULTATION.ID FROM " + SacchonApplication.SCHEMA + ".CONSULTATION" +
+            " WHERE CONSULTATION.DATE_CREATED <= :dateGiven AND CONSULTATION.DATE_CREATED > :previousDays" +
+            " AND CONSULTATION.PATIENT_ID = :patientId", nativeQuery = true)
+    Long findConsultationIdInSpecificDate(
+            @Param("patientId") long patientId,
+            @Param("dateGiven") LocalDate dateGiven,
+            @Param("previousDays") LocalDate previousDays
+    );
+
+    @Query(value = "SELECT MAX(CONSULTATION.DATE_CREATED) FROM " + SacchonApplication.SCHEMA + ".CONSULTATION " +
+            "WHERE CONSULTATION.PATIENT_ID = :patientId", nativeQuery = true)
+    LocalDate findLatestConsultationByPatientId(@Param("patientId") long patientId);
 }

@@ -1,7 +1,6 @@
 package gr.codehub.sacchon.app.repository;
 
 import gr.codehub.sacchon.app.SacchonApplication;
-import gr.codehub.sacchon.app.dto.GlucoseRecordDto;
 import gr.codehub.sacchon.app.dto.PastGlucoseMeasurementDto;
 import gr.codehub.sacchon.app.model.GlucoseRecord;
 import jakarta.transaction.Transactional;
@@ -37,7 +36,7 @@ public interface GlucoseRecordRepository extends JpaRepository<GlucoseRecord, Lo
     @Query(value = "SELECT COUNT(*) FROM " + SacchonApplication.SCHEMA + ".GLUCOSE_RECORD " +
             "WHERE GLUCOSE_RECORD.GLUCOSE_ID = :glucoseId",
             nativeQuery = true)
-    int findGlucoseRecordsCountByGlucoseId(@Param("glucoseId") long glucoseId);
+    Integer findGlucoseRecordsCountByGlucoseId(@Param("glucoseId") long glucoseId);
 
     @Query("SELECT new gr.codehub.sacchon.app.dto.PastGlucoseMeasurementDto(glr.measurement, glr.time, g.date) FROM GlucoseRecord glr JOIN glr.glucose g WHERE g.patient.id = :patientId AND g.date BETWEEN :startingDate AND :endingDate")
     List<PastGlucoseMeasurementDto> getGlucoseMeasurementsBetweenDatesByPatientId(
@@ -45,4 +44,6 @@ public interface GlucoseRecordRepository extends JpaRepository<GlucoseRecord, Lo
             @Param("startingDate") LocalDate startingDate,
             @Param("endingDate") LocalDate endingDate
     );
+
+//    int readGlucoseRecordCountByGlucoseId(@Param("glucoseId") long glucoseId);
 }

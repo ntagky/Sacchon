@@ -1,6 +1,5 @@
 package gr.codehub.sacchon.app.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import gr.codehub.sacchon.app.SacchonApplication;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,6 +39,7 @@ public class Consultation {
     private LocalDate dateCreated;
     private boolean seenConsultation;
     @ElementCollection
+    @CollectionTable(schema = SacchonApplication.SCHEMA)
     private List<String> medications;
     private String details;
     @ManyToOne() // me ti logiki oti to consultation de tha syndeetai pleon me ton giatro, an fygei apo to systima, ara mporei na meinei xwris referenced giatro

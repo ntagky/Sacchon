@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -185,4 +187,85 @@ public class PatientController {
         patientService.deletePatientById(id);
     }
 
+    @GetMapping("/patient/{id}/data")
+    public List<PersonDataDto> getPersonData(@PathVariable("id") long id){
+        List<PersonDataDto> personDataDtoList = new ArrayList<>();
+        LocalDate referenceDate = patientService.findDateAssignedFromPatientId(id);
+        LocalDate currentDate = LocalDate.now();
+
+        while (!referenceDate.equals(currentDate.plusDays(1))) {
+
+            ConsultationPureDto consultationPureDto = consultationService.findConsultationIdInAndStatusSpecificDate(
+                    id, currentDate,
+                    currentDate.minusMonths(1)
+            );
+
+            personDataDtoList.add(new PersonDataDto(
+                    currentDate,
+                    currentDate.getDayOfWeek().toString(),
+                    carbsService.readCarbsByPatientIdInSpecificDate(id, currentDate),
+                    glucoseService.readDailyAverageGlucoseByPatientIdOnSpecificDates(
+                            id,
+                            currentDate,
+                            currentDate
+                    ).stream().findFirst().orElseGet(() -> new BigDecimal(0)),
+                    glucoseRecordService.readGlucoseRecordCountByGlucoseId(glucoseService.findGlucoseIdInSpecificDate(id, referenceDate)),
+                    consultationPureDto.getId(),
+                    consultationPureDto.getStatus()
+            ));
+
+            currentDate = currentDate.minusDays(1);
+        }
+        return personDataDtoList;
+    }
+
+    @GetMapping("/patient/{id}/data/query")
+    public List<PersonDataDto> getPersonDataPaginating(
+            @PathVariable("id") long id,
+            @RequestParam(name="start") long startingPosition,
+            @RequestParam(name="step") long step
+    ){
+        List<PersonDataDto> personDataDtoList = new ArrayList<>();
+        LocalDate assignedDate = patientService.findDateAssignedFromPatientId(id);
+        LocalDate indexDate = LocalDate.now().minusDays(startingPosition);
+        long index = startingPosition;
+
+        while (index < startingPosition + step) {
+
+            if (indexDate.isBefore(assignedDate))
+                break;
+
+            ConsultationPureDto consultationPureDto = consultationService.findConsultationIdInAndStatusSpecificDate(
+                    id,
+                    indexDate,
+                    indexDate.minusMonths(1)
+            );
+
+            personDataDtoList.add(new PersonDataDto(
+                    indexDate,
+                    indexDate.getDayOfWeek().toString(),
+                    carbsService.readCarbsByPatientIdInSpecificDate(id, indexDate),
+                    glucoseService.readDailyAverageGlucoseByPatientIdOnSpecificDates(
+                            id,
+                            indexDate,
+                            indexDate
+                    ).stream().findFirst().orElseGet(() -> new BigDecimal(0)),
+                    glucoseRecordService.readGlucoseRecordCountByGlucoseId(glucoseService.findGlucoseIdInSpecificDate(id, indexDate)),
+                    consultationPureDto.getId(),
+                    consultationPureDto.getStatus()
+            ));
+
+            indexDate = indexDate.minusDays(1);
+            index++;
+        }
+        return personDataDtoList;
+    }
+
+    @GetMapping("/patient/{id}/data/paginator")
+    public long getDateCountFromPerson(
+            @PathVariable("id") long id,
+            @RequestParam("step") long step
+    ){
+        return patientService.findDateAssignedFromPatientId(id).until(LocalDate.now(), ChronoUnit.DAYS) / step;
+    }
 }

@@ -18,4 +18,5 @@ public interface ConsultationService {
     boolean updateConsultation(ConsultationReceivedDto consultation, long id);
     boolean deleteConsultation(long id);
     ConsultationReceivedDto updateConsultationFromDoctorByPatientId(ConsultationReceivedDto consultationReceivedDto);
+    ConsultationPureDto findConsultationIdInAndStatusSpecificDate(long patientId, LocalDate dateGiven, LocalDate previousDays);
 }

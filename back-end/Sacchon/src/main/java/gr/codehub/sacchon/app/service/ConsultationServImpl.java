@@ -3,6 +3,7 @@ package gr.codehub.sacchon.app.service;
 import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.ConsultationException;
 import gr.codehub.sacchon.app.model.Consultation;
+import gr.codehub.sacchon.app.model.ConsultationStatus;
 import gr.codehub.sacchon.app.repository.CarbsRepository;
 import gr.codehub.sacchon.app.repository.ConsultationRepository;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ConsultationServImpl implements ConsultationService {
     private final ConsultationRepository consultationRepository;
-    private final CarbsRepository carbsRepository;
 
     @Override
     public ConsultationDto createConsultation(ConsultationReceivedDto consultationDto){
@@ -157,4 +157,27 @@ public class ConsultationServImpl implements ConsultationService {
 //
 //        return null;
 //    }
+
+
+    @Override
+    public ConsultationPureDto findConsultationIdInAndStatusSpecificDate(long patientId, LocalDate dateGiven, LocalDate previousDays) {
+        Long consultationId = consultationRepository.findConsultationIdInSpecificDate(patientId, dateGiven, previousDays);
+        LocalDate latestConsultation = consultationRepository.findLatestConsultationByPatientId(patientId);
+
+        assert dateGiven.isAfter(previousDays);
+
+        if ((dateGiven.isAfter(latestConsultation) || dateGiven.isEqual(latestConsultation)) &&
+                previousDays.isBefore(latestConsultation))
+            return new ConsultationPureDto(consultationId, ConsultationStatus.ACTIVE.name());
+
+        if (dateGiven.isBefore(latestConsultation) && previousDays.isBefore(latestConsultation))
+            if (consultationId != null)
+                return new ConsultationPureDto(consultationId, ConsultationStatus.EXPIRED.name());
+
+        if ((dateGiven.isAfter(latestConsultation) || dateGiven.isEqual(latestConsultation)) &&
+                (previousDays.isEqual(latestConsultation) || previousDays.isAfter(latestConsultation)))
+            return new ConsultationPureDto(-1, ConsultationStatus.AWAITING.name());
+
+        return new ConsultationPureDto(-1, ConsultationStatus.NONE.name());
+    }
 }

@@ -34,4 +34,8 @@ public interface GlucoseRepository extends JpaRepository<Glucose, Long> {
             @Param("endingDate") LocalDate endingDate
     );
 
+    @Query(value = "SELECT GLUCOSE.ID FROM " + SacchonApplication.SCHEMA + ".GLUCOSE " +
+            "WHERE GLUCOSE.PATIENT_ID = :patientId AND GLUCOSE.DATE = :givenDate",
+            nativeQuery = true)
+    Long findGlucoseIdInSpecificDate(long patientId, LocalDate givenDate);
 }

@@ -76,4 +76,10 @@ public class CarbsServImpl implements CarbsService {
                 carbsDto.asCarbs(patientRepository.findById(patientId).get())
         ).getId();
     }
+
+    @Override
+    public int readCarbsByPatientIdInSpecificDate(long patientId, LocalDate givenData) {
+        Integer carbs = carbsRepository.readCarbsByPatientIdInSpecificDate(patientId, givenData);
+        return carbs == null ? 0 : carbs;
+    }
 }

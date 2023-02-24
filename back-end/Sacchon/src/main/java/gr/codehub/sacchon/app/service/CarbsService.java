@@ -17,4 +17,5 @@ public interface CarbsService {
     boolean updateCarbsById(long id, int measurement);
     boolean deleteCarbsById(long id) throws CarbsException;
     long createCarbsByPatientId(long patientId, CarbsFromPersonDto carbsDto);
+    int readCarbsByPatientIdInSpecificDate(long id, LocalDate givenDate);
 }
