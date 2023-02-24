@@ -5,7 +5,7 @@
     width: fit-content;
     font-weight: bold;
     margin-top: 35px;
-    font-size: 56px;
+    font-size: 42px;
 }
 
 .main_motto{
@@ -15,19 +15,19 @@
     width: fit-content;
     margin-top: 25px;
     margin-bottom: 40px;
-    font-size: 42px;
+    font-size: 26px;
     font-style: italic;
 }
 
 .vl_sidebar{
     border-left: 2px solid #BCBCBC;
     height: 100vh;
-    margin: auto; 
+    // margin: auto; 
     width: fit-content;
 }
 
 .cards {
-    flex-wrap: nowrap;
+    // flex-wrap: nowrap;
     display: flex;
 }
 
@@ -45,19 +45,19 @@
 }
 
 .card_title{
-    font-size: 34px;
+    font-size: 26px;
     color: #0B436C;
 }
 
 .card_text{
     margin-top: 10px;
-    font-size: 22px;
+    font-size: 16px;
     color: #0B436C;
     display: table-caption;
     width: 100%;
 }
 
 .card_bold{
-    font-size: 28px;
+    font-size: 20px;
     font-weight: 600;
 }

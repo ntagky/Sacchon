@@ -7,9 +7,13 @@ import { Component } from '@angular/core';
 })
 export class MainContentComponent {
 
-welcomeMessage = "Sacchon";
-mottoMessage = "Control diabetes, live without limits";
-medication ="ff";
-dosage ="ff";
-details ="ff";
+  welcomeMessage = "Sacchon";
+  mottoMessage = "Control diabetes, live without limits";
+  medication ="ff";
+  dosage ="ff";
+  details ="ff";
+
+  printThisPage() {
+    window.print();
+  }
 }
