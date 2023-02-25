@@ -42,7 +42,9 @@ public class DoctorServImpl implements DoctorService {
                 doctor.getLastName(),
                 doctor.getPassword(),
                 doctor.getEmail(),
-                doctor.getSignedDate());
+                doctor.getSignedDate(),
+                doctor.getPhoneNumber());
+
         return doctorRepository.save(doctor).getId();
     }
 

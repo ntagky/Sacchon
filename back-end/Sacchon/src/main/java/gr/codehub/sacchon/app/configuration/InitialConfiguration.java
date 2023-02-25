@@ -102,6 +102,7 @@ public class InitialConfiguration {
 
             doctor.setPatients(null);
             doctor.setConsultations(null);
+            doctor.setPhoneNumber("69"+RandomStringUtils.random(8, false, true));
 
             doctorArrayList.add(doctor);
         }
@@ -129,6 +130,7 @@ public class InitialConfiguration {
             monthBorn = random.nextInt(12) + 1;
             dayBorn = random.nextInt(27) + 1;
 
+            patient.setPhoneNumber("69"+RandomStringUtils.random(8, false, true));
             patient.setId(0L);
             patient.setFirstName(firstName);
             patient.setLastName(lastName);

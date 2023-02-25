@@ -20,6 +20,7 @@ public class DoctorDto extends PersonDto{
             super.setEmail(doctor.getEmail());
             super.setPassword(doctor.getPassword());
             super.setSignedDate(doctor.getSignedDate());
+            super.setPhoneNumber(doctor.getPhoneNumber());
         }
     }
 
@@ -32,6 +33,7 @@ public class DoctorDto extends PersonDto{
         doctor.setEmail(super.getEmail());
         doctor.setPassword(super.getPassword());
         doctor.setSignedDate(super.getSignedDate());
+        doctor.setPhoneNumber(super.getPhoneNumber());
         return doctor;
     }
 }

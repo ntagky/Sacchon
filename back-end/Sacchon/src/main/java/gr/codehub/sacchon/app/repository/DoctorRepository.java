@@ -31,13 +31,14 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long>{
     // query: register a new doctor
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO " + SacchonApplication.SCHEMA + ".DOCTOR (first_name, last_name, password, email, signed_date) " +
-            "VALUES (:firstName, :lastName, :password, :email, :signedDate);", nativeQuery = true)
+    @Query(value = "INSERT INTO " + SacchonApplication.SCHEMA + ".DOCTOR (first_name, last_name, password, email, signed_date,phone_number) " +
+            "VALUES (:firstName, :lastName, :password, :email, :signedDate, :phoneNumber);", nativeQuery = true)
     void registerDoctor(@Param("firstName") String firstName,
                         @Param("lastName") String lastName,
                         @Param("password") String password,
                         @Param("email") String email,
-                        @Param("signedDate") LocalDate signedDate);
+                        @Param("signedDate") LocalDate signedDate,
+                        @Param("phoneNumber")String phoneNumber);
 
 //     query: delete a doctor
     @Transactional
