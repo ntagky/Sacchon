@@ -1,6 +1,7 @@
 package gr.codehub.sacchon.app.service;
 
 import gr.codehub.sacchon.app.dto.GlucoseRecordDto;
+import gr.codehub.sacchon.app.dto.GlucoseRecordFromDayDto;
 import gr.codehub.sacchon.app.dto.GlucoseRecordUpdaterDto;
 import gr.codehub.sacchon.app.dto.PastGlucoseMeasurementDto;
 import gr.codehub.sacchon.app.exception.GlucoseRecordException;
@@ -96,5 +97,14 @@ public class GlucoseRecordServImpl implements GlucoseRecordService {
             return 0;
         Integer count = glucoseRecordRepository.findGlucoseRecordsCountByGlucoseId(glucoseId);
         return count != null ? count : 0;
+    }
+
+    @Override
+    public List<GlucoseRecordFromDayDto> readGlucoseRecordByGlucoseId(long glucoseId) {
+        return glucoseRecordRepository
+                .readGlucoseRecordByGlucoseId(glucoseId)
+                .stream()
+                .map(GlucoseRecordFromDayDto::new)
+                .collect(Collectors.toList());
     }
 }

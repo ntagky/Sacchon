@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin("http://localhost:4200")
 public class PatientController {
 
     private PatientService patientService;
@@ -64,6 +65,15 @@ public class PatientController {
     ) {
         log.info("The end point PatientDto & CarbsDto has been used");
         return carbsService.updateCarbsById(id, measurement);
+    }
+
+    @PostMapping("/patient/{id}/carbs/{date}/update/{measurement}")
+    public boolean updateCarbsFromPatientIdAndDate(
+            @PathVariable(name="id") int patientId,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date,
+            @PathVariable(name="measurement") int measurement) {
+        log.info("The end point PatientDto & CarbsDto has been used");
+        return carbsService.updateCarbsFromPatientIdAndDate(patientId, date, measurement);
     }
 
     @DeleteMapping("/patient/carbs/{id}/delete")
@@ -187,38 +197,6 @@ public class PatientController {
         patientService.deletePatientById(id);
     }
 
-    @GetMapping("/patient/{id}/data")
-    public List<PersonDataDto> getPersonData(@PathVariable("id") long id){
-        List<PersonDataDto> personDataDtoList = new ArrayList<>();
-        LocalDate referenceDate = patientService.findDateAssignedFromPatientId(id);
-        LocalDate currentDate = LocalDate.now();
-
-        while (!referenceDate.equals(currentDate.plusDays(1))) {
-
-            ConsultationPureDto consultationPureDto = consultationService.findConsultationIdInAndStatusSpecificDate(
-                    id, currentDate,
-                    currentDate.minusMonths(1)
-            );
-
-            personDataDtoList.add(new PersonDataDto(
-                    currentDate,
-                    currentDate.getDayOfWeek().toString(),
-                    carbsService.readCarbsByPatientIdInSpecificDate(id, currentDate),
-                    glucoseService.readDailyAverageGlucoseByPatientIdOnSpecificDates(
-                            id,
-                            currentDate,
-                            currentDate
-                    ).stream().findFirst().orElseGet(() -> new BigDecimal(0)),
-                    glucoseRecordService.readGlucoseRecordCountByGlucoseId(glucoseService.findGlucoseIdInSpecificDate(id, referenceDate)),
-                    consultationPureDto.getId(),
-                    consultationPureDto.getStatus()
-            ));
-
-            currentDate = currentDate.minusDays(1);
-        }
-        return personDataDtoList;
-    }
-
     @GetMapping("/patient/{id}/data/query")
     public List<PersonDataDto> getPersonDataPaginating(
             @PathVariable("id") long id,
@@ -267,5 +245,27 @@ public class PatientController {
             @RequestParam("step") long step
     ){
         return patientService.findDateAssignedFromPatientId(id).until(LocalDate.now(), ChronoUnit.DAYS) / step;
+    }
+
+    @GetMapping("/patient/{id}/glucose/{date}")
+    public List<GlucoseRecordFromDayDto> getGlucoseDtoFromPatientByIdInSpecificDate(
+            @PathVariable(name="id") long patientId,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date
+    ) {
+        log.info("The end point PatientDto & GlucoseDto has been used");
+        Long glucoseId = glucoseService.findGlucoseIdInSpecificDate(patientId, date);
+        if (glucoseId == null)
+            return null;
+
+        return glucoseRecordService.readGlucoseRecordByGlucoseId(glucoseId);
+    }
+
+    @DeleteMapping("/patient/{id}/carbs/{date}")
+    public boolean deleteCarbsFromPatientInSpecificDate(
+            @PathVariable(name="id") long id,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date
+    ){
+        patientService.deleteCarbsFromPatientInSpecificDate(id, date);
+        return true;
     }
 }

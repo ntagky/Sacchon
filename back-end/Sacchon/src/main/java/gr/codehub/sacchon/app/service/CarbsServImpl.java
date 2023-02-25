@@ -65,6 +65,13 @@ public class CarbsServImpl implements CarbsService {
         carbsRepository.updateCarbsById(id, measurement);
         return true;
     }
+
+    @Override
+    public boolean updateCarbsFromPatientIdAndDate(long patientId, LocalDate date, int measurement) {
+        carbsRepository.updateCarbsFromPatientIdAndDate(patientId, date, measurement);
+        return true;
+    }
+
     @Override
     public boolean deleteCarbsById(long id) throws CarbsException {
         carbsRepository.delete(readCarbsDb(id));

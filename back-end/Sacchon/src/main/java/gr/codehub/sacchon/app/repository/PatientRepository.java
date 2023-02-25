@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-    @Query("SELECT COUNT(p) FROM Patient p")
+    @Query("SELECT COUNT(p) FROM " + SacchonApplication.SCHEMA + ".Patient p")
     Long countPatients();
 
     @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id = :patientId", nativeQuery = true)
@@ -59,7 +59,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
             @Param("endingDate") LocalDate endingDate
     );
 
-
     //PATIENT/GLUCOSE/CARBS/CONSULTATION DELETION
     @Transactional
     @Modifying
@@ -93,22 +92,22 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM DBO.CONSULTATION_MEDICATIONS WHERE CONSULTATION_ID IN (SELECT ID FROM " +SacchonApplication.SCHEMA + ".CONSULTATION WHERE patient_id=:patientId)", nativeQuery = true)
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".CONSULTATION_MEDICATIONS WHERE CONSULTATION_ID IN (SELECT ID FROM " +SacchonApplication.SCHEMA + ".CONSULTATION WHERE patient_id=:patientId)", nativeQuery = true)
     void deleteDboConsultationMedications(@Param("patientId") long patientId);
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM DBO.PATIENT_ALLERGIES  WHERE patient_id=:patientId", nativeQuery = true)
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT_ALLERGIES  WHERE patient_id=:patientId", nativeQuery = true)
     void deleteDboPatientAllergies(@Param("patientId") long patientId);
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM DBO.PATIENT_CONDITIONS  WHERE patient_id=:patientId", nativeQuery = true)
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT_CONDITIONS  WHERE patient_id=:patientId", nativeQuery = true)
     void deleteDboPatientConditions(@Param("patientId") long patientId);
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM DBO.PATIENT_CONDITIONS  WHERE patient_id=:patientId", nativeQuery = true)
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT_CONDITIONS  WHERE patient_id=:patientId", nativeQuery = true)
     void deleteDboPatientMedications(@Param("patientId") long patientId);
 
 

@@ -45,5 +45,9 @@ public interface GlucoseRecordRepository extends JpaRepository<GlucoseRecord, Lo
             @Param("endingDate") LocalDate endingDate
     );
 
-//    int readGlucoseRecordCountByGlucoseId(@Param("glucoseId") long glucoseId);
+    @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".GLUCOSE_RECORD " +
+            "WHERE GLUCOSE_RECORD.GLUCOSE_ID = :glucoseId", nativeQuery = true)
+    List<GlucoseRecord> readGlucoseRecordByGlucoseId(
+            @Param("glucoseId") long glucoseId
+    );
 }

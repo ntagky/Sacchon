@@ -72,4 +72,22 @@ public interface CarbsRepository extends JpaRepository<Carbs, Long> {
             @Param("patientId") long patientId,
             @Param("givenDate") LocalDate givenDate
     );
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".CARBS " +
+            "WHERE CARBS.PATIENT_ID = :patientId AND DATE = :dateGiven", nativeQuery = true)
+    void deleteCarbsFromPatientInSpecificDate(
+            @Param("patientId") long patientId,
+            @Param("dateGiven") LocalDate dateGiven
+    );
+
+    @Transactional
+    @Modifying
+    @Query(value ="UPDATE " + SacchonApplication.SCHEMA + ".CARBS SET CARBS.MEASUREMENT = :measurement" +
+            " WHERE CARBS.PATIENT_ID = :patientId AND CARBS.DATE = :date", nativeQuery = true)
+    void updateCarbsFromPatientIdAndDate(
+            @Param("patientId") long patientId,
+            @Param("date") LocalDate date,
+            @Param("measurement") int measurement);
 }

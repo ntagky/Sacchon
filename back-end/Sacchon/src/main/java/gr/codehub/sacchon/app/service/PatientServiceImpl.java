@@ -134,5 +134,10 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.findDateAssignedFromPatientId(id);
     }
 
+    @Override
+    public void deleteCarbsFromPatientInSpecificDate(long id, LocalDate dateGiven) {
+        carbsRepository.deleteCarbsFromPatientInSpecificDate(id, dateGiven);
+    }
+
 
 }

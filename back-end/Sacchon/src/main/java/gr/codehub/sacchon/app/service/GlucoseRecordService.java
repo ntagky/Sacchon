@@ -1,6 +1,7 @@
 package gr.codehub.sacchon.app.service;
 
 import gr.codehub.sacchon.app.dto.GlucoseRecordDto;
+import gr.codehub.sacchon.app.dto.GlucoseRecordFromDayDto;
 import gr.codehub.sacchon.app.dto.GlucoseRecordUpdaterDto;
 import gr.codehub.sacchon.app.dto.PastGlucoseMeasurementDto;
 import gr.codehub.sacchon.app.exception.GlucoseRecordException;
@@ -20,4 +21,5 @@ public interface GlucoseRecordService {
     boolean updateRecordById(long id, GlucoseRecordUpdaterDto glucoseRecordUpdaterDto);
     public List<PastGlucoseMeasurementDto> getGlucoseReadingsBetweenDatesByPatientId(long patientId, LocalDate startingDate, LocalDate endingDate);
     Integer readGlucoseRecordCountByGlucoseId(Long glucoseId);
+    List<GlucoseRecordFromDayDto> readGlucoseRecordByGlucoseId(long glucoseId);
 }

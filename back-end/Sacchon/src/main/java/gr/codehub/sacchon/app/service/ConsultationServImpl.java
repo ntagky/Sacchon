@@ -136,6 +136,9 @@ public class ConsultationServImpl implements ConsultationService {
         Long consultationId = consultationRepository.findConsultationIdInSpecificDate(patientId, dateGiven, previousDays);
         LocalDate latestConsultation = consultationRepository.findLatestConsultationByPatientId(patientId);
 
+        if (latestConsultation == null || consultationId == null)
+            return new ConsultationPureDto(-1, ConsultationStatus.NONE.name());
+
         assert dateGiven.isAfter(previousDays);
 
         if ((dateGiven.isAfter(latestConsultation) || dateGiven.isEqual(latestConsultation)) &&
@@ -143,8 +146,7 @@ public class ConsultationServImpl implements ConsultationService {
             return new ConsultationPureDto(consultationId, ConsultationStatus.ACTIVE.name());
 
         if (dateGiven.isBefore(latestConsultation) && previousDays.isBefore(latestConsultation))
-            if (consultationId != null)
-                return new ConsultationPureDto(consultationId, ConsultationStatus.EXPIRED.name());
+            return new ConsultationPureDto(consultationId, ConsultationStatus.EXPIRED.name());
 
         if ((dateGiven.isAfter(latestConsultation) || dateGiven.isEqual(latestConsultation)) &&
                 (previousDays.isEqual(latestConsultation) || previousDays.isAfter(latestConsultation)))

@@ -24,4 +24,6 @@ public interface PatientService {
     void updateDoctorIdFromPatient(long patientId, long doctorId);
 
     LocalDate findDateAssignedFromPatientId(long id);
+
+    void deleteCarbsFromPatientInSpecificDate(long id, LocalDate dateGiven);
 }
