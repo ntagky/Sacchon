@@ -31,9 +31,9 @@ public class Patient extends Person {
     @ElementCollection
     @CollectionTable(schema = SacchonApplication.SCHEMA)
     private List<String> allergies;
-    @ElementCollection
-    @CollectionTable(schema = SacchonApplication.SCHEMA)
-    private List<String> medications;
+//    @ElementCollection
+//    @CollectionTable(schema = SacchonApplication.SCHEMA)
+//    private List<String> medications;
     @ElementCollection
     @CollectionTable(schema = SacchonApplication.SCHEMA)
     private List<String> conditions;

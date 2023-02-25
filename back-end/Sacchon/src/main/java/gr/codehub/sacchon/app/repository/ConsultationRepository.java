@@ -56,19 +56,6 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
     @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".CONSULTATION SET doctor_id = null WHERE doctor_id = :doctorId" , nativeQuery = true)
     void makeDoctorIdNullOnDoctorDelete(@Param("doctorId") long doctorId);
 
-    // Queries for Use Case: Doctor modifies a consultation to a patient
-    // query: deletes medications from consultation_medications table (to re-write at modification)
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM DBO.CONSULTATION_MEDICATIONS WHERE consultation_id = :consultationId", nativeQuery = true)
-    void deleteMedicationsByConsultationId(@Param("consultationId") long consultationId);
-
-    // query: deletes medications from consultation_medications table (to re-write at modification)
-    @Transactional
-    @Modifying
-    @Query(value = "INSERT INTO DBO.CONSULTATION_MEDICATIONS(consultation_id, medications) VALUES (:consultationId, :medications)", nativeQuery = true)
-    void addMedicationsByConsultationId(@Param("consultationId") long consultationId,
-                                        @Param("medications") List<String> medications);
 
     // query: doctor modifies a consultation to a patient
     @Transactional
@@ -78,6 +65,13 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
     void updateConsultationFromDoctorByPatientId(@Param("consultationId") long consultationId,
                                                  @Param("details") String details,
                                                  @Param("seenConsultation") boolean seenConsultation);
+
+    // query: updates seenConsultation after medications have been modified
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".CONSULTATION SET seen_consultation = 0" +
+            " WHERE id = :consultationId", nativeQuery = true)
+    void updateSeenConsultationById(@Param("consultationId") long consultationId);
 
     @Query(value = "SELECT CONSULTATION.ID FROM " + SacchonApplication.SCHEMA + ".CONSULTATION" +
             " WHERE CONSULTATION.DATE_CREATED <= :dateGiven AND CONSULTATION.DATE_CREATED > :previousDays" +

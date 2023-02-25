@@ -47,13 +47,6 @@ public class ConsultationController {
         return consultationService.createConsultation(consultation);
     }
 
-    @PutMapping("/consultation/{id}")
-    public boolean updateConsultationDto(@RequestBody ConsultationReceivedDto consultation,
-                                   @PathVariable(name="id")  int id){
-        log.info("The end point consultation with id has been used");
-        return consultationService.updateConsultation(consultation, id);
-    }
-
     @DeleteMapping("/consultation/{id}")
     public boolean deleteConsultationDto(@PathVariable(name="id")  long id){
         log.info("The end point consultation with id has been used");

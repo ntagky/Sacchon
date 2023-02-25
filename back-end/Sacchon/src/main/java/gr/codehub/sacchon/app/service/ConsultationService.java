@@ -15,8 +15,7 @@ public interface ConsultationService {
     List<ConsultationDto> readConsultationByPatientId(long id);
     List<ConsultationBasicInfoDto> findConsultationInfoByPatientId(long id);
     List<Long> findPatientWithActiveConsultation(LocalDate dateGiven);
-    boolean updateConsultation(ConsultationReceivedDto consultation, long id);
     boolean deleteConsultation(long id);
-    ConsultationReceivedDto updateConsultationFromDoctorByPatientId(ConsultationReceivedDto consultationReceivedDto);
+    ConsultationModifiedDto updateConsultationFromDoctorByPatientId(ConsultationModifiedDto consultationModifiedDto);
     ConsultationPureDto findConsultationIdInAndStatusSpecificDate(long patientId, LocalDate dateGiven, LocalDate previousDays);
 }

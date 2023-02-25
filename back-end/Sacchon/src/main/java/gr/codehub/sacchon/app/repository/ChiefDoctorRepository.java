@@ -1,9 +1,5 @@
 package gr.codehub.sacchon.app.repository;
 
-import gr.codehub.sacchon.app.SacchonApplication;
-import gr.codehub.sacchon.app.dto.AllConsultationsReceivedForOnePatientDto;
-import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
-import gr.codehub.sacchon.app.dto.ConsultationReceivedDto;
 import gr.codehub.sacchon.app.dto.ConsultationsGivenByDoctor;
 import gr.codehub.sacchon.app.model.ChiefDoctor;
 import org.springframework.data.jpa.repository.JpaRepository;

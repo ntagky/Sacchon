@@ -2,6 +2,7 @@ package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.Consultation;
 import gr.codehub.sacchon.app.model.Doctor;
+import gr.codehub.sacchon.app.model.Medication;
 import gr.codehub.sacchon.app.model.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class ConsultationWriterDto {
     private String doctorEmail;
     private LocalDate dateCreated;
     private boolean seenConsultation;
-    private List<String> medications;
+    private List<Medication> medications;
     private String details;
     private long doctorId;
     private long patientId;

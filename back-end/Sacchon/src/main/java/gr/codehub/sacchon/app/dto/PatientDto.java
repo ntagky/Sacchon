@@ -21,7 +21,7 @@ public class PatientDto extends PersonDto {
     private int height;
     private double weight;
     private List<String> allergies;
-    private List<String> medications;
+//    private List<String> medications;
     private List<String> conditions;
 
     public PatientDto(Patient patient){
@@ -40,7 +40,7 @@ public class PatientDto extends PersonDto {
             height = patient.getHeight();
             weight = patient.getWeight();
             allergies = patient.getAllergies();
-            medications = patient.getMedications();
+//            medications = patient.getMedications();
             conditions = patient.getConditions();
         }
     }
@@ -60,7 +60,7 @@ public class PatientDto extends PersonDto {
         patient.setHeight(height);
         patient.setWeight(weight);
         patient.setAllergies(allergies);
-        patient.setMedications(medications);
+//        patient.setMedications(medications);
         patient.setConditions(conditions);
         return patient;
     }

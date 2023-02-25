@@ -28,7 +28,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = SacchonApplication.DEBUG_MODE ? "develop" : "production")
+@Table(schema = SacchonApplication.SCHEMA)
 public class Consultation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,11 +38,11 @@ public class Consultation {
     private String doctorEmail; // in case the doctor leaves the system  - referral
     private LocalDate dateCreated;
     private boolean seenConsultation;
-    @ElementCollection
-    @CollectionTable(schema = SacchonApplication.SCHEMA)
-    private List<String> medications;
+
+    @OneToMany(mappedBy = "consultation", cascade = CascadeType.REMOVE)
+    private List<Medication> medications;
     private String details;
-    @ManyToOne() // me ti logiki oti to consultation de tha syndeetai pleon me ton giatro, an fygei apo to systima, ara mporei na meinei xwris referenced giatro
+    @ManyToOne // me ti logiki oti to consultation de tha syndeetai pleon me ton giatro, an fygei apo to systima, ara mporei na meinei xwris referenced giatro
     @JoinColumn(name="doctor_id", referencedColumnName = "id")
     private Doctor doctor;
 

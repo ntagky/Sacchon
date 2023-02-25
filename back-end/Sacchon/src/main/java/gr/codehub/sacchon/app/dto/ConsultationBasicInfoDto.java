@@ -1,6 +1,7 @@
 package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.Consultation;
+import gr.codehub.sacchon.app.model.Medication;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class ConsultationBasicInfoDto {
     private String doctorLastName;
     private String doctorEmail;
     private LocalDate dateCreated;
-    private List<String> medications;
+    private List<Medication> medications;
     private String details;
 
     public ConsultationBasicInfoDto(Consultation consultation){

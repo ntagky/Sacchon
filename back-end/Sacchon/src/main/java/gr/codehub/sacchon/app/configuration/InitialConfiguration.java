@@ -25,7 +25,7 @@ public class InitialConfiguration {
     private final LinkedList<String> namesFemaleLinkedList = new LinkedList<>(List.of("Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper", "Debra", "Maria", "Olivia", "Joyce", "Ruth", "Janet", "Samantha", "Stella", "Helen", "Evelyn"));
     private final List<String> lastNamesLinkedList = new ArrayList<>(List.of("Smith", "Johnson", "William", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", " Wilson", "Anderson", "Thomas", "Taylor", "Jackson", "Martin", "Moore", "Lee", "Perez", "Thompson", "White", "Walker", "Hill", "Torres", "Scot", "Young"));
     private final List<String> allergiesList = new ArrayList<>(List.of("Grass Pollen", "Dust", "Peanut", "Milk", "Egg", "Animal Fur", "Bee", "Wasp", "Fish", "Crustaceans", "Wheat", "Soy"));
-    private final List<String> medicationsList = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
+    private final List<String> medicationNamesList = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
     private final List<String> conditionsList = new ArrayList<>(List.of("Heart Disease", "Cancer", "Asthma", "Emphysema", "Alzheimer Disease", "Substance Abuse", "Pneumonia", "Kidney Disease", "Mental Health Conditions"));
     private final List<String> detailsList = new ArrayList<>(List.of("Take 2 pills per day.", "Don't mix with alcohol!", "After each meal.", "Before bed only.", "One before eating lunch, one after.", "At the morning."));
 
@@ -118,7 +118,7 @@ public class InitialConfiguration {
         int monthBorn;
         int dayBorn;
         List<String> allergies;
-        List<String> medications;
+//        List<String> medications;
         List<String> conditions;
 
         for (int i = 0; i < population; i++) {
@@ -149,9 +149,9 @@ public class InitialConfiguration {
             createRandomListSequence(allergiesList, allergies, 0.35, random);
             patient.setAllergies(allergies);
 
-            medications = new ArrayList<>();
-            createRandomListSequence(medicationsList, medications, 0.2, random);
-            patient.setMedications(medications);
+//            medications = new ArrayList<>();
+//            createRandomListSequence(medicationNamesList, medications, 0.2, random);
+//            patient.setMedications(medications);
 
             conditions = new ArrayList<>();
             createRandomListSequence(conditionsList, conditions, 0.1, random);
@@ -165,6 +165,31 @@ public class InitialConfiguration {
         }
 
         return patientRepository.saveAll(patientArrayList);
+    }
+
+    private void createMedication(MedicationRepository medicationRepository, int population, Consultation assignedConsultation) {
+        ArrayList<Medication> medicationArrayList = new ArrayList<>();
+        Medication medication;
+        List<String> medicationNames;
+
+        for (int i = 0; i < population; i++) {
+            medication = new Medication();
+
+            medication.setId(0L);
+
+//            medicationNames = new ArrayList<>();
+//            createRandomListSequence(medicationNamesList, medicationNames, 0.2, random);
+//            medication.setName(medicationNames.get(i));
+            medication.setMedName("sffs");
+
+            medication.setDosage("2 pills per day");
+
+            medication.setConsultation(assignedConsultation);
+
+            medicationArrayList.add(medication);
+        }
+
+        medicationRepository.saveAll(medicationArrayList);
     }
 
     private void createCarbs(CarbsRepository carbsRepository, int population, Patient assignedPerson) {
@@ -228,12 +253,12 @@ public class InitialConfiguration {
         glucoseRecordRepository.saveAll(glucoseRecordArrayList);
     }
 
-    private void createConsultation(ConsultationRepository consultationRepository, int population, Patient assignedPerson, Doctor assignedDoctor, LocalDate[] localDates) {
+    private List<Consultation> createConsultation(ConsultationRepository consultationRepository, int population, Patient assignedPerson, Doctor assignedDoctor, LocalDate[] localDates) {
         ArrayList<Consultation> consultationArrayList = new ArrayList<>();
         Consultation consultation;
 
-        List<String> medications = new ArrayList<>();
-        createRandomListSequence(medicationsList, medications, 2, random);
+//        List<String> medications = new ArrayList<>();
+//        createRandomListSequence(medicationNamesList, medications, 2, random);
 
         for (int i = 0; i < population; i++) {
             consultation = new Consultation();
@@ -244,7 +269,7 @@ public class InitialConfiguration {
             consultation.setDoctorEmail(assignedDoctor.getEmail());
             consultation.setDateCreated(localDates[i]);
             consultation.setSeenConsultation(random.nextBoolean());
-            consultation.setMedications(medications);
+//            consultation.setMedications(medications);
             consultation.setDetails(detailsList.get(random.nextInt(detailsList.size())));
             consultation.setPatient(assignedPerson);
             consultation.setDoctor(assignedDoctor);
@@ -252,7 +277,7 @@ public class InitialConfiguration {
             consultationArrayList.add(consultation);
         }
 
-        consultationRepository.saveAll(consultationArrayList);
+        return consultationRepository.saveAll(consultationArrayList);
     }
 
     @Bean
@@ -260,7 +285,7 @@ public class InitialConfiguration {
             PatientRepository patientRepository, CarbsRepository carbsRepository,
             GlucoseRepository glucoseRepository, GlucoseRecordRepository glucoseRecordRepository,
             DoctorRepository doctorRepository,
-            ChiefDoctorRepository chiefDoctorRepository, ConsultationRepository consultationRepository){
+            ChiefDoctorRepository chiefDoctorRepository, ConsultationRepository consultationRepository, MedicationRepository medicationRepository){
         return args -> {
 
             if (!SacchonApplication.DEBUG_MODE)
@@ -311,6 +336,10 @@ public class InitialConfiguration {
                             localDates[i] = glucoseArrayList.get((i + 1) * 30).getDate();
                         }
                         createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
+
+                        List<Consultation> consultationsList = createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
+                        Consultation randomCons = consultationsList.get(random.nextInt(consultationsList.size()-1));
+                        createMedication(medicationRepository, maxConsultation, randomCons);
                     }
                 }
                 idx[0]++;

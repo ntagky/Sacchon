@@ -1,10 +1,11 @@
 package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.*;
-import gr.codehub.sacchon.app.exception.ConsultationException;
 import gr.codehub.sacchon.app.repository.ConsultationRepository;
+import gr.codehub.sacchon.app.repository.MedicationRepository;
 import gr.codehub.sacchon.app.service.ConsultationService;
 import gr.codehub.sacchon.app.service.DoctorService;
+import gr.codehub.sacchon.app.service.MedicationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,9 @@ public class DoctorController {
 
     private DoctorService doctorService;
     private ConsultationService consultationService;
+    private MedicationService medicationService;
     private ConsultationRepository consultationRepository;
+    private MedicationRepository medicationRepository;
 
     @GetMapping("/doctor")
     public List<DoctorDto> getDoctorsDto(){
@@ -94,9 +97,14 @@ public class DoctorController {
     }
 
     @PutMapping("/doctor/consultation/modify")
-    public void modifyConsultation(@RequestBody ConsultationReceivedDto consultationReceivedDto) {
+    public void modifyConsultation(@RequestBody ConsultationModifiedDto consultationModifiedDto) {
+        consultationService.updateConsultationFromDoctorByPatientId(consultationModifiedDto);
+        log.info("The end point /doctor/consultation/modify has been used.");
+    }
 
-        consultationService.updateConsultationFromDoctorByPatientId(consultationReceivedDto);
-        log.info("The end point /doctor/consultation/{id}/modify has been used.");
+    @PutMapping("/doctor/medication/modify")
+    public void modifyMedication(@RequestBody MedicationDto medicationDto) {
+        medicationService.updateMedicationByConsultationId(medicationDto);
+        log.info("The end point /doctor/medication/modify has been used.");
     }
 }
