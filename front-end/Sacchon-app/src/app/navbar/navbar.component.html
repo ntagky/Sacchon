@@ -1,26 +1,26 @@
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <div class="navbar_logo_name">
-        <img class="ms-1" src="assets/logo.png" alt="Sacchon logo"/>
+        <img class="ms-1 logo" src="assets/logo.png" alt="Sacchon logo"/>
         <h4 class="mb-0 ms-3">Sacchon</h4>
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="navbar-brand" href="#">
                 <i class="bi bi-justify m-4" style="font-size: 28px; color: white;"></i>
-            </a>
+            </a> -->
             <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> -->
             <!-- </button> -->
-        </li>
+        <!-- </li> -->
       </ul>
       <div class="navbar_right">
-        <i class="bi bi-bell" style="font-size: 26px; margin-right: 25px;"></i>
+        <i class="bi bi-bell" style="font-size: 22px; margin-right: 25px;"></i>
         <div class="vl"></div>
         <div class="patient_initials">
-            <h4 id="initials">PN</h4>
+            <h4 id="initials">{{ initials }}</h4>
         </div>
-        <h5 class="mb-0 me-2" style="font-weight: 300;">Patient Name</h5>
+        <h6 class="mb-0 me-2" style="font-weight: 300;">{{ firstName }} {{ lastName }}</h6>
       </div>  
     </div>
   </div>

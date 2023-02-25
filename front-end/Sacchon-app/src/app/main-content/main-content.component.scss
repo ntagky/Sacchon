@@ -26,11 +26,6 @@
     width: fit-content;
 }
 
-.cards {
-    // flex-wrap: nowrap;
-    display: flex;
-}
-
 .card{
     margin-top: 40px!important;
     width: 50%;
@@ -53,11 +48,20 @@
     margin-top: 10px;
     font-size: 16px;
     color: #0B436C;
-    display: table-caption;
     width: 100%;
 }
 
 .card_bold{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
+}
+
+.doctor_avatar{
+    height: auto;
+    width: 65%;
+}
+
+.my_button{
+    background-color: #D22B74;
+    color: white;
 }
