@@ -20,7 +20,6 @@ public class PersonDto {
     private String password;
     private String email;
     private LocalDate signedDate;
-
     private String phoneNumber;
 
     public PersonDto(Person person) {
