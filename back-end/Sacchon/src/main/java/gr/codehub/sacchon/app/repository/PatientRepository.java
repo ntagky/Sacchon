@@ -88,7 +88,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".consultation SET medications = NULL WHERE patient_id = :patientId", nativeQuery = true)
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".MEDICATION WHERE CONSULTATION_ID IN (SELECT ID FROM " +SacchonApplication.SCHEMA + ".CONSULTATION WHERE patient_id=:patientId)", nativeQuery = true)
     void deleteMedicationsByPatientId(@Param("patientId") long patientId);
 
     @Transactional

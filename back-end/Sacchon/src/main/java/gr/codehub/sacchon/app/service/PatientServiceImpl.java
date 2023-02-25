@@ -40,13 +40,14 @@ public class PatientServiceImpl implements PatientService {
         //DBO REMOVAL
 
         patientRepository.deleteDboPatientAllergies(patientId);
-        patientRepository.deleteDboPatientMedications(patientId);
-        patientRepository.deleteDboPatientConditions(patientId);
-        patientRepository.deleteDboConsultationMedications(patientId);
+//        patientRepository.deleteDboPatientMedications(patientId);
+//        patientRepository.deleteDboPatientConditions(patientId);
+//        patientRepository.deleteDboConsultationMedications(patientId);
 
         //SCHEMA REMOVAL
 
         patientRepository.deleteCarbsByPatientId(patientId);
+        patientRepository.deleteMedicationsByPatientId(patientId);
         patientRepository.deleteConsultationsByPatientId(patientId);
         patientRepository.deleteGlucoseRecordByPatientId(patientId);
         patientRepository.deleteGlucoseByPatientId(patientId);
