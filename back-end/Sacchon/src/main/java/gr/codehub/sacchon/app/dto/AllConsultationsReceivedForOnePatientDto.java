@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Getter
 public class AllConsultationsReceivedForOnePatientDto {
 
+    private long id;
     private String doctor_first_name;
     private String doctor_last_name;
     private String doctor_email;
@@ -23,6 +24,7 @@ public class AllConsultationsReceivedForOnePatientDto {
 
     public AllConsultationsReceivedForOnePatientDto(Consultation consultation){
         if(consultation!=null){
+            id = consultation.getId();
             doctor_first_name = consultation.getDoctor().getFirstName();
             doctor_last_name = consultation.getDoctor().getLastName();
             doctor_email = consultation.getDoctor().getEmail();
@@ -33,6 +35,7 @@ public class AllConsultationsReceivedForOnePatientDto {
 
     public Consultation asConsultation(){
         Consultation consultation = new Consultation();
+        consultation.setId(id);
         consultation.setDoctorFirstName(getDoctor_first_name());
         consultation.setDoctorLastName(getDoctor_last_name());
         consultation.setDateCreated(date_created);

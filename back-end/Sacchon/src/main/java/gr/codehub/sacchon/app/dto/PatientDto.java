@@ -24,6 +24,7 @@ public class PatientDto extends PersonDto {
 //    private List<String> medications;
     private List<String> conditions;
 
+
     public PatientDto(Patient patient){
         if (patient != null){
             super.setId(patient.getId());
@@ -31,6 +32,7 @@ public class PatientDto extends PersonDto {
             super.setLastName(patient.getLastName());
             super.setEmail(patient.getEmail());
             super.setSignedDate(patient.getSignedDate());
+            super.setPhoneNumber(patient.getPhoneNumber());
             medicalRecordNumber = patient.getMedicalRecordNumber();
             address = patient.getAddress();
             gender = patient.getGender();
@@ -47,6 +49,7 @@ public class PatientDto extends PersonDto {
     public Patient asPatient() {
         Patient patient = new Patient();
         patient.setId(super.getId());
+        patient.setPhoneNumber(super.getPhoneNumber());
         patient.setFirstName(super.getFirstName());
         patient.setLastName(super.getLastName());
         patient.setEmail(super.getEmail());

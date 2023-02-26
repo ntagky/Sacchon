@@ -28,6 +28,8 @@ public class Patient extends Person {
     private int height;
     private double weight;
 
+
+
     @ElementCollection
     @CollectionTable(schema = SacchonApplication.SCHEMA)
     private List<String> allergies;

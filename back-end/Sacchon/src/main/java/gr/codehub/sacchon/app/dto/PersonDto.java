@@ -20,6 +20,7 @@ public class PersonDto {
     private String password;
     private String email;
     private LocalDate signedDate;
+    private String phoneNumber;
 
     public PersonDto(Person person) {
         if (person == null)
@@ -30,10 +31,11 @@ public class PersonDto {
         password = person.getPassword();
         email = person.getEmail();
         signedDate = person.getSignedDate();
+        phoneNumber = person.getPhoneNumber();
     }
 
     public Person asPerson() {
-        return new Person(id, firstName, lastName, password, email, signedDate);
+        return new Person(id, firstName, lastName, password, email, signedDate, phoneNumber);
     }
 
 }

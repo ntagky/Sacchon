@@ -33,7 +33,7 @@ public class PatientController {
 
 
     @GetMapping("/patient/{id}")
-    //http://localhost:9000/api/{{id}}
+    //http://localhost:9000/patient/{{id}}
     public List<PatientDto> findPatientById(@PathVariable("id") long id){
         return patientService.readPatientById(id);
     }

@@ -10,9 +10,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface MedicationRepository extends JpaRepository<Medication, Long> {
+
+    // query: get medication
+    @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".MEDICATION WHERE consultation_id = :consultationId", nativeQuery = true)
+    List<Medication> findMedicationsByConsId(@Param("consultationId") long consultationId);
+
 
     // query: creates medications
     @Transactional

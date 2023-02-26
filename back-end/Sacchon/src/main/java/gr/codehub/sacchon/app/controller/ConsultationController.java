@@ -1,11 +1,9 @@
 package gr.codehub.sacchon.app.controller;
 
-import gr.codehub.sacchon.app.dto.AllConsultationsReceivedForOnePatientDto;
-import gr.codehub.sacchon.app.dto.ConsultationBasicInfoDto;
-import gr.codehub.sacchon.app.dto.ConsultationDto;
-import gr.codehub.sacchon.app.dto.ConsultationReceivedDto;
+import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.ConsultationException;
 import gr.codehub.sacchon.app.service.ConsultationService;
+import gr.codehub.sacchon.app.service.MedicationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +15,7 @@ import java.util.List;
 @Slf4j
 public class ConsultationController {
     private ConsultationService consultationService;
+    private MedicationService medicationService;
 
     @GetMapping("/patient/{id}/consultations")
     public List<AllConsultationsReceivedForOnePatientDto> getConsultationsByPatientId
@@ -51,5 +50,11 @@ public class ConsultationController {
     public boolean deleteConsultationDto(@PathVariable(name="id")  long id){
         log.info("The end point consultation with id has been used");
         return consultationService.deleteConsultation(id);
+    }
+
+    @GetMapping("/consultation/{id}/medication")
+    public List<MedicationDto> getMedicationsByConsId(@PathVariable(name="id") long id){
+        log.info("The end point consultation/{id}/medication has been used");
+        return medicationService.findMedications(id);
     }
 }

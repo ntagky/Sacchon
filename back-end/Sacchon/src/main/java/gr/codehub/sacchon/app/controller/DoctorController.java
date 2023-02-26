@@ -42,7 +42,7 @@ public class DoctorController {
         return doctorService.readDoctorNameAndEmailById(id);
     }
 
-    @GetMapping("/doctor/{id}/info")
+    @GetMapping("/doctor/{id}")
     public DoctorDto getDoctorInfoById(@PathVariable(name="id") long id) {
         log.info("The end point doctor/id/ has been used");
         return doctorService.readDoctorById(id);

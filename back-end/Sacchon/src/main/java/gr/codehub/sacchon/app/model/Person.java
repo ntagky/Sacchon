@@ -27,5 +27,8 @@ public class Person {
     private String password;
     private String email;
     private LocalDate signedDate;
+    private String phoneNumber;
+
+
 
 }

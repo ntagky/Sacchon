@@ -33,7 +33,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO " + SacchonApplication.SCHEMA + ".PATIENT (first_name, last_name, password, email, medical_record_number, address, gender, date_of_birth, blood_type, diabetes_type, height, weight, signed_date) VALUES (:firstName, :lastName, :password, :email, :medicalRecordNumber, :address, :gender, :dateOfBirth, :bloodType, :diabetesType, :height, :weight, :signedDate)", nativeQuery = true)
+    @Query(value = "INSERT INTO " + SacchonApplication.SCHEMA + ".PATIENT (first_name, last_name, password, email, medical_record_number, address, gender, date_of_birth, blood_type, diabetes_type, height, weight, signed_date, phone_number) VALUES (:firstName, :lastName, :password, :email, :medicalRecordNumber, :address, :gender, :dateOfBirth, :bloodType, :diabetesType, :height, :weight, :signedDate, :phoneNumber)", nativeQuery = true)
     void createPatient(@Param("firstName") String firstName,
                        @Param("lastName") String lastName,
                        @Param("password") String password,
@@ -46,7 +46,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
                        @Param("diabetesType") String diabetesType,
                        @Param("height") int height,
                        @Param("weight") Double weight,
-                       @Param("signedDate") LocalDate signedDate);
+                       @Param("signedDate") LocalDate signedDate,
+                       @Param("phoneNumber") String phoneNumber);
 
     @Transactional
     @Modifying
@@ -87,7 +88,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".consultation SET medications = NULL WHERE patient_id = :patientId", nativeQuery = true)
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".MEDICATION WHERE CONSULTATION_ID IN (SELECT ID FROM " +SacchonApplication.SCHEMA + ".CONSULTATION WHERE patient_id=:patientId)", nativeQuery = true)
     void deleteMedicationsByPatientId(@Param("patientId") long patientId);
 
     @Transactional

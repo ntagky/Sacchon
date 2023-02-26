@@ -107,11 +107,12 @@ public class ConsultationServImpl implements ConsultationService {
         List<AllConsultationsReceivedForOnePatientDto> dtos = new ArrayList<>();
         for (Object[] result : results) {
             AllConsultationsReceivedForOnePatientDto dto = new AllConsultationsReceivedForOnePatientDto();
-            dto.setDoctor_first_name((String) result[0]);
-            dto.setDoctor_last_name((String) result[1]);
-            dto.setDoctor_email((String) result[2]);
-            dto.setDate_created(((java.sql.Date) result[3]).toLocalDate());
-            dto.setDetails((String) result[4]);
+            dto.setId((long) result[0]);
+            dto.setDoctor_first_name((String) result[1]);
+            dto.setDoctor_last_name((String) result[2]);
+            dto.setDoctor_email((String) result[3]);
+            dto.setDate_created(((java.sql.Date) result[4]).toLocalDate());
+            dto.setDetails((String) result[5]);
             dtos.add(dto);
         }
         return dtos;

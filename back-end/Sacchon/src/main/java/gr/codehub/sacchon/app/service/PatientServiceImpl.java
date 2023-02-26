@@ -40,13 +40,14 @@ public class PatientServiceImpl implements PatientService {
         //DBO REMOVAL
 
         patientRepository.deleteDboPatientAllergies(patientId);
-        patientRepository.deleteDboPatientMedications(patientId);
-        patientRepository.deleteDboPatientConditions(patientId);
-        patientRepository.deleteDboConsultationMedications(patientId);
+//        patientRepository.deleteDboPatientMedications(patientId);
+//        patientRepository.deleteDboPatientConditions(patientId);
+//        patientRepository.deleteDboConsultationMedications(patientId);
 
         //SCHEMA REMOVAL
 
         patientRepository.deleteCarbsByPatientId(patientId);
+        patientRepository.deleteMedicationsByPatientId(patientId);
         patientRepository.deleteConsultationsByPatientId(patientId);
         patientRepository.deleteGlucoseRecordByPatientId(patientId);
         patientRepository.deleteGlucoseByPatientId(patientId);
@@ -119,7 +120,8 @@ public class PatientServiceImpl implements PatientService {
 
         patientRepository.createPatient(patient.getFirstName(), patient.getLastName(), patient.getPassword(), patient.getEmail(),
                 patient.getMedicalRecordNumber(), patient.getAddress(), patient.getGender(), patient.getDateOfBirth(),
-                patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight(), patient.getSignedDate());
+                patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight(), patient.getSignedDate()
+                ,patient.getPhoneNumber());
 
         return patientRepository.save(patient).getId();
     }
