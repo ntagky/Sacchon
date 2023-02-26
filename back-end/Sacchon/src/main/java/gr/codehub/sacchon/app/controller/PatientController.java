@@ -29,7 +29,7 @@ public class PatientController {
     private GlucoseRecordService glucoseRecordService;
     private ConsultationService consultationService;
     private DoctorService doctorService;
-    private NetworkService networkService;
+
 
 
     @GetMapping("/patient/{id}")
@@ -38,7 +38,8 @@ public class PatientController {
         return patientService.readPatientById(id);
     }
 
-    @DeleteMapping("/{patientId}")   //<?> for generic response, could also be not found
+    @DeleteMapping("/delete/{patientId}")
+    //http://localhost:9000/delete/{{patientId}}
     public ResponseEntity<?> deletePatientById(@PathVariable("patientId") long patientId) {
         patientService.deletePatientById(patientId);
         return ResponseEntity.noContent().build();
@@ -286,5 +287,13 @@ public class PatientController {
     ){
         patientService.deleteCarbsFromPatientInSpecificDate(id, date);
         return true;
+    }
+
+    @PutMapping("/patient/update/{id}")
+    public boolean updatePatientDto(@RequestBody PatientDto patientDto,
+                                   @PathVariable(name="id") int id){
+        log.info("The end point doctor with id has been used");
+        return false;
+//         doctorService.updateDoctor(doctor, id);
     }
 }
