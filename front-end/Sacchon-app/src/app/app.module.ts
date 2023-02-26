@@ -1,3 +1,5 @@
+import { ModalMeasurementsComponent } from './modal-measurements/measurements.component';
+import { MeasurementsComponent } from './measurements/measurements.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxPrintElementModule } from 'ngx-print-element';
@@ -14,6 +16,12 @@ import { ConsultationsTableComponent } from './consultations-table/consultations
 import { SignupComponent } from './signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -24,7 +32,9 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     HomepageComponent,
     ConsultationsComponent,
     ConsultationsTableComponent,
-    SignupComponent
+    SignupComponent,
+    MeasurementsComponent,
+    ModalMeasurementsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +42,13 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     NgxPrintElementModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
