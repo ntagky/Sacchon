@@ -9,13 +9,21 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MainContentComponent } from './main-content/main-content.component';
+import { HomepageComponent } from './pages/homepage/homepage.component';
+import { ConsultationsComponent } from './pages/consultations/consultations.component';
+import { ConsultationsTableComponent } from './consultations-table/consultations-table.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SidenavComponent,
-    MainContentComponent
+    MainContentComponent,
+    HomepageComponent,
+    ConsultationsComponent,
+    ConsultationsTableComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,35 @@
+<div class="p-4">
+    <table class="table text-center align-middle">
+        <thead class="table_head">
+            <tr>
+                <th>Date Created</th>
+                <th>Medication (Dosage)</th>
+                <th>Details</th>
+                <th>Doctor</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of response">
+                <td>{{ item.date_created }}</td>
+                <td>
+                    <div *ngIf= "medications[getIndexFromId(item.id)].length===0">-</div>
+                    <div class="justify-content-center d-flex">
+                        <table class="text-center">
+                            <tbody>
+                                <tr *ngFor="let medicationItem of medications[getIndexFromId(item.id)]">
+                                    <td>{{ medicationItem.medName }} ({{ medicationItem.dosage }})</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+                <td>{{ item.details }}</td>
+                <td>{{ item.doctor_first_name }} {{ item.doctor_last_name }}</td>
+                <td>
+                    <span class="badge rounded-pill d-inline" [ngClass] = "activeId == item.id ? 'active_class' : 'inactive_class'">{{ activeId == item.id ? "Active" : "Inactive" }}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,7 +1,7 @@
 import { DoctorService } from './../services/doctor.service';
 import { MedicationService } from './../services/medication.service';
 import { Component, OnInit } from '@angular/core';
-import { ActiveConsultationService } from '../services/active-consultation.service';
+import { ConsultationsService } from '../services/consultations.service';
 
 @Component({
   selector: 'app-main-content',
@@ -22,18 +22,18 @@ export class MainContentComponent implements OnInit{
   consultationId: any;
   data: any;
 
-  patientId = 5;
+  patientId = 4;
 
   welcomeMessage = "Sacchon";
   mottoMessage = "Control diabetes, live without limits";
 
-  constructor(private consultationService: ActiveConsultationService, private medicationService: MedicationService, private doctorService: DoctorService) {}
+  constructor(private consultationService: ConsultationsService, private medicationService: MedicationService, private doctorService: DoctorService) {}
 
   ngOnInit(): void {
 
     this.consultationService.getConsultations(this.patientId).subscribe({
-      next: activeConsultation => {
-        this.response = activeConsultation;
+      next: consultations => {
+        this.response = consultations;
 
         let latest = this.response.length - 1;
 
@@ -45,7 +45,7 @@ export class MainContentComponent implements OnInit{
         this.date = new Date(this.date.setDate(this.date.getDate()-1));
         this.date = this.date.toLocaleDateString();
 
-        this.consDoctorFirstName = this.response[latest]["doctor_first_name"];
+        this.consDoctorFirstName = 'Dr. ' + this.response[latest]["doctor_first_name"];
         this.consDoctorLastName = this.response[latest]["doctor_last_name"];
 
         this.medicationService.getMedications(this.consultationId).subscribe({

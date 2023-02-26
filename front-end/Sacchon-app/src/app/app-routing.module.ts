@@ -1,10 +1,12 @@
-import { MainContentComponent } from './main-content/main-content.component';
+import { ConsultationsComponent } from './pages/consultations/consultations.component';
+import { HomepageComponent } from './pages/homepage/homepage.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  // { path: 'home', component: MainContentComponent },
-  // { path: '', redirectTo: '/home', pathMatch: 'full'  }
+  { path: 'home', component: HomepageComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'consultations', component: ConsultationsComponent }
 ];
 
 @NgModule({
