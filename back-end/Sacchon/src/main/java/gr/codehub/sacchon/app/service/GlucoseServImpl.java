@@ -1,8 +1,6 @@
 package gr.codehub.sacchon.app.service;
 
-import gr.codehub.sacchon.app.dto.GlucoseDto;
-import gr.codehub.sacchon.app.dto.GlucoseFromPersonDto;
-import gr.codehub.sacchon.app.dto.GlucoseInitiatorDto;
+import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.GlucoseException;
 import gr.codehub.sacchon.app.model.Glucose;
 import gr.codehub.sacchon.app.repository.GlucoseRecordRepository;
@@ -82,11 +80,24 @@ public class GlucoseServImpl implements GlucoseService {
         newGlucoseDto.setPatientDto(glucoseDto.getPatientDto());
         newGlucoseDto.setDate(glucoseDto.getDate());
         glucoseRepository.save(newGlucoseDto.asGlucose());
+        glucoseRepository.save(newGlucoseDto.asGlucose());
         return true;
     }
     @Override
     public boolean deleteGlucoseById(long id) throws GlucoseException {
         glucoseRepository.delete(readGlucoseDb(id));
+        return true;
+    }
+
+    @Override
+    public boolean deleteGlucoseByPatientIdAndDate(long patientId, LocalDate date) {
+        Long glucoseId = glucoseRepository.findGlucoseInSpecificDateByPatientId(patientId, date).getId();
+        if (glucoseId == null)
+            return false;
+        System.out.println("Glucose id=" + glucoseId);
+        glucoseRecordRepository.deleteGlucoseRecordByGlucoseId(glucoseId);
+        System.out.println("Before");
+        glucoseRepository.deleteGlucoseByPatientIdAndDate(patientId, date);
         return true;
     }
 
@@ -101,8 +112,21 @@ public class GlucoseServImpl implements GlucoseService {
     }
 
     @Override
-    public Long findGlucoseIdInSpecificDate(long patientId, LocalDate givenDate) {
-        return glucoseRepository.findGlucoseIdInSpecificDate(patientId, givenDate);
+    public Long findGlucoseIdInSpecificDateByPatientId(long patientId, LocalDate givenDate) {
+        return glucoseRepository.findGlucoseIdInSpecificDateByPatientId(patientId, givenDate);
+    }
+
+    @Override
+    public Long createGlucoseByPatientIdAtDate(long patientId, LocalDate date, GlucoseRecordUpdaterDto glucoseRecordUpdaterDto) {
+        System.out.println("3");
+        Glucose glucose = glucoseRepository.save(new Glucose(
+                0L,
+                date,
+                null,
+                patientRepository.findById(patientId).get()
+        ));
+        System.out.println("3");
+        return glucoseRecordRepository.save(glucoseRecordUpdaterDto.asGlucoseRecord(glucose)).getId();
     }
 
 }

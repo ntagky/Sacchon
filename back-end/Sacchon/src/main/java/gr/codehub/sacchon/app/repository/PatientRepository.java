@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-    @Query("SELECT COUNT(p) FROM " + SacchonApplication.SCHEMA + ".Patient p")
+    @Query(value = "SELECT COUNT(p) FROM " + SacchonApplication.SCHEMA + ".Patient p", nativeQuery = true)
     Long countPatients();
 
     @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE id = :patientId", nativeQuery = true)

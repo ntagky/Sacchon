@@ -29,6 +29,7 @@ public class PatientController {
     private GlucoseRecordService glucoseRecordService;
     private ConsultationService consultationService;
     private DoctorService doctorService;
+    private NetworkService networkService;
 
 
     @GetMapping("/patient/{id}")
@@ -58,7 +59,7 @@ public class PatientController {
         return carbsService.createCarbsByPatientId(id, carbsFromPersonDto);
     }
 
-    @PostMapping("/patient/carbs/{carbsId}/update/{measurement}")
+    @PutMapping("/patient/carbs/{carbsId}/update/{measurement}")
     public boolean updateCarbsDtoFromCarbsId(
             @PathVariable(name="carbsId") long id,
             @PathVariable(name="measurement") int measurement
@@ -67,7 +68,7 @@ public class PatientController {
         return carbsService.updateCarbsById(id, measurement);
     }
 
-    @PostMapping("/patient/{id}/carbs/{date}/update/{measurement}")
+    @PutMapping("/patient/{id}/carbs/{date}/update/{measurement}")
     public boolean updateCarbsFromPatientIdAndDate(
             @PathVariable(name="id") int patientId,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date,
@@ -81,7 +82,7 @@ public class PatientController {
         carbsService.deleteCarbsById(id);
     }
 
-    @PostMapping("/patient/glucose/record/{recordId}/update")
+    @PutMapping("/patient/glucose/record/{recordId}/update")
     public boolean updateGlucoseRecordDtoFromGlucoseId(
             @PathVariable(name="recordId") long recordId,
             @RequestBody GlucoseRecordUpdaterDto glucoseRecordUpdaterDto
@@ -99,6 +100,16 @@ public class PatientController {
         return glucoseService.createGlucoseByPatientId(id, glucoseInitiatorDto);
     }
 
+    @PostMapping("/patient/{id}/glucose/{date}")
+    public Long createGlucoseRecordForPatientInSpecificDate(
+            @PathVariable(name="id") long patientId,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date,
+            @RequestBody GlucoseRecordUpdaterDto glucoseRecordUpdaterDto
+    ) {
+        log.info("The end point PatientDto & CarbsDto has been used");
+        return glucoseService.createGlucoseByPatientIdAtDate(patientId, date, glucoseRecordUpdaterDto);
+    }
+
     @DeleteMapping("/patient/glucose/record/{id}/delete")
     public void deleteGlucoseRecordById(@PathVariable(name="id") long id) throws GlucoseRecordException {
         glucoseRecordService.deleteGlucoseRecordById(id);
@@ -107,6 +118,14 @@ public class PatientController {
     @DeleteMapping("/patient/glucose/{id}/delete")
     public void deleteGlucoseById(@PathVariable(name="id") long id) throws GlucoseException {
         glucoseService.deleteGlucoseById(id);
+    }
+
+    @DeleteMapping("/patient/{id}/glucose/{date}/delete")
+    public void deletePatientGlucoseByDate(
+            @PathVariable(name="id") long id,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date
+    ) throws GlucoseException {
+        glucoseService.deleteGlucoseByPatientIdAndDate(id, date);
     }
 
     @GetMapping("/patient/{id}/carbs/query")
@@ -228,7 +247,7 @@ public class PatientController {
                             indexDate,
                             indexDate
                     ).stream().findFirst().orElseGet(() -> new BigDecimal(0)),
-                    glucoseRecordService.readGlucoseRecordCountByGlucoseId(glucoseService.findGlucoseIdInSpecificDate(id, indexDate)),
+                    glucoseRecordService.readGlucoseRecordCountByGlucoseId(glucoseService.findGlucoseIdInSpecificDateByPatientId(id, indexDate)),
                     consultationPureDto.getId(),
                     consultationPureDto.getStatus()
             ));
@@ -244,7 +263,7 @@ public class PatientController {
             @PathVariable("id") long id,
             @RequestParam("step") long step
     ){
-        return patientService.findDateAssignedFromPatientId(id).until(LocalDate.now(), ChronoUnit.DAYS) / step;
+        return patientService.findDateAssignedFromPatientId(id).until(LocalDate.now(), ChronoUnit.DAYS) / step + 1;
     }
 
     @GetMapping("/patient/{id}/glucose/{date}")
@@ -253,7 +272,7 @@ public class PatientController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date
     ) {
         log.info("The end point PatientDto & GlucoseDto has been used");
-        Long glucoseId = glucoseService.findGlucoseIdInSpecificDate(patientId, date);
+        Long glucoseId = glucoseService.findGlucoseIdInSpecificDateByPatientId(patientId, date);
         if (glucoseId == null)
             return null;
 

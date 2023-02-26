@@ -2,7 +2,9 @@ package gr.codehub.sacchon.app.repository;
 
 import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.model.Glucose;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -37,5 +39,16 @@ public interface GlucoseRepository extends JpaRepository<Glucose, Long> {
     @Query(value = "SELECT GLUCOSE.ID FROM " + SacchonApplication.SCHEMA + ".GLUCOSE " +
             "WHERE GLUCOSE.PATIENT_ID = :patientId AND GLUCOSE.DATE = :givenDate",
             nativeQuery = true)
-    Long findGlucoseIdInSpecificDate(long patientId, LocalDate givenDate);
+    Long findGlucoseIdInSpecificDateByPatientId(long patientId, LocalDate givenDate);
+
+    @Query(value = "SELECT * FROM " + SacchonApplication.SCHEMA + ".GLUCOSE " +
+            "WHERE GLUCOSE.PATIENT_ID = :patientId AND GLUCOSE.DATE = :givenDate",
+            nativeQuery = true)
+    Glucose findGlucoseInSpecificDateByPatientId(long patientId, LocalDate givenDate);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".GLUCOSE " +
+            "WHERE GLUCOSE.PATIENT_ID = :patientId AND DATE = :givenDate", nativeQuery = true)
+    void deleteGlucoseByPatientIdAndDate(long patientId, LocalDate givenDate);
 }

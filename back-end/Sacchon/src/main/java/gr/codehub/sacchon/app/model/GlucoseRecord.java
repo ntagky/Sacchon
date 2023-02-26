@@ -20,7 +20,7 @@ public class GlucoseRecord {
     private Long id;
     private LocalTime time;
     private BigDecimal measurement;
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "glucose_id", referencedColumnName = "id")
     private Glucose glucose;
 

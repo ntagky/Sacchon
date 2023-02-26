@@ -50,4 +50,10 @@ public interface GlucoseRecordRepository extends JpaRepository<GlucoseRecord, Lo
     List<GlucoseRecord> readGlucoseRecordByGlucoseId(
             @Param("glucoseId") long glucoseId
     );
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".GLUCOSE_RECORD " +
+            "WHERE GLUCOSE_RECORD.GLUCOSE_ID = :glucoseId", nativeQuery = true)
+    void deleteGlucoseRecordByGlucoseId(long glucoseId);
 }

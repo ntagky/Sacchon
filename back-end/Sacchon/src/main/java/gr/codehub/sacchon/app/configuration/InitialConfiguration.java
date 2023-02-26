@@ -299,7 +299,7 @@ public class InitialConfiguration {
             int[] measurementPersonPopulation = new int[patientPopulation];
             int measurementBound = 125;
             for (int i = 0; i < patientPopulation; i++)
-                measurementPersonPopulation[i] = random.nextInt(15, measurementBound);
+                measurementPersonPopulation[i] = random.nextInt(25, measurementBound);
 
             Collections.shuffle(namesMaleLinkedList);
             Collections.shuffle(namesFemaleLinkedList);
@@ -322,29 +322,26 @@ public class InitialConfiguration {
                 List<Glucose> glucoseArrayList = createGlucose(glucoseRepository, measurementPersonPopulation[idx[0]], patient);
                 glucoseArrayList.forEach(glucose -> createGlucoseRecords(glucoseRecordRepository, random.nextInt(1, 6), glucose));
 
-                int maxConsultation = measurementPersonPopulation[idx[0]] / 30;
+                int maxConsultation = measurementPersonPopulation[idx[0]] / 31;
+                int waitingPenalty = 0;
                 if (maxConsultation > 0) {
-                    boolean isWaiting = random.nextInt(0, 1) == 0;
+                    boolean isWaiting = random.nextInt(0, 2) == 0;
                     if (isWaiting)
-                        maxConsultation--;
+                        waitingPenalty = 1;
 
-                    if (maxConsultation > 0){
-                        Doctor randomDoctor = doctorList.get(random.nextInt(doctorList.size()-1));
-                        patientRepository.updateDoctorIdFromPatient(patient.getId(), randomDoctor.getId());
-                        LocalDate[] localDates = new LocalDate[maxConsultation];
-                        for (int i = 0; i < maxConsultation; i++) {
-                            localDates[i] = glucoseArrayList.get((i + 1) * 30).getDate();
-                        }
-                        createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
+                    Doctor randomDoctor = doctorList.get(random.nextInt(doctorList.size()-1));
+                    patientRepository.updateDoctorIdFromPatient(patient.getId(), randomDoctor.getId());
+                    LocalDate[] localDates = new LocalDate[maxConsultation - waitingPenalty];
+                    for (int i = 0; i < maxConsultation - waitingPenalty; i++)
+                        localDates[i] = glucoseArrayList.get((i + 1) * 32).getDate();
 
-                        List<Consultation> consultationsList = createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
-                        Consultation randomCons = consultationsList.get(random.nextInt(consultationsList.size()-1));
-                        createMedication(medicationRepository, maxConsultation, randomCons);
-                    }
+                    maxConsultation -= waitingPenalty;
+                    List<Consultation> consultationsList = createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
+                    Consultation randomCons = consultationsList.get(random.nextInt(consultationsList.size()-1));
+                    createMedication(medicationRepository, maxConsultation, randomCons);
                 }
                 idx[0]++;
             });
-
         };
     }
 
