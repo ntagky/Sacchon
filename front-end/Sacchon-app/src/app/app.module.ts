@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgxPrintElementModule } from 'ngx-print-element';
 import { HttpClientModule } from '@angular/common/http';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -13,6 +12,8 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ConsultationsComponent } from './pages/consultations/consultations.component';
 import { ConsultationsTableComponent } from './consultations-table/consultations-table.component';
 import { SignupComponent } from './signup/signup.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { SignupComponent } from './signup/signup.component';
     BrowserModule,
     AppRoutingModule,
     NgxPrintElementModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    NgxSkeletonLoaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

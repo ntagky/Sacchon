@@ -1,0 +1,103 @@
+<div class="modal-content">
+  <form [formGroup]="createForm" (ngSubmit)="createCabrs()" class="form">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Measurements</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="createForm" (ngSubmit)="createCabrs()" class="form">
+
+          <div class="container">
+            <mat-form-field class="example-full-width" appearance="fill"  disabled="true">
+              <!-- <mat-label>Choose a date</mat-label> -->
+              <input matInput formControlName="date" [matDatepicker]="picker" readonly="true">
+              <mat-datepicker-toggle matIconSuffix [for]="picker" disabled="true">
+                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <p>Carbs</p>
+            <div class="row">
+              <div class="col-9">
+                <input type="number" formControlName="carbsMeasurement" class="form-control" placeholder="{{ carbs }} g">
+              </div>
+              <div class="col-2 btn-group">
+                <button type="button" [disabled]="isCarbsSaveValid" class="btn btn-success">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-check" viewBox="0 0 16 16" (click)="saveCarbs()">
+                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                  </svg>
+                </button>
+                <button type="button" [disabled]="isCarbsDeleteValid" class="btn btn-danger" (click)="deleteCarbs()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row mt-2">
+              <div class="col-5">
+                <p >Glucose</p>
+              </div>
+              <div class="col-5">
+                <p>Time</p>
+              </div>
+            </div>
+
+            <ng-container formArrayName="glucoseMeasurement">
+              <ng-container *ngFor="let glucoseForm of glucoseMeasurement.controls; let i = index">
+                  <div [formGroupName]="i">
+                    <div class="row mt-2">
+
+                      <div class="col-5">
+                        <input type="number" formControlName="measurement" class="form-control" placeholder="{{ getGlucoseValue(i) }} mg/dL">
+                      </div>
+
+                      <div class="col-4 btn-group">
+                        <input style="margin-right: 4px; text-align: center;" type="number" min="0" max="24" formControlName="hour" class="form-control" placeholder="{{ getGlucoseHourValue(i) }}">
+                        <input style="text-align: center;" type="number" min="0" max="60" formControlName="minute" class="form-control" placeholder="{{ getGlucoseMinuteValue(i) }}">
+                      </div>
+
+                      <div class="col-2 btn-group">
+                        <button type="button" [disabled]="isGlucoseSaveValid(i)" class="btn btn-success" (click)="saveGlucoseRecord(i)">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-check" viewBox="0 0 16 16">
+                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                          </svg>
+                        </button>
+                        <button type="button" [disabled]="isGlucoseDeleteValid(i)" class="btn btn-danger" (click)="deleteGlucoseRecord(i)">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+              </ng-container>
+            </ng-container>
+
+            <button class="btn btn-light" style="margin-top: 10px;" (click)="addGlucoseRecord(0, 0, '', '')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+            </button>
+
+          </div>
+        </form>
+      </div>
+
+<!--  <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+
+    </div>
+  </form>
+</div>
