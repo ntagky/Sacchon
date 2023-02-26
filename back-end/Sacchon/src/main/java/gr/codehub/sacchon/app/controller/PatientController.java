@@ -29,8 +29,6 @@ public class PatientController {
     private GlucoseRecordService glucoseRecordService;
     private ConsultationService consultationService;
     private DoctorService doctorService;
-    private NetworkService networkService;
-
 
     @GetMapping("/patient/{id}")
     //http://localhost:9000/patient/{{id}}

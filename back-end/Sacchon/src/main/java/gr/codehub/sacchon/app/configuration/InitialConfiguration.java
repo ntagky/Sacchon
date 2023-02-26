@@ -295,8 +295,8 @@ public class InitialConfiguration {
 
             System.out.println("Saving dummy objects..");
 
-            int patientPopulation = 5;
-            int doctorPopulation = 3;
+            int patientPopulation = 12;
+            int doctorPopulation = 4;
             int chiefDoctorPopulation = 1;
             int[] measurementPersonPopulation = new int[patientPopulation];
             int measurementBound = 125;
@@ -335,12 +335,14 @@ public class InitialConfiguration {
                     patientRepository.updateDoctorIdFromPatient(patient.getId(), randomDoctor.getId());
                     LocalDate[] localDates = new LocalDate[maxConsultation - waitingPenalty];
                     for (int i = 0; i < maxConsultation - waitingPenalty; i++)
-                        localDates[i] = glucoseArrayList.get((i + 1) * 32).getDate();
+                        localDates[i] = glucoseArrayList.get((i + 1) * 31).getDate();
 
                     maxConsultation -= waitingPenalty;
-                    List<Consultation> consultationsList = createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
-                    Consultation randomCons = consultationsList.get(random.nextInt(consultationsList.size()-1));
-                    createMedication(medicationRepository, maxConsultation, randomCons);
+                    if (maxConsultation > 0) {
+                        List<Consultation> consultationsList = createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
+                        Consultation randomCons = consultationsList.get(consultationsList.size() > 0 ? random.nextInt(consultationsList.size()) : 0);
+                        createMedication(medicationRepository, maxConsultation, randomCons);
+                    }
                 }
                 idx[0]++;
             });
