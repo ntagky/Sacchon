@@ -61,5 +61,7 @@
     </div>
 </div>
 
-<div *ngIf=1 id="myAlert" class="alert">You have a new unseen consultation!</div>
+<div *ngIf="seenResponse && showAlert" id="myAlert" class="alert">You have a new unseen consultation!</div>
+
+
 

@@ -13,4 +13,10 @@ export class ConsultationsService {
     const url = 'http://localhost:9000/patient/' + id + '/consultations';
     return this.http.get(url);
   }
+
+  getLastConsultationSeenStatus(id :any){
+    // id = patient id
+    const url = 'http://localhost:9000/consultation/' + id + '/status';
+    return this.http.get(url);
+  }
 }

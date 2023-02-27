@@ -22,6 +22,7 @@ export class MainContentComponent implements OnInit{
   consultationId: any;
   data: any;
   showAlert = true;
+  seenResponse:any = null;
 
   patientId = 4;
 
@@ -32,13 +33,16 @@ export class MainContentComponent implements OnInit{
 
   ngOnInit(): void {
 
+    // const hasShownAlert = localStorage.getItem('hasShownAlert');
+    // if (hasShownAlert) {
+    //   this.showAlert = false;
+    // } else {
 
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 2000);
-
-
+      // localStorage.setItem('hasShownAlert', 'true');
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 5000);
+    // }
 
 
     this.consultationService.getConsultations(this.patientId).subscribe({
@@ -66,6 +70,10 @@ export class MainContentComponent implements OnInit{
       }
     });
 
+    this.consultationService.getLastConsultationSeenStatus(this.patientId).subscribe({
+      next: seenStatus => {this.seenResponse = seenStatus}
+    });
+
 
 
     this.doctorService.getDoctor(this.patientId).subscribe({
@@ -78,6 +86,8 @@ export class MainContentComponent implements OnInit{
       }
     })
   }
+
+
 
   printThisPage() {
     window.print();

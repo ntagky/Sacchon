@@ -12,12 +12,39 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #0b436c;
+  background-image: linear-gradient(to right, #ff00ff, #00ffff);
   color: white;
   padding: 1rem;
   border: 1px solid #d22b74;
   border-radius: 0.25rem;
   margin-bottom: 1rem;
+  position: fixed;
+  left: 0;
+  bottom: -100px;
+  width: 100%;
+  text-align: center;
+  animation: slideIn 0.5s ease forwards, glow 2s infinite;
+}
+
+@keyframes slideIn {
+  from {
+    bottom: -100px;
+  }
+  to {
+    bottom: 0;
+  }
+}
+
+@keyframes glow {
+  0% {
+    background-image: linear-gradient(to right, #0b436c, #00ffff);
+  }
+  50% {
+    background-image: linear-gradient(to right, #35b9ba, #d22b74);
+  }
+  100% {
+    background-image: linear-gradient(to right, #0b436c, #d22b74);
+  }
 }
 
 .main_motto{
