@@ -22,10 +22,8 @@ import java.util.stream.Collectors;
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
-    private final DoctorRepository doctorRepository;
     private final CarbsRepository carbsRepository;
 
-    private final GlucoseRepository glucoseRepository;
 
 
     @Override
@@ -118,10 +116,10 @@ public class PatientServiceImpl implements PatientService {
 
         Patient patient = patientDto.asPatient();
 
-        patientRepository.createPatient(patient.getFirstName(), patient.getLastName(), patient.getPassword(), patient.getEmail(),
-                patient.getMedicalRecordNumber(), patient.getAddress(), patient.getGender(), patient.getDateOfBirth(),
-                patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight(), patient.getSignedDate()
-                ,patient.getPhoneNumber());
+//        patientRepository.createPatient(patient.getFirstName(), patient.getLastName(), patient.getPassword(), patient.getEmail(),
+//                patient.getMedicalRecordNumber(), patient.getAddress(), patient.getGender(), patient.getDateOfBirth(),
+//                patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight(), patient.getSignedDate()
+//                ,patient.getPhoneNumber());
 
         return patientRepository.save(patient).getId();
     }

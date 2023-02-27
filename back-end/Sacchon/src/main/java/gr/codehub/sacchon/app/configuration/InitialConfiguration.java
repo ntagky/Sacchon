@@ -27,7 +27,7 @@ public class InitialConfiguration {
     private final List<String> allergiesList = new ArrayList<>(List.of("Grass Pollen", "Dust", "Peanut", "Milk", "Egg", "Animal Fur", "Bee", "Wasp", "Fish", "Crustaceans", "Wheat", "Soy"));
     private final List<String> medicationNamesList = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
     private final List<String> conditionsList = new ArrayList<>(List.of("Heart Disease", "Cancer", "Asthma", "Emphysema", "Alzheimer Disease", "Substance Abuse", "Pneumonia", "Kidney Disease", "Mental Health Conditions"));
-    private final List<String> detailsList = new ArrayList<>(List.of("Take 2 pills per day.", "Don't mix with alcohol!", "After each meal.", "Before bed only.", "One before eating lunch, one after.", "At the morning."));
+    private final List<String> detailsList = new ArrayList<>(List.of("Take 2 pills per day", "Don't mix with alcohol", "After each meal", "Before bed only", "One before eating lunch, one after", "At the morning"));
 
     private String convertToTens(int number) { return number > 10 ? String.valueOf(number) : "0" + number; }
 

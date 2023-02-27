@@ -31,7 +31,6 @@ public class PatientController {
     private DoctorService doctorService;
 
 
-
     @GetMapping("/patient/{id}")
     //http://localhost:9000/patient/{{id}}
     public List<PatientDto> findPatientById(@PathVariable("id") long id){
@@ -193,7 +192,6 @@ public class PatientController {
         LocalDate curDate = LocalDate.now();
         patientDto.setSignedDate(curDate);
         log.info("The end point signup/patient has been used");
-        patientService.registerPatient(patientDto);
         return patientService.registerPatient(patientDto);
 //        return ResponseEntity.ok(patientDto);
     }
