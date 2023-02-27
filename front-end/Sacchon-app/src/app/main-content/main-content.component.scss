@@ -8,6 +8,18 @@
     font-size: 42px;
 }
 
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0b436c;
+  color: white;
+  padding: 1rem;
+  border: 1px solid #d22b74;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+
 .main_motto{
     color:#35B9BA;
     margin: auto;

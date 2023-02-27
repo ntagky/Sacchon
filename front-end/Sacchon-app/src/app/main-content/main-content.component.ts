@@ -21,6 +21,7 @@ export class MainContentComponent implements OnInit{
   date: any;
   consultationId: any;
   data: any;
+  showAlert = true;
 
   patientId = 4;
 
@@ -30,6 +31,12 @@ export class MainContentComponent implements OnInit{
   constructor(private consultationService: ConsultationsService, private medicationService: MedicationService, private doctorService: DoctorService) {}
 
   ngOnInit(): void {
+
+
+
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 2000);
 
 
 
@@ -76,14 +83,9 @@ export class MainContentComponent implements OnInit{
     window.print();
   }
 
-  showAlert: boolean = false;
 
-  displayAlert() {
-    this.showAlert = true;
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 5000);
-  }
+
+
 
 
 

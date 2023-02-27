@@ -1,4 +1,5 @@
-import { DeleteButtonComponent } from './delete-button/delete-button.component';
+
+
 import { ModalMeasurementsComponent } from './modal-measurements/measurements.component';
 import { MeasurementsComponent } from './measurements/measurements.component';
 import { NgModule } from '@angular/core';
@@ -35,7 +36,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     SignupComponent,
     MeasurementsComponent,
     ModalMeasurementsComponent,
-    DeleteButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +50,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatIconModule,
     MatInputModule,
     MatFormFieldModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
