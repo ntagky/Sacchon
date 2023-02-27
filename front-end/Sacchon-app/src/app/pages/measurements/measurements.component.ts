@@ -1,8 +1,7 @@
-import { ModalMeasurementsComponent } from '../modal-measurements/measurements.component';
-import { MeasurementService } from '../services/measurements.service';
+import { ModalMeasurementsComponent } from '../../modal-measurements/modal-measurements.component';
+import { MeasurementService } from '../../services/measurements.service';
 import { Component, OnInit } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
-import 'web-animations-js';
 
 @Component({
   selector: 'app-measurements',
@@ -14,10 +13,10 @@ export class MeasurementsComponent implements OnInit {
   modalRef: MdbModalRef<ModalMeasurementsComponent> | null = null;
   dataResponse: any;
   pagesRespone: any;
-  patientId;
-  currentPage;
+  patientId: any;
+  currentPage: any;
   realPage: any;
-  pageStep;
+  pageStep: any;
   toShow: any;
   section: number = 0;
   pagesVisible: any;

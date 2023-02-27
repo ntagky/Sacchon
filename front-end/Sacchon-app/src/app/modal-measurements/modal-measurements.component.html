@@ -12,7 +12,7 @@
             <mat-form-field class="example-full-width" appearance="fill"  disabled="true">
               <!-- <mat-label>Choose a date</mat-label> -->
               <input matInput formControlName="date" [matDatepicker]="picker" readonly="true">
-              <mat-datepicker-toggle matIconSuffix [for]="picker" disabled="true">
+              <mat-datepicker-toggle matIconSuffix [for]="picker" disabled="true" hidden="true">
                 <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
               </mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>

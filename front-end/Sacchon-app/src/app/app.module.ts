@@ -1,5 +1,3 @@
-import { ModalMeasurementsComponent } from './modal-measurements/measurements.component';
-import { MeasurementsComponent } from './measurements/measurements.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxPrintElementModule } from 'ngx-print-element';
@@ -10,6 +8,8 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MainContentComponent } from './main-content/main-content.component';
+import { ModalMeasurementsComponent } from './modal-measurements/modal-measurements.component';
+import { MeasurementsComponent } from './pages/measurements/measurements.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ConsultationsComponent } from './pages/consultations/consultations.component';
 import { ConsultationsTableComponent } from './consultations-table/consultations-table.component';
@@ -22,6 +22,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { DataInspectorComponent } from './pages/data-inspector/data-inspector.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ConsultationsTableComponent,
     SignupComponent,
     MeasurementsComponent,
-    ModalMeasurementsComponent
+    ModalMeasurementsComponent,
+    DataInspectorComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatIconModule,
     MatInputModule,
     MatFormFieldModule,
+    MdbModalModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
