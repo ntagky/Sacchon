@@ -31,6 +31,9 @@ export class MainContentComponent implements OnInit{
 
   ngOnInit(): void {
 
+
+
+
     this.consultationService.getConsultations(this.patientId).subscribe({
       next: consultations => {
         this.response = consultations;
@@ -56,6 +59,8 @@ export class MainContentComponent implements OnInit{
       }
     });
 
+
+
     this.doctorService.getDoctor(this.patientId).subscribe({
       next: doctor => {
         this.response = doctor;
@@ -70,4 +75,17 @@ export class MainContentComponent implements OnInit{
   printThisPage() {
     window.print();
   }
+
+  showAlert: boolean = false;
+
+  displayAlert() {
+    this.showAlert = true;
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 5000);
+  }
+
+
+
+
 }
