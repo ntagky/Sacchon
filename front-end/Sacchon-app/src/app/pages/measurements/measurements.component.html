@@ -40,7 +40,7 @@
         <p class="fw-normal mb-1">{{ record.carbs }}</p>
         </td>
       <td>
-        <p class="fw-normal mb-1">{{ record.averageGlucose }}</p>
+        <p class="fw-normal mb-1">{{ record.averageGlucose | number : '.0-3' }}</p>
         <p class="text-muted mb-0 d-flex">{{ record.glucoseRecordsNumber }} Records</p>
        </td>
       <td>
