@@ -1,10 +1,10 @@
+import { DeleteButtonComponent } from './delete-button/delete-button.component';
 import { ModalMeasurementsComponent } from './modal-measurements/measurements.component';
 import { MeasurementsComponent } from './measurements/measurements.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxPrintElementModule } from 'ngx-print-element';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -34,7 +34,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ConsultationsTableComponent,
     SignupComponent,
     MeasurementsComponent,
-    ModalMeasurementsComponent
+    ModalMeasurementsComponent,
+    DeleteButtonComponent
   ],
   imports: [
     BrowserModule,
