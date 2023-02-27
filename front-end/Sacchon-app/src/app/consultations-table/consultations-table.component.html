@@ -1,6 +1,7 @@
 <div class="p-4">
-    <table class="table text-center align-middle">
-        <thead class="table_head">
+    <table class="table align-middle">
+        <!-- <table class="table text-center align-middle"> -->
+        <thead class="table_head bg-light">
             <tr>
                 <th>Date Created</th>
                 <th>Medication (Dosage)</th>
@@ -14,7 +15,8 @@
                 <td>{{ item.date_created }}</td>
                 <td>
                     <div *ngIf= "medications[getIndexFromId(item.id)].length===0">-</div>
-                    <div class="justify-content-center d-flex">
+                    <!-- <div class="justify-content-center d-flex"> -->
+                    <div class="justify-content-center">
                         <table class="text-center">
                             <tbody>
                                 <tr *ngFor="let medicationItem of medications[getIndexFromId(item.id)]">
@@ -27,7 +29,7 @@
                 <td>{{ item.details }}</td>
                 <td>{{ item.doctor_first_name }} {{ item.doctor_last_name }}</td>
                 <td>
-                    <span class="badge rounded-pill d-inline" [ngClass] = "activeId == item.id ? 'active_class' : 'inactive_class'">{{ activeId == item.id ? "Active" : "Inactive" }}</span>
+                    <span class="badge rounded-pill d-inline" [ngClass] = "activeId == item.id ? 'active_class' : 'inactive_class'">{{ activeId == item.id ? "ACTIVE" : "EXPIRED" }}</span>
                 </td>
             </tr>
         </tbody>

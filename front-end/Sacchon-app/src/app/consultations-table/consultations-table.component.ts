@@ -12,9 +12,10 @@ export class ConsultationsTableComponent implements OnInit{
 
   response: any;
   activeId: any;
+  expDate: any;
   medications: Array<any> = [];
   medicationsIds: Array<any> = [];
-  patientId = 2;
+  patientId = 3;
 
   constructor(private consultationService: ConsultationsService, private medicationService: MedicationService) {}
 
@@ -25,7 +26,23 @@ export class ConsultationsTableComponent implements OnInit{
         this.response = consultations;
         this.response = this.response.reverse();
 
-        this.activeId = this.response[0].id;
+        this.expDate = this.response[0].date_created;
+        this.expDate = new Date(this.expDate);
+        this.expDate = new Date(this.expDate.setMonth(this.expDate.getMonth()+1));
+        this.expDate = new Date(this.expDate.setDate(this.expDate.getDate()-1));
+
+        let start = Date.parse(this.response[0].date_created);
+        let end = Date.parse(this.expDate);
+        let curDate = Date.now();
+
+        let bool = curDate.valueOf() >= start.valueOf() && curDate.valueOf() <= end.valueOf();
+
+        if(bool){
+          this.activeId = this.response[0].id;
+        }
+        else{
+          this.activeId = -1;
+        }
 
         for (let i = 0; i <  this.response.length; i++){
           let id = this.response[i].id;

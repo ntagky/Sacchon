@@ -1,4 +1,4 @@
-import { ModalMeasurementsComponent } from '../modal-measurements/measurements.component';
+import { ModalMeasurementsComponent } from '../modal-measurements/modal-measurements.component';
 import { MeasurementService } from '../services/measurements.service';
 import { Component, OnInit } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';

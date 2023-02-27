@@ -1,14 +1,16 @@
 import { ConsultationsComponent } from './pages/consultations/consultations.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
-import { MeasurementsComponent } from './measurements/measurements.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MeasurementsPageComponent } from './pages/measurements-page/measurements-page.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   { path: 'home', component: HomepageComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'consultations', component: ConsultationsComponent },
-  { path: 'person-data', component: MeasurementsComponent }
+  { path: 'measurements', component: MeasurementsPageComponent },
+  { path: 'signup', component: SignupComponent }
 ];
 
 @NgModule({
