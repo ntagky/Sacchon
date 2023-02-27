@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
-import { MeasurementService } from './../services/measurements.service';
+import { MeasurementService } from '../services/measurements.service';
 
 @Component({
-  selector: 'app-measurements.',
-  templateUrl: './measurements.component.html',
+  selector: 'app-modal-measurements',
+  templateUrl: './modal-measurements.component.html',
+  styleUrls: ['./modal-measurements.component.scss']
 })
 export class ModalMeasurementsComponent implements OnInit {
 

@@ -1,1 +1,60 @@
-<p>signup works!</p>
+<div class="form_page">
+    <div class="container">
+        <div class="title text-center mt-4">
+            <h1>Sacchon</h1>
+        </div>
+        <div class="form w-75 p-5 mx-auto mt-5">
+            <form [formGroup]="signupForm" (ngSubmit)="signUp()" class="form">
+                <div class="row mb-4">
+                    <div class="col-sm-6">
+                        <label for="firstName">Name&nbsp;</label>
+                        <input id="firstName" type="text" formControlName="firstName">
+                        <div class="d-block mb-3"></div>
+                        <label for="lastName">Surname&nbsp;</label>
+                        <input id="lastName" type="text" formControlName="lastName">
+                        <div class="d-block mb-3"></div>
+                        <label for="address">Address&nbsp;</label>
+                        <input id="address" type="text" formControlName="address">
+                        <div class="d-block mb-3"></div>
+                        <label for="phoneNumber">Phone Number&nbsp;</label>
+                        <input id="phoneNumber" type="tel" formControlName="phoneNumber">
+                        <div class="d-block mb-3"></div>
+                        <label for="birthday">Date of Birth&nbsp;</label>
+                        <input id="birthday" type="date" formControlName="birthday">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="gender">Gender&nbsp;</label>
+                        <input id="gender" type="text" formControlName="gender">
+                        <div class="d-block mb-3"></div>
+                        <label for="height">Height&nbsp;</label>
+                        <input id="height" type="text" formControlName="height">
+                        <div class="d-block mb-3"></div>
+                        <label for="weight">Weight&nbsp;</label>
+                        <input id="weight" type="text" formControlName="weight">
+                        <div class="d-block mb-3"></div>
+                        <label for="bloodType">Blood Type&nbsp;</label>
+                        <input id="bloodType" type="text" formControlName="bloodType">
+                        <div class="d-block mb-3"></div>
+                        <label for="diabetesType">Diabetes Type&nbsp;</label>
+                        <input id="diabetesType" type="text" formControlName="diabetesType">
+                        <div class="d-block mb-3"></div>
+                        <label for="mrn">Medical Record Number&nbsp;</label>
+                        <input id="mrn" type="text" formControlName="mrn">
+                    </div>
+                </div>
+                
+                <div class="row mb-4 text-center">
+                    <div>
+                        <label for="email">Email&nbsp;</label>
+                        <input class="me-3 mt-3" id="email" type="email" formControlName="email">
+                        <label for="password">Password&nbsp;</label>
+                        <input id="password" type="password" formControlName="password">
+                    </div>
+                </div>
+            </form>
+            <div class="text-center">
+                <button class="btn my_button" (click)="signUp()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

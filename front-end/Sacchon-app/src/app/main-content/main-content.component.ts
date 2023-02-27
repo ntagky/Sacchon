@@ -24,7 +24,7 @@ export class MainContentComponent implements OnInit{
   showAlert = true;
   seenResponse:any = null;
 
-  patientId = 4;
+  patientId = 3;
 
   welcomeMessage = "Sacchon";
   mottoMessage = "Control diabetes, live without limits";
