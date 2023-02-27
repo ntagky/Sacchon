@@ -296,4 +296,62 @@ public class PatientController {
         return false;
 //         doctorService.updateDoctor(doctor, id);
     }
+
+  @PutMapping("/patient/update/{id}/email")
+    public void updatePatientEmail(@PathVariable(name="id") int id,
+                                                @RequestParam("email") String email){
+        patientService.updateEmailByPatientId(id,email);
+  }
+    @PutMapping("/patient/update/{id}/firstname")
+    public void updatePatientFirstName(@PathVariable(name="id") int id,
+                                   @RequestParam("firstName") String firstName){
+        patientService.updateFirstNameByPatientId(id,firstName);
+    }
+    @PutMapping("/patient/update/{id}/lastname")
+    public void updatePatientLastName(@PathVariable(name="id") int id,
+                                       @RequestParam("lastName") String lastName){
+        patientService.updateLastNameByPatientId(id,lastName);
+    }
+
+    @PutMapping("/patient/update/{id}/address")
+    public void updatePatientAddress(@PathVariable(name="id") int id,
+                                      @RequestParam("address") String address){
+        patientService.updateAddressByPatientId(id,address);
+    }
+
+    @PutMapping("/patient/update/{id}/gender")
+    public void updatePatientGender(@PathVariable(name="id") int id,
+                                     @RequestParam("gender") String gender){
+        patientService.updateGenderByPatientId(id,gender);
+    }
+
+    @PutMapping("/patient/update/{id}/phonenumber")
+    public void updatePatientPhoneNumber(@PathVariable(name="id") int id,
+                                         @RequestParam("phonenumber") String phonenumber){
+        patientService.updatePhoneNumberByPatientId(id,phonenumber);
+    }
+
+    @PutMapping("/patient/update/{id}/medicalrecordnumber")
+    public void updatePatientMedicalRecordNumber(@PathVariable(name="id") int id,
+                                                 @RequestParam("medicalRecordNumber") String medicalRecordNumber){
+        patientService.updateMedicalRecordNumberByPatientId(id,medicalRecordNumber);
+    }
+
+    @PutMapping("/patient/update/{id}/height")
+    public void updatePatientHeight(@PathVariable(name="id") int id,
+                                                 @RequestParam("height") int height){
+        patientService.updateHeightByPatientId(id,height);
+    }
+
+    @PutMapping("/patient/update/{id}/weight")
+    public void updatePatientWeight(@PathVariable(name="id") int id,
+                                                 @RequestParam("weight") double weight){
+        patientService.updateWeightByPatientId(id,weight);
+    }
+    @PutMapping("/patient/update/{id}/birthdate")
+    public void updatePatientWeight(@PathVariable(name="id") int id,
+                                    @RequestParam("birthDate") LocalDate birthDate){
+        patientService.updateBirthDateByPatientId(id,birthDate);
+    }
+
 }
