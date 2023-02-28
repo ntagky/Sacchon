@@ -19,14 +19,17 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MainContentComponent } from './main-content/main-content.component';
-import { ModalMeasurementsComponent } from './modal-measurements/modal-measurements.component';
-import { MeasurementsComponent } from './pages/measurements/measurements.component';
+import { ModalMeasurementsComponent } from './measurements-modal/measurements-modal.component';
+import { MeasurementsTableComponent } from './measurements-table/measurements-table.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ConsultationsComponent } from './pages/consultations/consultations.component';
 import { ConsultationsTableComponent } from './consultations-table/consultations-table.component';
 import { SignupComponent } from './signup/signup.component';
-import { MeasurementsPageComponent } from './pages/measurements-page/measurements-page.component';
-import { DataInspectorComponent } from './pages/data-inspector/data-inspector.component';
+import { GoodByeComponent } from './pages/goodbye/goodbye.component';
+import { LoginComponent } from './pages/login/login.component';
+import { ToastrModule } from 'ngx-toastr';
+import { InspectorComponent } from './pages/inspector/inspector.component';
+import { MeasurementsComponent } from './pages/measurements/measurements.component';
 
 
 @NgModule({
@@ -39,9 +42,12 @@ import { DataInspectorComponent } from './pages/data-inspector/data-inspector.co
     ConsultationsComponent,
     ConsultationsTableComponent,
     SignupComponent,
-    MeasurementsComponent,
     ModalMeasurementsComponent,
-    DeleteButtonComponent
+    GoodByeComponent,
+    LoginComponent,
+    MeasurementsTableComponent,
+    InspectorComponent,
+    MeasurementsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,12 +56,15 @@ import { DataInspectorComponent } from './pages/data-inspector/data-inspector.co
     HttpClientModule,
     ReactiveFormsModule,
     NgxSkeletonLoaderModule,
-    BrowserAnimationsModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
     MatInputModule,
     MatFormFieldModule,
+    MdbModalModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

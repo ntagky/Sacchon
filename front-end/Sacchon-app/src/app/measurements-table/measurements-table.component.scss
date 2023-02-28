@@ -1,0 +1,97 @@
+/* Add application styles & imports to this file! */
+body {
+  border: 2px solid #f6f7f8;
+  padding: 100px;
+}
+
+.shine {
+  background: #f6f7f8;
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 800px 104px;
+  display: inline-block;
+  position: relative;
+
+  -webkit-animation-duration: 1s;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-name: placeholderShimmer;
+  -webkit-animation-timing-function: linear;
+}
+
+.box {
+  height: 104px;
+  width: 100px;
+}
+
+div {
+  display: inline-flex;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-top: 15px;
+  vertical-align: top;
+}
+
+.lines {
+  height: 10px;
+  margin-top: 10px;
+  width: 200px;
+}
+
+.photo {
+  display: block !important;
+  width: 325px;
+  height: 100px;
+  margin-top: 15px;
+}
+
+@-webkit-keyframes placeholderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.table_head{
+  color: #0B436C;
+}
+
+.page-link{
+  color: #0B436C!important;
+}
+
+.page-link.active{
+  color: white!important;
+  background-color: #0B436C!important;
+  border-color: #0B436C!important;
+}
+
+.disabled{
+  color: gray!important;
+}
+
+
+// .motto{
+//   color: #35B9BA; 
+//   margin: auto; 
+//   width: 60%; 
+//   width: fit-content;
+//   margin-top: 15px;
+//   margin-bottom: 10px;
+//   font-weight: 400;
+//   font-size: 20px;
+//   font-style: italic;
+// }

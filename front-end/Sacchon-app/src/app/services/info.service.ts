@@ -8,23 +8,16 @@ import { catchError } from 'rxjs/operators';
 })
 export class InfoService {
 
-
-
   constructor(private http:HttpClient) { }
 
-
-  get(){
-    return this.http.get('http://localhost:9000/patient/2')
+  get(url: string){
+    return this.http.get(url)
   }
 
-  getId()
-{
-  const url = 'http://localhost:9000/patient/2';
-  const lastTwo = url.substring(url.length - 1);
+  getId(){
+    const url = 'http://localhost:9000/patient/2';
+    const lastTwo = url.substring(url.length - 1);
 
-  return lastTwo
-}
-
-
-
+    return lastTwo;
+  }
 }

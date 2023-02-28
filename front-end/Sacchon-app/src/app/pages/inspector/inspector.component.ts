@@ -1,13 +1,16 @@
+import { LocalStorageService } from './../../services/local-storage.service';
 import { InspectorService } from './../../services/inspector.service';
 import { Component, OnInit } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 
 @Component({
-  selector: 'app-data-inspector',
-  templateUrl: './data-inspector.component.html',
-  styleUrls: ['./data-inspector.component.scss']
+  selector: 'app-inspector',
+  templateUrl: './inspector.component.html',
+  styleUrls: ['./inspector.component.scss']
 })
-export class DataInspectorComponent {
+export class InspectorComponent {
+
+  userId: number;
 
   data: any = [];
   public view: any = [700, 400];
@@ -46,12 +49,16 @@ export class DataInspectorComponent {
   carbsChart: any = [];
   glucoseChart: any = [];
 
-  constructor(private service: InspectorService) {
+  constructor(
+    private service: InspectorService,
+    private localStoreService: LocalStorageService
+  ) {
+    this.userId = Number(localStoreService.getData("user"));
     this.readPagesCount();
   }
 
   readPagesCount() {
-    this.service.get("http://localhost:9000/patient/" + 4 + "/insights/query?start=2023-01-01&end=2023-02-18").subscribe({
+    this.service.get("http://localhost:9000/patient/" + this.userId + "/insights/query?start=2023-01-01&end=2023-02-18").subscribe({
       next: res => {
         this.responseMeasurements = res;
         this.dateSigned = this.responseMeasurements.dateSigned;
