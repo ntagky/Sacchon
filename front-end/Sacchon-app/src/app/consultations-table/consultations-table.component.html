@@ -1,4 +1,4 @@
-<div class="p-4">
+<div class="p-4" style="height: calc(100vh - 500px);">
     <table class="table align-middle">
         <!-- <table class="table text-center align-middle"> -->
         <thead class="table_head bg-light">
@@ -34,4 +34,26 @@
             </tr>
         </tbody>
     </table>
+
+    <nav class="d-flex justify-content-md-center mt-3" *ngIf="retrievedPages">
+        <ul class="pagination pagination-circle">
+          <li class="page-item " *ngIf="currentPage == 0">
+            <button class="page-link disabled">Previous</button>
+          </li> 
+           <li class="page-item" *ngIf="currentPage > 0">
+            <button class="page-link" (click)="previousPage()">Previous</button>
+          </li>
+          <li class="page-item" *ngFor="let page of [].constructor( pagesVisible ); let i = index">
+            <button class="page-link active" (click)="setPageValue(i + 1)" *ngIf="i == currentPage">{{ i + 1 }}<span class="visually-hidden">(current)</span></button>
+            <button class="page-link" (click)="setPageValue(i + 1)" *ngIf="i != currentPage">{{ i + 1}}</button>
+          </li>
+          <li class="page-item" *ngIf="currentPage == pagesVisible-1">
+            <button class="page-link disabled">Next</button>
+          </li> 
+          <li class="page-item" *ngIf="currentPage < pagesVisible-1">
+            <button class="page-link" (click)="nextPage()">Next</button>
+          </li>
+        </ul>
+    </nav>
+
 </div>

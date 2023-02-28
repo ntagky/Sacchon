@@ -8,7 +8,6 @@ import { ConsultationsService } from '../services/consultations.service';
   templateUrl: './main-content.component.html',
   styleUrls: ['./main-content.component.scss']
 })
-
 export class MainContentComponent implements OnInit{
 
   response: any;

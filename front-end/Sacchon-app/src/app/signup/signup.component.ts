@@ -40,21 +40,23 @@ export class SignupComponent implements OnInit {
       email: this.signupForm.get('email').value,
       address: this.signupForm.get('address').value,
       phoneNumber: this.signupForm.get('phoneNumber').value,
-      dateOfBirth: this.signupForm.get('birthday').value,
+      dateOfBirth: new Date(this.signupForm.get('birthday').value),
       gender: this.signupForm.get('gender').value,
       height: this.signupForm.get('height').value,
       weight: this.signupForm.get('weight').value,
       bloodType: this.signupForm.get('bloodType').value,
       diabetesType: this.signupForm.get('diabetesType').value,
       medicalRecordNumber: this.signupForm.get('mrn').value,
-      password: this.signupForm.get('password').value,
+      password: this.signupForm.get('password').value
     };
+
+    console.log(this.signupForm.get('password').value);
+    console.log(data.password);
 
     this.service.signUp(data, "http://localhost:9000/signup/patient").subscribe({
       next: res => {
         this.response = res;
         console.log(this.response);
-        // this.firstName = data.firstName;
       }
     })
   }

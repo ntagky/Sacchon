@@ -11,13 +11,12 @@ import { InfoComponent } from './info/info.component';
 const routes: Routes = [
   {path: 'delete', component: DeleteButtonComponent},
   { path: 'home', component: HomepageComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'consultations', component: ConsultationsComponent },
   { path: 'measurements', component: MeasurementsPageComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'inspector', component: DataInspectorComponent },
   {path: 'info', component: InfoComponent},
-
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 @NgModule({

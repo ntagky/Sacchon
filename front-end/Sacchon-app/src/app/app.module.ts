@@ -19,7 +19,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MainContentComponent } from './main-content/main-content.component';
 import { ModalMeasurementsComponent } from './modal-measurements/modal-measurements.component';
-import { MeasurementsComponent } from './pages/measurements/measurements.component';
+import { MeasurementsComponent } from './measurements/measurements.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ConsultationsComponent } from './pages/consultations/consultations.component';
 import { ConsultationsTableComponent } from './consultations-table/consultations-table.component';

@@ -18,14 +18,13 @@ export class MeasurementsComponent implements OnInit {
   realPage: any;
   pageStep: any;
   toShow: any;
-  section: number = 0;
   pagesVisible: any;
   lastPageIndex: any;
   retrievedPages = false;
   retrievedTable = false;
 
   constructor(private modalService: MdbModalService, private service: MeasurementService) {
-    this.patientId = 3;
+    this.patientId = 2;
     this.currentPage = 0;
     this.pageStep = 10;
 
@@ -84,7 +83,7 @@ export class MeasurementsComponent implements OnInit {
   }
 
   getPageVisible(): void {
-    if ((this.section + 1) * this.pageStep / this.pagesRespone <= 1)
+    if (this.pageStep / this.pagesRespone <= 1)
       this.pagesVisible = this.pageStep;
     else
       this.pagesVisible = this.pagesRespone % this.pageStep;
@@ -96,15 +95,8 @@ export class MeasurementsComponent implements OnInit {
   }
 
   manipulatePageValue(value:any): void {
-    this.section += value;
-    if (value > 0)
-      this.currentPage = (this.pageStep * this.section);
-    else
-      this.currentPage = (this.pageStep * this.section + this.pageStep - 1);
-    this.getPageVisible();
+    this.currentPage += value;
     this.readPaginatingData();
-    console.log(this.currentPage);
-    this.lastPageIndex = Math.floor(this.pagesRespone / this.pageStep);
   }
 
 }
