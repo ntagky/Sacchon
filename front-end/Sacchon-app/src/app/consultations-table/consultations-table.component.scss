@@ -1,11 +1,26 @@
 .active_class{
-    background-color: green;
+    background-color: RGBA(25, 135, 84, var(--bs-bg-opacity, 1)) !important;
 }
 
 .inactive_class{
-    background-color: gray;
+    background-color: RGBA(220, 53, 69, var(--bs-bg-opacity, 1)) !important;
 }
 
 .table_head{
     color: #0B436C;
+    font-weight: 100!important;
+}
+
+.page-link{
+    color: #0B436C!important;
+  }
+  
+.page-link.active{
+color: white!important;
+background-color: #0B436C!important;
+border-color: #0B436C!important;
+}
+
+.disabled{
+    color: gray!important;
 }

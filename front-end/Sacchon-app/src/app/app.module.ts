@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -26,7 +27,6 @@ import { ConsultationsTableComponent } from './consultations-table/consultations
 import { SignupComponent } from './signup/signup.component';
 import { GoodByeComponent } from './pages/goodbye/goodbye.component';
 import { LoginComponent } from './pages/login/login.component';
-import { ToastrModule } from 'ngx-toastr';
 import { InspectorComponent } from './pages/inspector/inspector.component';
 import { MeasurementsComponent } from './pages/measurements/measurements.component';
 

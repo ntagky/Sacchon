@@ -1,7 +1,7 @@
 <div class="main_content">
   <h1 class="main_title">{{ welcomeMessage }}</h1>
   <h1 class="main_motto">{{ mottoMessage }}</h1>
-    <div class="row ms-0" style="background-color: #ffe7f2; border-top: 1px solid #BCBCBC; height: 100vh;">
+    <div class="row ms-0" style="background-color: #ffe7f2; border-top: 1px solid #BCBCBC; height: calc(100vh - 226px);">
       <div class="col-sm-6" style="border-right: 1px solid #BCBCBC;">
         <div class="card">
           <div class="card_body" id="printConsultation">
@@ -9,9 +9,9 @@
             <hr>
             <table class="card_text ps-0">
               <thead>
-                <tr class="card_bold">
-                  <th>Medication</th>
-                  <th>Dosage</th>
+                <tr>
+                  <th class="card_bold">Medication</th>
+                  <th class="card_bold">Dosage</th>
                 </tr>
               </thead>
               <tbody>
@@ -60,3 +60,8 @@
       </div>
     </div>
 </div>
+
+<div *ngIf="seenResponse && showAlert" id="myAlert" class="alert">You have a new unseen consultation!</div>
+
+
+

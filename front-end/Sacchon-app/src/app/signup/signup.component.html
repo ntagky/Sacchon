@@ -1,60 +1,80 @@
 <div class="form_page">
     <div class="container">
-        <div class="title text-center mt-4">
-            <h1>Sacchon</h1>
+        <div class="text-center">
+            <div class="title text-center mt-4">
+                <img class="ms-1 mb-2 logo" src="assets/logo.png" alt="Sacchon logo"/>
+                <h1 class="mt-2">&nbsp;Sacchon</h1>
+            </div>
         </div>
-        <div class="form w-75 p-5 mx-auto mt-5">
+        <div class="form w-75 p-5 mx-auto mt-4">
+            <h4 style="font-weight: 400;">Sign up and get started</h4>
+            <hr class="mb-4 mt-3">
             <form [formGroup]="signupForm" (ngSubmit)="signUp()" class="form">
                 <div class="row mb-4">
                     <div class="col-sm-6">
                         <label for="firstName">Name&nbsp;</label>
-                        <input id="firstName" type="text" formControlName="firstName">
+                        <input class="border" id="firstName" type="text" formControlName="firstName">
                         <div class="d-block mb-3"></div>
                         <label for="lastName">Surname&nbsp;</label>
-                        <input id="lastName" type="text" formControlName="lastName">
+                        <input class="border" id="lastName" type="text" formControlName="lastName">
                         <div class="d-block mb-3"></div>
                         <label for="address">Address&nbsp;</label>
-                        <input id="address" type="text" formControlName="address">
+                        <input class="border" id="address" type="text" formControlName="address">
                         <div class="d-block mb-3"></div>
                         <label for="phoneNumber">Phone Number&nbsp;</label>
-                        <input id="phoneNumber" type="tel" formControlName="phoneNumber">
+                        <input class="border" id="phoneNumber" type="tel" formControlName="phoneNumber">
                         <div class="d-block mb-3"></div>
                         <label for="birthday">Date of Birth&nbsp;</label>
-                        <input id="birthday" type="date" formControlName="birthday">
+                        <input class="border" id="birthday" type="date" formControlName="birthday">
                     </div>
                     <div class="col-sm-6">
                         <label for="gender">Gender&nbsp;</label>
-                        <input id="gender" type="text" formControlName="gender">
+                        <input class="border" id="gender" type="text" formControlName="gender">
                         <div class="d-block mb-3"></div>
                         <label for="height">Height&nbsp;</label>
-                        <input id="height" type="text" formControlName="height">
+                        <input class="border" id="height" type="text" formControlName="height"><span>&nbsp;cm</span>
                         <div class="d-block mb-3"></div>
                         <label for="weight">Weight&nbsp;</label>
-                        <input id="weight" type="text" formControlName="weight">
+                        <input class="border" id="weight" type="text" formControlName="weight"><span>&nbsp;kg</span>
                         <div class="d-block mb-3"></div>
                         <label for="bloodType">Blood Type&nbsp;</label>
-                        <input id="bloodType" type="text" formControlName="bloodType">
+                        <!-- <input id="bloodType" type="text" formControlName="bloodType"> -->
+                        <select class="border" id="bloodType" type="text" formControlName="bloodType">
+                            <option value="A_POSITIVE">A+</option>
+                            <option value="A_NEGATIVE">A-</option>
+                            <option value="B_POSITIVE">B+</option>
+                            <option value="B_NEGATIVE">B-</option>
+                            <option value="AB_POSITIVE">AB+</option>
+                            <option value="AB_NEGATIVE">AB-</option>
+                            <option value="0_POSITIVE">0+</option>
+                            <option value="0_NEGATIVE">0-</option>
+                        </select>
                         <div class="d-block mb-3"></div>
                         <label for="diabetesType">Diabetes Type&nbsp;</label>
-                        <input id="diabetesType" type="text" formControlName="diabetesType">
+                        <!-- <input id="diabetesType" type="text" formControlName="diabetesType"> -->
+                        <select class="border" id="diabetesType" type="text" formControlName="diabetesType">
+                            <option value="TYPE_1">Type 1</option>
+                            <option value="TYPE_2">Type 2</option>
+                        </select>
                         <div class="d-block mb-3"></div>
                         <label for="mrn">Medical Record Number&nbsp;</label>
-                        <input id="mrn" type="text" formControlName="mrn">
+                        <input class="border" id="mrn" type="text" formControlName="mrn">
                     </div>
                 </div>
                 
                 <div class="row mb-4 text-center">
                     <div>
                         <label for="email">Email&nbsp;</label>
-                        <input class="me-3 mt-3" id="email" type="email" formControlName="email">
+                        <input class="me-3 mt-3 border" id="email" type="email" formControlName="email">
                         <label for="password">Password&nbsp;</label>
-                        <input id="password" type="password" formControlName="password">
+                        <input class="border" id="password" type="password" formControlName="password">
                     </div>
                 </div>
             </form>
             <div class="text-center">
-                <button class="btn my_button" (click)="signUp()">Save</button>
+                <button class="btn my_button" (click)="signUp()">Sign up</button>
             </div>
         </div>
+        <h2 class="motto mt-5 text-center">Control diabetes, live without limits</h2>
     </div>
 </div>

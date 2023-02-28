@@ -9,7 +9,6 @@ import { ConsultationsService } from '../services/consultations.service';
   templateUrl: './main-content.component.html',
   styleUrls: ['./main-content.component.scss']
 })
-
 export class MainContentComponent implements OnInit{
 
   @Input() patientId: any;
@@ -24,6 +23,8 @@ export class MainContentComponent implements OnInit{
   date: any;
   consultationId: any;
   data: any;
+  showAlert = true;
+  seenResponse:any = null;
 
   welcomeMessage = "Sacchon";
   mottoMessage = "Control diabetes, live without limits";
@@ -35,6 +36,21 @@ export class MainContentComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
+
+
+    // const hasShownAlert = localStorage.getItem('hasShownAlert');
+    // if (hasShownAlert) {
+    //   this.showAlert = false;
+    // } else {
+
+      // localStorage.setItem('hasShownAlert', 'true');
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 5000);
+    // }
+
+
+
     this.consultationService.getConsultations(this.patientId).subscribe({
       next: consultations => {
         this.response = consultations;
@@ -60,6 +76,12 @@ export class MainContentComponent implements OnInit{
       }
     });
 
+    this.consultationService.getLastConsultationSeenStatus(this.patientId).subscribe({
+      next: seenStatus => {this.seenResponse = seenStatus}
+    });
+
+
+
     this.doctorService.getDoctor(this.patientId).subscribe({
       next: doctor => {
         this.response = doctor;
@@ -71,7 +93,17 @@ export class MainContentComponent implements OnInit{
     })
   }
 
+
+
   printThisPage() {
     window.print();
   }
+
+
+
+
+
+
+
+
 }

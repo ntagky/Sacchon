@@ -13,9 +13,8 @@ import { Router } from  '@angular/router';
 import { Location } from '@angular/common';
 
 const routes: Routes = [
-  { path: 'goodbye', component: GoodByeComponent},
+  {path: 'delete', component: GoodByeComponent},
   { path: 'home', component: HomepageComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'consultations', component: ConsultationsComponent },
   { path: 'inspector', component: InspectorComponent },
   { path: 'info', component: InfoComponent },
