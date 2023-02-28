@@ -1,6 +1,7 @@
 import { MedicationService } from './../services/medication.service';
 import { Component, OnInit } from '@angular/core';
 import { ConsultationsService } from '../services/consultations.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-consultations-table',
@@ -10,13 +11,14 @@ import { ConsultationsService } from '../services/consultations.service';
 
 export class ConsultationsTableComponent implements OnInit{
 
+  userId: number;
+
   originalResponse: any;
   response: any;
   activeId: any;
   expDate: any;
   medications: Array<any> = [];
   medicationsIds: Array<any> = [];
-  patientId = 3;
 
   currentPage: any;
   pageStep: any;
@@ -26,14 +28,15 @@ export class ConsultationsTableComponent implements OnInit{
   pagesVisible: any;
   retrievedPages = false;
 
-  constructor(private consultationService: ConsultationsService, private medicationService: MedicationService) {
+  constructor(private consultationService: ConsultationsService, private medicationService: MedicationService, private localStoreService: LocalStorageService) {
     this.currentPage = 0;
     this.pageStep = 10;
+    this.userId = Number(localStoreService.getData("user"));
   }
 
   ngOnInit(): void {
 
-    this.consultationService.getConsultations(this.patientId).subscribe({
+    this.consultationService.getConsultations(this.userId).subscribe({
       next: consultations => {
         this.originalResponse = consultations;
         this.originalResponse = this.originalResponse.reverse();

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
-import { FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormArray, Validators, Input } from '@angular/forms';
 import { MeasurementService } from '../services/measurements.service';
 
 @Component({
@@ -9,6 +9,8 @@ import { MeasurementService } from '../services/measurements.service';
   styleUrls: ['./measurements-modal.component.scss']
 })
 export class ModalMeasurementsComponent implements OnInit {
+
+  @Input() patientId: any;
 
   id: number | null = null;
   date: string | null = null;
@@ -88,7 +90,7 @@ export class ModalMeasurementsComponent implements OnInit {
       units: 'g'
     };
 
-    this.service.post(data, "http://localhost:9000/patient/3/carbs").subscribe({
+    this.service.post(data, "http://localhost:9000/patient/" + this.patientId + "/carbs").subscribe({
       next: res => {
         this.response = res;
         this.createForm.patchValue({'carbsMeasurement': data.measurement});
@@ -100,7 +102,7 @@ export class ModalMeasurementsComponent implements OnInit {
 
   updateCabrs() {
     const id = 3;
-    this.service.put("http://localhost:9000/patient/3/carbs/" + this.createForm.get('date').value + "/update/" + this.createForm.get('carbsMeasurement').value).subscribe({
+    this.service.put("http://localhost:9000/patient/" + this.patientId + "/carbs/" + this.createForm.get('date').value + "/update/" + this.createForm.get('carbsMeasurement').value).subscribe({
       next: res => {
         this.response = res;
         this.createForm.patchValue({'carbsMeasurement': this.createForm.get('carbsMeasurement').value});
@@ -111,7 +113,7 @@ export class ModalMeasurementsComponent implements OnInit {
   }
 
   readGlucoseRecords() {
-    this.service.get("http://localhost:9000/patient/3/glucose/" + this.date).subscribe({
+    this.service.get("http://localhost:9000/patient/" + this.patientId + "/glucose/" + this.date).subscribe({
       next: glucoseRecordsResponse => {
         this.glucoseRecordsResponse = glucoseRecordsResponse;
 
@@ -142,7 +144,7 @@ export class ModalMeasurementsComponent implements OnInit {
   }
 
   deleteCarbs():void {
-    this.service.delete("http://localhost:9000/patient/3/carbs/" + this.date).subscribe({
+    this.service.delete("http://localhost:9000/patient/" + this.patientId + "/carbs/" + this.date).subscribe({
       next: res => {
         this.createForm.patchValue({'carbsMeasurement': 0});
         this.carbs = 0
@@ -212,7 +214,7 @@ export class ModalMeasurementsComponent implements OnInit {
       measurement: currentForm.value['measurement'],
     };
 
-    this.service.postData(data, "http://localhost:9000/patient/3/glucose/" + this.date).subscribe({
+    this.service.postData(data, "http://localhost:9000/patient/" + this.patientId + "/glucose/" + this.date).subscribe({
       next: res => {
         this.response = res;
 
@@ -275,7 +277,7 @@ export class ModalMeasurementsComponent implements OnInit {
       });
     } else {  // Delete Glucose table
       console.log("Deleting whole table..");
-      this.service.delete("http://localhost:9000/patient/3/glucose/" + this.date + "/delete").subscribe({
+      this.service.delete("http://localhost:9000/patient/" + this.patientId + "/glucose/" + this.date + "/delete").subscribe({
         next: res => {
           this.response = res;
         }

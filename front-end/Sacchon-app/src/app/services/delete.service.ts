@@ -12,8 +12,8 @@ export class DeleteService {
   constructor(private http:HttpClient) { }
 
 
-  delete(){
-    return this.http.delete('http://localhost:9000/delete/2')}
+  delete(id: any){
+    return this.http.delete('http://localhost:9000/delete/' + id)}
 
 
 }
