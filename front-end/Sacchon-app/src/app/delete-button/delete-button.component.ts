@@ -21,16 +21,9 @@ export class DeleteButtonComponent implements OnInit {
   }
 
   deleteData(){
-
-
-
-    this.deleteService.delete().subscribe(
-   {
-      next: data =>this.response = data,
-
-   }
-
-
- )}
+    this.deleteService.delete().subscribe({
+      next: data =>this.response = data
+    }
+  )}
 
 }

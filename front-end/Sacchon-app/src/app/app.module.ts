@@ -25,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { DataInspectorComponent } from './pages/data-inspector/data-inspector.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MeasurementsComponent,
     ModalMeasurementsComponent,
     DataInspectorComponent,
-    DeleteButtonComponent
+    DeleteButtonComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
