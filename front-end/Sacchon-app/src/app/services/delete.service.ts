@@ -14,6 +14,4 @@ export class DeleteService {
 
   delete(id: any){
     return this.http.delete('http://localhost:9000/delete/' + id)}
-
-
 }

@@ -29,6 +29,7 @@ import { GoodByeComponent } from './pages/goodbye/goodbye.component';
 import { LoginComponent } from './pages/login/login.component';
 import { InspectorComponent } from './pages/inspector/inspector.component';
 import { MeasurementsComponent } from './pages/measurements/measurements.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { MeasurementsComponent } from './pages/measurements/measurements.compone
     LoginComponent,
     MeasurementsTableComponent,
     InspectorComponent,
-    MeasurementsComponent
+    MeasurementsComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

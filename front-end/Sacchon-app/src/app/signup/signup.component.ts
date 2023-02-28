@@ -50,13 +50,9 @@ export class SignupComponent implements OnInit {
       password: this.signupForm.get('password').value
     };
 
-    console.log(this.signupForm.get('password').value);
-    console.log(data.password);
-
     this.service.signUp(data, "http://localhost:9000/signup/patient").subscribe({
       next: res => {
         this.response = res;
-        console.log(this.response);
       }
     })
   }

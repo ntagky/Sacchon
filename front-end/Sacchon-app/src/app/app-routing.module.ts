@@ -1,3 +1,4 @@
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { LocalStorageService } from './services/local-storage.service';
 import { LoginComponent } from './pages/login/login.component';
 import { InspectorComponent } from './pages/inspector/inspector.component';
@@ -23,7 +24,9 @@ const routes: Routes = [
   { path: 'measurements', component: MeasurementsComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'inspector', component: InspectorComponent },
-  { path: 'info', component: InfoComponent}
+  { path: 'info', component: InfoComponent},
+  { path: 'signout', component: LoginComponent},
+  { path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({

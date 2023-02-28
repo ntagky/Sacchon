@@ -1,5 +1,7 @@
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { PatientService } from './../services/patient.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +17,7 @@ export class NavbarComponent implements OnInit{
   lastName: any;
   initials: any;
 
-  constructor(private patientService: PatientService){}
+  constructor(private patientService: PatientService, private localStorageService: LocalStorageService, private router: Router){}
 
   ngOnInit(): void {
     if (this.patientId > 0) {
@@ -30,5 +32,10 @@ export class NavbarComponent implements OnInit{
         }
       })
     }
+  }
+
+  deleteData(){
+    this.localStorageService.clearData();
+    this.router.navigateByUrl('/signout')
   }
 }

@@ -17,7 +17,6 @@ export class InfoComponent implements OnInit {
     this.userId = Number(localStoreService.getData("user"));
   }
 
-
   ngOnInit(): void {
     this.getData();
   }
@@ -25,9 +24,10 @@ export class InfoComponent implements OnInit {
   getData() {
     this.infoService.get('http://localhost:9000/patient/' + this.userId).subscribe({
       next: response => this.data = response
-  })
-
-  } deleteData() {
+    })
+  }
+  
+  deleteData() {
     this.deleteService.delete(this.userId).subscribe({
       next: data => {
         this.deleteRespone = data;

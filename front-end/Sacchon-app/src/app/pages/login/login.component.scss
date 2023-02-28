@@ -16,15 +16,15 @@
 }
 
 .form-signin {
-  width: 420px;
+  	width: 420px;	
 	max-width: 420px;
 	padding: 45px;
 	margin: 0 auto;
 	background-color: #fff;
 	border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  box-shadow: 0px 10px 20px 5px #ffffff3c;
-}
+	border-radius: 10px;
+	box-shadow: 0px 5px 20px 5px #ffffff3c;
+	}
 
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -59,4 +59,10 @@
 	margin-bottom: 20px;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
+}
+
+.my_button{
+    background-color: #D22B74;
+    // background-color: #0B436C;
+    color: white;
 }

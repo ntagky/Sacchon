@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
-import { FormBuilder, FormArray, Validators, Input } from '@angular/forms';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { MeasurementService } from '../services/measurements.service';
 
 @Component({
