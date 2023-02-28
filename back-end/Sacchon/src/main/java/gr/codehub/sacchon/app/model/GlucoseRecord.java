@@ -7,6 +7,21 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 
+/**
+ A class that represents a glucose record which contains a time, a measurement,
+ and a reference to the parent glucose entity.
+ It contains the following properties:
+
+ ID: Unique Identifier
+ Time: Time of Measurement
+ Measurement: The value of the measurement
+ Glucose: Owning glucose class
+
+ @author Christos Tzoulias
+ @version 1.0
+ @since 2023-02-28
+ */
+
 @Entity
 @Table(schema = SacchonApplication.SCHEMA)
 @AllArgsConstructor

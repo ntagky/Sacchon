@@ -13,6 +13,27 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+  The doctor controllers contain CRUD controllers that enable the user to achieve the following
+  functionalities in the application:
+  _____________________________________________________________________________________________
+  • view their account
+  • sign up for an account remove the account
+  • view patient record browse the data for a single patient (patient data and consultations)
+  • search /find patients that have not had a consultation in the last month
+  • consult provide advice to a patient for the upcoming month (name of medication
+    and dosage)
+  • update modify a consultation to a patient
+
+   @RestController: This annotation is used to define the class as a Spring Rest Controller
+   @AllArgsConstructor: This annotation is used to generate a constructor with arguments for all fields in the class
+   @Slf4j: This annotation is used to enable logging in the class using the Simple Logging Facade for Java (SLF4J) API
+
+   @author Christos Tzoulias
+   @version 1.0
+   @since 2023-02-28
+ */
+
 @RestController
 @AllArgsConstructor
 @Slf4j

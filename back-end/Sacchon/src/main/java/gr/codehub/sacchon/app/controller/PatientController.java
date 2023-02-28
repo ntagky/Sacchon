@@ -17,6 +17,31 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+  The patient controllers contain CRUD controllers that enable the user to achieve the following
+  functionalities in the application:
+  _____________________________________________________________________________________________
+  • view their account
+  • sign up for an account
+  • remove the account
+  • store their data
+       -> blood glucose level (date, time, measured in mg/dL)
+       -> daily carbonates intake (date, measured in grams)
+  • view
+       -> their average daily blood glucose level over a user-specified period
+       -> their average carb intake over a user-specified period
+       -> the current and past consultations from doctors
+  • update /modify incorrect submitted data
+  • delete incorrect submitted data
+
+   @RestController: This annotation is used to define the class as a Spring Rest Controller
+   @AllArgsConstructor: This annotation is used to generate a constructor with arguments for all fields in the class
+   @Slf4j: This annotation is used to enable logging in the class using the Simple Logging Facade for Java (SLF4J) API
+
+   @author Christos Tzoulias
+   @version 1.0
+   @since 2023-02-28
+ */
 @RestController
 @AllArgsConstructor
 @Slf4j

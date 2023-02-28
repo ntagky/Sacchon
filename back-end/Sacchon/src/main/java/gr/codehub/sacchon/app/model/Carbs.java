@@ -6,6 +6,22 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+/**
+ * <p>Carbs is one of the sub entities of the Sacchon Diabetes Management application.
+ * Carbs is used to store the patients carbohydrates data
+ *
+ * Properties
+ * id: unique identification number
+ * Units: Units of measurement
+ * Date: Date measured
+ * Measurement: Measurement value
+ * Patient: Owning patient
+ *
+ * @author Georgia Giannokosta - geogiannokosta@gmail.com
+ * @version 1.0
+ * @since 2023-02-28
+ */
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

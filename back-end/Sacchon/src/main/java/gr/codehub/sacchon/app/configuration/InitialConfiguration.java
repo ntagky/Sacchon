@@ -16,6 +16,13 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
 
+/** This is the initial configuration file of the Sacchon2023 project
+ * Its aim is to create and populate the database with entities. If the
+ * user is running the application in test mode it populates the DEVELOP database
+ * while if the user runs it in production mode it populates the PRODUCTION database.
+ *
+ * The creation of the population is done using randomized seeds to achieve maximum randomization.
+ */
 @Configuration
 public class InitialConfiguration {
 
