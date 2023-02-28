@@ -10,6 +10,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+  This class represents the RestController for consultations.
+  It is responsible for handling HTTP requests related to consultations,
+  and it communicates with the ConsultationService and MedicationService to
+  execute the necessary actions.
+
+   @RestController: This annotation is used to define the class as a Spring Rest Controller
+   @AllArgsConstructor: This annotation is used to generate a constructor with arguments for all fields in the class
+   @Slf4j: This annotation is used to enable logging in the class using the Simple Logging Facade for Java (SLF4J) API
+
+   @author Christos Tzoulias
+   @version 1.0
+   @since 2023-02-28
+ */
 @RestController
 @AllArgsConstructor
 @Slf4j

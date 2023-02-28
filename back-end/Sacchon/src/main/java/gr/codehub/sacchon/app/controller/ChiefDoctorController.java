@@ -15,6 +15,25 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+/**  This Chief Doctor controllers enables doctors who have the chief doctor functionality
+    to be able to achieve the following functionalities and receive the following information:
+    _________________________________________________________________________________________
+   . The information submissions (personal monitor data) of a patient over a time range
+   . The information submissions (consultations) of a doctor over a time range
+   . The list of the patients who are waiting for a consultation
+   . The patients and the number of consultations they got over a time range
+   . The list of the patients with no activity over a time range
+   . The list of the doctors with no activity over a time range
+
+   @RestController: This annotation is used to define the class as a Spring Rest Controller
+   @AllArgsConstructor: This annotation is used to generate a constructor with arguments for all fields in the class
+   @Slf4j: This annotation is used to enable logging in the class using the Simple Logging Facade for Java (SLF4J) API
+
+   @author Christos Tzoulias
+   @version 1.0
+   @since 2023-02-28
+
+ */
 @RestController
 @AllArgsConstructor
 @Slf4j

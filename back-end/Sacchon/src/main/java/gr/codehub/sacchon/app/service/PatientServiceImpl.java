@@ -120,10 +120,10 @@ public class PatientServiceImpl implements PatientService {
 
         Patient patient = patientDto.asPatient();
 
-        patientRepository.createPatient(patient.getFirstName(), patient.getLastName(), patient.getPassword(), patient.getEmail(),
-                patient.getMedicalRecordNumber(), patient.getAddress(), patient.getGender(), patient.getDateOfBirth(),
-                patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight(), patient.getSignedDate()
-                ,patient.getPhoneNumber());
+//        patientRepository.createPatient(patient.getFirstName(), patient.getLastName(), patient.getPassword(), patient.getEmail(),
+//                patient.getMedicalRecordNumber(), patient.getAddress(), patient.getGender(), patient.getDateOfBirth(),
+//                patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight(), patient.getSignedDate()
+//                ,patient.getPhoneNumber());
 
         return patientRepository.save(patient).getId();
     }
@@ -141,6 +141,55 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deleteCarbsFromPatientInSpecificDate(long id, LocalDate dateGiven) {
         carbsRepository.deleteCarbsFromPatientInSpecificDate(id, dateGiven);
+    }
+
+    @Override
+    public void updateEmailByPatientId(long id, String email) {
+        patientRepository.updateEmailFromPatientById(id,email);
+    }
+
+    @Override
+    public void updateFirstNameByPatientId(long id, String firstName) {
+        patientRepository.updateFirstNameFromPatientById(id,firstName);
+    }
+    @Override
+    public void updateLastNameByPatientId(long id, String lastName) {
+        patientRepository.updateLastNameFromPatientById(id,lastName);
+    }
+
+    @Override
+    public void updateGenderByPatientId(long id, String gender) {
+        patientRepository.updateGenderFromPatientById(id,gender);
+    }
+
+    @Override
+    public void updateHeightByPatientId(long id, int height) {
+        patientRepository.updateHeightFromPatientById(id,height);
+    }
+
+    @Override
+    public void updateWeightByPatientId(long id, double weight) {
+        patientRepository.updateWeightFromPatientById(id,weight);
+    }
+
+    @Override
+    public void updateMedicalRecordNumberByPatientId(long id, String medicalRecordNumber) {
+        patientRepository.updateMedicalRecordNumberFromPatientById(id,medicalRecordNumber);
+    }
+
+    @Override
+    public void updatePhoneNumberByPatientId(long id, String phoneNumber) {
+        patientRepository.updatePhoneNumberFromPatientById(id,phoneNumber);
+    }
+
+    @Override
+    public void updateBirthDateByPatientId(long id, LocalDate birthDate) {
+        patientRepository.updateBirthDateFromPatientById(id,birthDate);
+    }
+
+    @Override
+    public void updateAddressByPatientId(long id, String address) {
+        patientRepository.updateAddressFromPatientById(id,address);
     }
 
     @Override

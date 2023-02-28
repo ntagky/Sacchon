@@ -17,6 +17,31 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+  The patient controllers contain CRUD controllers that enable the user to achieve the following
+  functionalities in the application:
+  _____________________________________________________________________________________________
+  • view their account
+  • sign up for an account
+  • remove the account
+  • store their data
+       -> blood glucose level (date, time, measured in mg/dL)
+       -> daily carbonates intake (date, measured in grams)
+  • view
+       -> their average daily blood glucose level over a user-specified period
+       -> their average carb intake over a user-specified period
+       -> the current and past consultations from doctors
+  • update /modify incorrect submitted data
+  • delete incorrect submitted data
+
+   @RestController: This annotation is used to define the class as a Spring Rest Controller
+   @AllArgsConstructor: This annotation is used to generate a constructor with arguments for all fields in the class
+   @Slf4j: This annotation is used to enable logging in the class using the Simple Logging Facade for Java (SLF4J) API
+
+   @author Christos Tzoulias
+   @version 1.0
+   @since 2023-02-28
+ */
 @RestController
 @AllArgsConstructor
 @Slf4j
@@ -190,7 +215,6 @@ public class PatientController {
         LocalDate curDate = LocalDate.now();
         patientDto.setSignedDate(curDate);
         log.info("The end point signup/patient has been used");
-        patientService.registerPatient(patientDto);
         return patientService.registerPatient(patientDto);
 //        return ResponseEntity.ok(patientDto);
     }
@@ -293,6 +317,64 @@ public class PatientController {
         return false;
 //         doctorService.updateDoctor(doctor, id);
     }
+
+  @PutMapping("/patient/update/{id}/email")
+    public void updatePatientEmail(@PathVariable(name="id") int id,
+                                                @RequestParam("email") String email){
+        patientService.updateEmailByPatientId(id,email);
+  }
+    @PutMapping("/patient/update/{id}/firstname")
+    public void updatePatientFirstName(@PathVariable(name="id") int id,
+                                   @RequestParam("firstName") String firstName){
+        patientService.updateFirstNameByPatientId(id,firstName);
+    }
+    @PutMapping("/patient/update/{id}/lastname")
+    public void updatePatientLastName(@PathVariable(name="id") int id,
+                                       @RequestParam("lastName") String lastName){
+        patientService.updateLastNameByPatientId(id,lastName);
+    }
+
+    @PutMapping("/patient/update/{id}/address")
+    public void updatePatientAddress(@PathVariable(name="id") int id,
+                                      @RequestParam("address") String address){
+        patientService.updateAddressByPatientId(id,address);
+    }
+
+    @PutMapping("/patient/update/{id}/gender")
+    public void updatePatientGender(@PathVariable(name="id") int id,
+                                     @RequestParam("gender") String gender){
+        patientService.updateGenderByPatientId(id,gender);
+    }
+
+    @PutMapping("/patient/update/{id}/phonenumber")
+    public void updatePatientPhoneNumber(@PathVariable(name="id") int id,
+                                         @RequestParam("phonenumber") String phonenumber){
+        patientService.updatePhoneNumberByPatientId(id,phonenumber);
+    }
+
+    @PutMapping("/patient/update/{id}/medicalrecordnumber")
+    public void updatePatientMedicalRecordNumber(@PathVariable(name="id") int id,
+                                                 @RequestParam("medicalRecordNumber") String medicalRecordNumber){
+        patientService.updateMedicalRecordNumberByPatientId(id,medicalRecordNumber);
+    }
+
+    @PutMapping("/patient/update/{id}/height")
+    public void updatePatientHeight(@PathVariable(name="id") int id,
+                                                 @RequestParam("height") int height){
+        patientService.updateHeightByPatientId(id,height);
+    }
+
+    @PutMapping("/patient/update/{id}/weight")
+    public void updatePatientWeight(@PathVariable(name="id") int id,
+                                                 @RequestParam("weight") double weight){
+        patientService.updateWeightByPatientId(id,weight);
+    }
+    @PutMapping("/patient/update/{id}/birthdate")
+    public void updatePatientWeight(@PathVariable(name="id") int id,
+                                    @RequestParam("birthDate") LocalDate birthDate){
+        patientService.updateBirthDateByPatientId(id,birthDate);
+    }
+
 
     @GetMapping("/patient/{id}/insights/query")
     public InsightsData getTotalMeasurements(

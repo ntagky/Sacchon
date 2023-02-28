@@ -1,6 +1,8 @@
 package gr.codehub.sacchon.app.repository;
 
 import gr.codehub.sacchon.app.SacchonApplication;
+import gr.codehub.sacchon.app.model.BloodType;
+import gr.codehub.sacchon.app.model.DiabetesType;
 import gr.codehub.sacchon.app.model.Patient;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -120,6 +122,71 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Query(value = "SELECT SIGNED_DATE FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE PATIENT.ID = :patientId" , nativeQuery = true)
     LocalDate findDateAssignedFromPatientId(@Param("patientId") long patientId);
+
+
+
+
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET FIRST_NAME = :firstName WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updateFirstNameFromPatientById(@Param("patientId") long patientId, @Param("firstName") String firstName);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET LAST_NAME = :lastName WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updateLastNameFromPatientById(@Param("patientId") long patientId,@Param("lastName") String lastName);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET PHONE_NUMBER = :phoneNumber WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updatePhoneNumberFromPatientById(@Param("patientId") long patientId,@Param("phoneNumber") String phoneNumber);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET ADDRESS = :address WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updateAddressFromPatientById(@Param("patientId") long patientId, @Param("address") String address);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET BLOOD_TYPE = :bloodtype WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void getBloodTypeFromPatientById(@Param("patientId") long patientId,@Param("bloodtype") BloodType bloodtype);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET DIABETES_TYPE = :diabetesType WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updateDiabetesTypeFromPatientById(@Param("patientId") long patientId,@Param("diabetesType") DiabetesType diabetesType);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET DATE_OF_BIRTH = :dateOfBirth WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updateBirthDateFromPatientById(@Param("patientId") long patientId,@Param("dateOfBirth") LocalDate dateOfBirth);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET EMAIL = :email WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updateEmailFromPatientById(@Param("patientId") long patientId,@Param("email") String email);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET GENDER = :gender WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updateGenderFromPatientById(@Param("patientId") long patientId,@Param("gender") String gender);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET HEIGHT = :height WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updateHeightFromPatientById(@Param("patientId") long patientId,@Param("height") int height);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET MEDICAL_RECORD_NUMBER = :medicalRecordNumber WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updateMedicalRecordNumberFromPatientById(@Param("patientId") long patientId,@Param("medicalRecordNumber") String medicalRecordNumber);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".PATIENT SET WEIGHT = :weight WHERE PATIENT.ID = :patientId" , nativeQuery = true)
+    void updateWeightFromPatientById(@Param("patientId") long patientId,@Param("weight") double weight);
 
     @Query(value = "SELECT ID FROM " + SacchonApplication.SCHEMA + ".PATIENT " +
             "WHERE PATIENT.EMAIL = :email AND PATIENT.PASSWORD = :password", nativeQuery = true)

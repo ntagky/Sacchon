@@ -37,13 +37,13 @@ public class DoctorServImpl implements DoctorService {
     @Override
     public long registerDoctor(DoctorDto doctorDto) {
         Doctor doctor = doctorDto.asDoctor();
-        doctorRepository.registerDoctor(
-                doctor.getFirstName(),
-                doctor.getLastName(),
-                doctor.getPassword(),
-                doctor.getEmail(),
-                doctor.getSignedDate(),
-                doctor.getPhoneNumber());
+//        doctorRepository.registerDoctor(
+//                doctor.getFirstName(),
+//                doctor.getLastName(),
+//                doctor.getPassword(),
+//                doctor.getEmail(),
+//                doctor.getSignedDate(),
+//                doctor.getPhoneNumber());
 
         return doctorRepository.save(doctor).getId();
     }

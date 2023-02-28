@@ -16,6 +16,8 @@ public interface PatientService {
     long findDoctorIdByPatientId(long id);
     boolean updatePatient(PatientDto patient, long id);
 
+    public void updateEmailByPatientId(long id, String email);
+
     long getPatientCount();
 
     void deletePatientById(long patientId);
@@ -27,6 +29,23 @@ public interface PatientService {
     LocalDate findDateAssignedFromPatientId(long id);
 
     void deleteCarbsFromPatientInSpecificDate(long id, LocalDate dateGiven);
+
+    public void updateFirstNameByPatientId(long id, String firstName);
+
+    public void updateLastNameByPatientId(long id, String lastName);
+
+    public void updateGenderByPatientId(long id, String gender);
+
+    public void updateHeightByPatientId(long id, int height);
+    public void updateWeightByPatientId(long id,double weight);
+
+    public void updateMedicalRecordNumberByPatientId(long id, String medicalRecordNumber);
+
+    public void updatePhoneNumberByPatientId(long id, String phoneNumber);
+
+    public void updateBirthDateByPatientId(long id, LocalDate birthDate);
+
+    public void updateAddressByPatientId(long id, String address);
 
     InsightsData getInsightsData(long id, LocalDate staringDate, LocalDate endingDate);
 }
