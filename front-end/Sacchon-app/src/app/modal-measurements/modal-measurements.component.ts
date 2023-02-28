@@ -4,8 +4,9 @@ import { FormBuilder, FormArray, Validators, FormControl } from '@angular/forms'
 import { MeasurementService } from '../services/measurements.service';
 
 @Component({
-  selector: 'app-measurements.',
+  selector: 'app-modal-measurements',
   templateUrl: './modal-measurements.component.html',
+  styleUrls: ['./modal-measurements.component.scss']
 })
 export class ModalMeasurementsComponent implements OnInit {
 

@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit{
   lastName: any;
   initials: any;
 
-  patientId = 2;
+  patientId = 3;
 
   constructor(private patientService: PatientService){}
 

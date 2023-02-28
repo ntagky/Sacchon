@@ -60,3 +60,38 @@ div {
     background-position: 468px 0;
   }
 }
+
+a {
+  text-decoration: none;
+}
+
+.table_head{
+  color: #0B436C;
+}
+
+.page-link{
+  color: #0B436C!important;
+}
+
+.page-link.active{
+  color: white!important;
+  background-color: #0B436C!important;
+  border-color: #0B436C!important;
+}
+
+.disabled{
+  color: gray!important;
+}
+
+
+// .motto{
+//   color: #35B9BA; 
+//   margin: auto; 
+//   width: 60%; 
+//   width: fit-content;
+//   margin-top: 15px;
+//   margin-bottom: 10px;
+//   font-weight: 400;
+//   font-size: 20px;
+//   font-style: italic;
+// }
