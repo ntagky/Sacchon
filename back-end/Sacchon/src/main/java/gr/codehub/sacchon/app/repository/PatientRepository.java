@@ -120,4 +120,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Query(value = "SELECT SIGNED_DATE FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE PATIENT.ID = :patientId" , nativeQuery = true)
     LocalDate findDateAssignedFromPatientId(@Param("patientId") long patientId);
+
+    @Query(value = "SELECT ID FROM " + SacchonApplication.SCHEMA + ".PATIENT " +
+            "WHERE PATIENT.EMAIL = :email AND PATIENT.PASSWORD = :password", nativeQuery = true)
+    Long findPatientByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 }

@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.service;
 
+import gr.codehub.sacchon.app.dto.InsightsData;
 import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 
@@ -26,4 +27,6 @@ public interface PatientService {
     LocalDate findDateAssignedFromPatientId(long id);
 
     void deleteCarbsFromPatientInSpecificDate(long id, LocalDate dateGiven);
+
+    InsightsData getInsightsData(long id, LocalDate staringDate, LocalDate endingDate);
 }

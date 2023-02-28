@@ -51,4 +51,9 @@ public interface GlucoseRepository extends JpaRepository<Glucose, Long> {
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".GLUCOSE " +
             "WHERE GLUCOSE.PATIENT_ID = :patientId AND DATE = :givenDate", nativeQuery = true)
     void deleteGlucoseByPatientIdAndDate(long patientId, LocalDate givenDate);
+
+    @Query(value = "SELECT COUNT(*) FROM " + SacchonApplication.SCHEMA + ".GLUCOSE " +
+            "WHERE GLUCOSE.PATIENT_ID = :patientId AND GLUCOSE.DATE = :givenDate",
+            nativeQuery = true)
+    Long findGlucoseCountInSpecificDateByPatientId(long patientId, LocalDate givenDate);
 }

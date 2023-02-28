@@ -45,8 +45,10 @@ public class GlucoseRecordServImpl implements GlucoseRecordService {
 
     @Override
     public BigDecimal readAverageDailyGlucoseByGlucoseId(long id) {
-        return glucoseRecordRepository
-                .findAverageGlucoseRecordsByGlucoseId(id);
+        BigDecimal average = glucoseRecordRepository.findAverageGlucoseRecordsByGlucoseId(id);
+        if (average == null)
+            return new BigDecimal(0);
+        return average;
     }
 
     private GlucoseRecord readGlucoseRecordDb(long id) throws GlucoseRecordException {

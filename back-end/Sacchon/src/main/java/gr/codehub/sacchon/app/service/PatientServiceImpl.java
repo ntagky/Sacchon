@@ -1,20 +1,23 @@
 package gr.codehub.sacchon.app.service;
 
+import gr.codehub.sacchon.app.dto.InsightsData;
+import gr.codehub.sacchon.app.dto.MeasurementsDto;
 import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.exception.PatientException;
 import gr.codehub.sacchon.app.model.Patient;
-import gr.codehub.sacchon.app.repository.CarbsRepository;
-import gr.codehub.sacchon.app.repository.DoctorRepository;
-import gr.codehub.sacchon.app.repository.GlucoseRepository;
-import gr.codehub.sacchon.app.repository.PatientRepository;
+import gr.codehub.sacchon.app.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Service
@@ -22,11 +25,10 @@ import java.util.stream.Collectors;
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
-    private final DoctorRepository doctorRepository;
     private final CarbsRepository carbsRepository;
-
+    private final ConsultationRepository consultationRepository;
     private final GlucoseRepository glucoseRepository;
-
+    private final GlucoseRecordRepository glucoseRecordRepository;
 
     @Override
     public long getPatientCount(){
@@ -139,6 +141,56 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deleteCarbsFromPatientInSpecificDate(long id, LocalDate dateGiven) {
         carbsRepository.deleteCarbsFromPatientInSpecificDate(id, dateGiven);
+    }
+
+    @Override
+    public InsightsData getInsightsData(long id, LocalDate startingDate, LocalDate endingDate) {
+        LocalDate dateIndex = startingDate;
+
+        List<MeasurementsDto<Integer>> carbsList = new ArrayList<>();
+        List<MeasurementsDto<BigDecimal>> glucoseList = new ArrayList<>();
+
+        Long longHolder;
+        while (dateIndex.isBefore(endingDate)) {
+            // Get average glucose of the day
+            longHolder = glucoseRepository.findGlucoseIdInSpecificDateByPatientId(id, dateIndex);
+
+            glucoseList.add(new MeasurementsDto<>(
+                    longHolder != null ? glucoseRecordRepository.findAverageGlucoseRecordsByGlucoseId(longHolder) : new BigDecimal(0),
+                    dateIndex
+            ));
+
+            // Get carbs of the day
+            carbsList.add(new MeasurementsDto<>(
+                    carbsRepository.readCarbsByPatientIdInSpecificDate(id, dateIndex),
+                    dateIndex
+            ));
+
+            dateIndex = dateIndex.plusDays(1);
+        }
+
+        BigDecimal glucoseAverage = new BigDecimal(0);
+        if (glucoseList.size() > 0) {
+            glucoseAverage = glucoseList.stream().map(MeasurementsDto::getValue).reduce(BigDecimal.ZERO, BigDecimal::add);
+            glucoseAverage = glucoseAverage.divide(new BigDecimal(glucoseList.size()), MathContext.DECIMAL128);
+        }
+
+        Long consultationCount = consultationRepository.findConsultationCountByPatientId(id);
+        consultationCount = consultationCount != null ? consultationCount : 0;
+
+        int averageCarbs = 0;
+        if (carbsList.size() > 0)
+            averageCarbs = carbsList.stream().map(MeasurementsDto::getValue).mapToInt(Integer::intValue).sum() / carbsList.size();
+
+        return new InsightsData(
+                startingDate,
+                carbsList.size() + glucoseList.size(),
+                consultationCount,
+                averageCarbs,
+                glucoseAverage,
+                carbsList,
+                glucoseList
+        );
     }
 
 

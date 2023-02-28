@@ -23,7 +23,7 @@ public class InitialConfiguration {
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private final LinkedList<String> namesMaleLinkedList = new LinkedList<>(List.of("Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore", "Amiri", "Kevin", "Jason", "Jeffrey", "Jacob", "Gary", "Eric", "Nicolas", "Jonathan", "Tyler"));
     private final LinkedList<String> namesFemaleLinkedList = new LinkedList<>(List.of("Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper", "Debra", "Maria", "Olivia", "Joyce", "Ruth", "Janet", "Samantha", "Stella", "Helen", "Evelyn"));
-    private final List<String> lastNamesLinkedList = new ArrayList<>(List.of("Smith", "Johnson", "William", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", " Wilson", "Anderson", "Thomas", "Taylor", "Jackson", "Martin", "Moore", "Lee", "Perez", "Thompson", "White", "Walker", "Hill", "Torres", "Scot", "Young"));
+    private final List<String> lastNamesLinkedList = new ArrayList<>(List.of("Smith", "Johnson", "William", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Wilson", "Anderson", "Thomas", "Taylor", "Jackson", "Martin", "Moore", "Lee", "Perez", "Thompson", "White", "Walker", "Hill", "Torres", "Scot", "Young"));
     private final List<String> allergiesList = new ArrayList<>(List.of("Grass Pollen", "Dust", "Peanut", "Milk", "Egg", "Animal Fur", "Bee", "Wasp", "Fish", "Crustaceans", "Wheat", "Soy"));
     private final List<String> medicationNamesList = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
     private final List<String> conditionsList = new ArrayList<>(List.of("Heart Disease", "Cancer", "Asthma", "Emphysema", "Alzheimer Disease", "Substance Abuse", "Pneumonia", "Kidney Disease", "Mental Health Conditions"));
@@ -33,7 +33,7 @@ public class InitialConfiguration {
 
     private void createRandomListSequence(List<String> referenceList, List<String> arrayList, double probability, Random random) {
         if (Math.random() < probability) {
-            int idx = random.nextInt(0, referenceList.size() - 1);
+            int idx = random.nextInt(0, referenceList.size());
             while (idx < referenceList.size()) {
                 arrayList.add(referenceList.get(idx));
                 idx = random.nextInt(idx, referenceList.size() + 5);
@@ -295,13 +295,14 @@ public class InitialConfiguration {
 
             System.out.println("Saving dummy objects..");
 
-            int patientPopulation = 12;
-            int doctorPopulation = 4;
+            int patientPopulation = 5;
+            int doctorPopulation = 1;
             int chiefDoctorPopulation = 1;
             int[] measurementPersonPopulation = new int[patientPopulation];
-            int measurementBound = 125;
+            int measurementOrigin = 10;
+            int measurementBound = 140;
             for (int i = 0; i < patientPopulation; i++)
-                measurementPersonPopulation[i] = random.nextInt(25, measurementBound);
+                measurementPersonPopulation[i] = random.nextInt(measurementOrigin, measurementBound);
 
             Collections.shuffle(namesMaleLinkedList);
             Collections.shuffle(namesFemaleLinkedList);
@@ -309,9 +310,8 @@ public class InitialConfiguration {
 
             assert namesMaleLinkedList.size() == namesFemaleLinkedList.size()
                     : "Provide same length of male and female names";
-            assert patientPopulation + doctorPopulation + chiefDoctorPopulation <= namesMaleLinkedList.size() + namesFemaleLinkedList.size() ||
-                    patientPopulation + doctorPopulation + chiefDoctorPopulation <= lastNamesLinkedList.size()
-                    : "Provided less population.";
+            assert patientPopulation + doctorPopulation + chiefDoctorPopulation <= namesMaleLinkedList.size() + namesFemaleLinkedList.size()
+                    : "Provided less population than the sum of names.";
 
             createChiefDoctors(chiefDoctorRepository, chiefDoctorPopulation);
             List<Doctor> doctorList = createDoctors(doctorRepository, doctorPopulation, measurementBound);
@@ -325,22 +325,20 @@ public class InitialConfiguration {
                 glucoseArrayList.forEach(glucose -> createGlucoseRecords(glucoseRecordRepository, random.nextInt(1, 6), glucose));
 
                 int maxConsultation = measurementPersonPopulation[idx[0]] / 31;
-                int waitingPenalty = 0;
                 if (maxConsultation > 0) {
                     boolean isWaiting = random.nextInt(0, 2) == 0;
                     if (isWaiting)
-                        waitingPenalty = 1;
+                        maxConsultation -= 1;
 
-                    Doctor randomDoctor = doctorList.get(random.nextInt(doctorList.size()-1));
-                    patientRepository.updateDoctorIdFromPatient(patient.getId(), randomDoctor.getId());
-                    LocalDate[] localDates = new LocalDate[maxConsultation - waitingPenalty];
-                    for (int i = 0; i < maxConsultation - waitingPenalty; i++)
-                        localDates[i] = glucoseArrayList.get((i + 1) * 31).getDate();
+                    if (maxConsultation> 0) {
+                        Doctor randomDoctor = doctorList.get(random.nextInt(doctorList.size()));
+                        patientRepository.updateDoctorIdFromPatient(patient.getId(), randomDoctor.getId());
+                        LocalDate[] localDates = new LocalDate[maxConsultation];
+                        for (int i = 0; i < maxConsultation; i++)
+                            localDates[i] = glucoseArrayList.get((i + 1) * 31).getDate();
 
-                    maxConsultation -= waitingPenalty;
-                    if (maxConsultation > 0) {
                         List<Consultation> consultationsList = createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
-                        Consultation randomCons = consultationsList.get(consultationsList.size() > 0 ? random.nextInt(consultationsList.size()) : 0);
+                        Consultation randomCons = consultationsList.get(random.nextInt(consultationsList.size()));
                         createMedication(medicationRepository, maxConsultation, randomCons);
                     }
                 }

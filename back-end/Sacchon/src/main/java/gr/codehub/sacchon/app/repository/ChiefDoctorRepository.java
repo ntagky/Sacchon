@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.repository;
 
+import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.dto.ConsultationsGivenByDoctor;
 import gr.codehub.sacchon.app.model.ChiefDoctor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +21,8 @@ public interface ChiefDoctorRepository
             @Param("startingDate") LocalDate startingDate,
             @Param("endingDate") LocalDate endingDate
     );
+
+    @Query(value = "SELECT CHIEF_DOCTOR.ID FROM " + SacchonApplication.SCHEMA + ".CHIEF_DOCTOR " +
+            "WHERE CHIEF_DOCTOR.EMAIL = :email AND CHIEF_DOCTOR.PASSWORD = :password", nativeQuery = true)
+    Long findChiefByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 }

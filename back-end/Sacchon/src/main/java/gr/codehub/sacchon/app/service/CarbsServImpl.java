@@ -50,8 +50,10 @@ public class CarbsServImpl implements CarbsService {
 
     @Override
     public Integer readAverageCarbsIntakeByPatientIdOnSpecificDates(long id, LocalDate startingDate, LocalDate endingDate) {
-        return carbsRepository
-                .findAverageCarbsByPatientIdOnSpecificDates(id, startingDate, endingDate);
+        Integer average = carbsRepository.findAverageCarbsByPatientIdOnSpecificDates(id, startingDate, endingDate);
+        if (average == null)
+            return 0;
+        return average;
     }
 
     private Carbs readCarbsDb(long id) throws CarbsException {

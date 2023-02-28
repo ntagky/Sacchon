@@ -31,15 +31,12 @@ public class PatientController {
     private DoctorService doctorService;
 
 
-
     @GetMapping("/patient/{id}")
-    //http://localhost:9000/patient/{{id}}
     public List<PatientDto> findPatientById(@PathVariable("id") long id){
         return patientService.readPatientById(id);
     }
 
     @DeleteMapping("/delete/{patientId}")
-    //http://localhost:9000/delete/{{patientId}}
     public ResponseEntity<?> deletePatientById(@PathVariable("patientId") long patientId) {
         patientService.deletePatientById(patientId);
         return ResponseEntity.noContent().build();
@@ -296,4 +293,14 @@ public class PatientController {
         return false;
 //         doctorService.updateDoctor(doctor, id);
     }
+
+    @GetMapping("/patient/{id}/insights/query")
+    public InsightsData getTotalMeasurements(
+            @PathVariable("id") long id,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
+    ){
+        return patientService.getInsightsData(id, startingDate, endingDate);
+    }
+
 }

@@ -45,4 +45,8 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long>{
     @Modifying
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".DOCTOR WHERE id = :doctorId", nativeQuery = true)
     void deleteDoctorById(@Param("doctorId") long doctorId);
+
+    @Query(value = "SELECT DOCTOR.ID FROM " + SacchonApplication.SCHEMA + ".DOCTOR " +
+            "WHERE DOCTOR.EMAIL = :email AND DOCTOR.PASSWORD = :password", nativeQuery = true)
+    Long findDoctorByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 }

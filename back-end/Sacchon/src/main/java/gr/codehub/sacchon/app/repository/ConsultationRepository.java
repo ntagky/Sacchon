@@ -85,4 +85,8 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
     @Query(value = "SELECT MAX(CONSULTATION.DATE_CREATED) FROM " + SacchonApplication.SCHEMA + ".CONSULTATION " +
             "WHERE CONSULTATION.PATIENT_ID = :patientId", nativeQuery = true)
     LocalDate findLatestConsultationByPatientId(@Param("patientId") long patientId);
+
+    @Query(value = "SELECT COUNT(*) FROM " + SacchonApplication.SCHEMA + ".CONSULTATION " +
+            "WHERE CONSULTATION.PATIENT_ID = :patientId", nativeQuery = true)
+    Long findConsultationCountByPatientId(@Param("patientId") long patientId);
 }
