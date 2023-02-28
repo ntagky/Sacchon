@@ -1,5 +1,5 @@
 import { PatientService } from './../services/patient.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -8,27 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit{
 
+  @Input() patientId: any;
+
   response: any;
   firstName: any;
   lastName: any;
   initials: any;
 
-  patientId = 3;
-
   constructor(private patientService: PatientService){}
 
   ngOnInit(): void {
-    this.patientService.getPatient(this.patientId).subscribe({
-      next: patient => {
-        this.response = patient;
+    if (this.patientId > 0) {
+      this.patientService.getPatient(this.patientId).subscribe({
+        next: patient => {
+          this.response = patient;
 
-        this.firstName = this.response[0]["firstName"];
-        this.lastName = this.response[0]["lastName"];
+          this.firstName = this.response[0]["firstName"];
+          this.lastName = this.response[0]["lastName"];
 
-        this.initials = this.firstName[0] + this.lastName[0];
-
-        
-      }
-    })
+          this.initials = this.firstName[0] + this.lastName[0];
+        }
+      })
+    }
   }
 }

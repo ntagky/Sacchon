@@ -1,6 +1,7 @@
+import { LocalStorageService } from './../services/local-storage.service';
 import { DoctorService } from './../services/doctor.service';
 import { MedicationService } from './../services/medication.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ConsultationsService } from '../services/consultations.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { ConsultationsService } from '../services/consultations.service';
   styleUrls: ['./main-content.component.scss']
 })
 export class MainContentComponent implements OnInit{
+
+  @Input() patientId: any;
 
   response: any;
   details: any;
@@ -20,15 +23,33 @@ export class MainContentComponent implements OnInit{
   date: any;
   consultationId: any;
   data: any;
-
-  patientId = 3;
+  showAlert = true;
+  seenResponse:any = null;
 
   welcomeMessage = "Sacchon";
   mottoMessage = "Control diabetes, live without limits";
 
-  constructor(private consultationService: ConsultationsService, private medicationService: MedicationService, private doctorService: DoctorService) {}
+  constructor(
+    private consultationService: ConsultationsService,
+    private medicationService: MedicationService,
+    private doctorService: DoctorService
+  ) { }
 
   ngOnInit(): void {
+
+
+    // const hasShownAlert = localStorage.getItem('hasShownAlert');
+    // if (hasShownAlert) {
+    //   this.showAlert = false;
+    // } else {
+
+      // localStorage.setItem('hasShownAlert', 'true');
+      setTimeout(() => {
+        this.showAlert = false;
+      }, 5000);
+    // }
+
+
 
     this.consultationService.getConsultations(this.patientId).subscribe({
       next: consultations => {
@@ -55,6 +76,12 @@ export class MainContentComponent implements OnInit{
       }
     });
 
+    this.consultationService.getLastConsultationSeenStatus(this.patientId).subscribe({
+      next: seenStatus => {this.seenResponse = seenStatus}
+    });
+
+
+
     this.doctorService.getDoctor(this.patientId).subscribe({
       next: doctor => {
         this.response = doctor;
@@ -66,7 +93,17 @@ export class MainContentComponent implements OnInit{
     })
   }
 
+
+
   printThisPage() {
     window.print();
   }
+
+
+
+
+
+
+
+
 }

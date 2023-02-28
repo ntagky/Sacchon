@@ -43,7 +43,7 @@
       </div>
       <div class="col-sm-6">
         <div class="card text-center">
-          <div class="card_body">
+          <div #containerRef class="card_body">
             <h5 class="card_title">Personal Doctor</h5>
             <hr style="margin-top: 0px;">
             <img class="ms-1 doctor_avatar" src="assets/doctor.jpeg" alt="doctor avatar"/>
@@ -60,3 +60,8 @@
       </div>
     </div>
 </div>
+
+<div *ngIf="seenResponse && showAlert" id="myAlert" class="alert">You have a new unseen consultation!</div>
+
+
+

@@ -8,7 +8,7 @@
         <h4 class="mb-0 ms-3">Sacchon</h4>
       </a>
     </div>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="patientId > 0">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <!-- <li class="nav-item">
             <a class="navbar-brand" href="#">
@@ -27,7 +27,7 @@
           </div>
           <h6 class="mb-0 me-2" style="font-weight: 300;">{{ firstName }} {{ lastName }}</h6>
         <!-- </a> -->
-      </div>  
+      </div>
     </div>
   </div>
 </nav>

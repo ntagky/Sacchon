@@ -1,39 +1,33 @@
-import { ModalMeasurementsComponent } from '../modal-measurements/modal-measurements.component';
+import { ModalMeasurementsComponent } from '../measurements-modal/measurements-modal.component';
 import { MeasurementService } from '../services/measurements.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 @Component({
-  selector: 'app-measurements',
-  templateUrl: './measurements.component.html',
-  styleUrls: ['./measurements.component.scss']
+  selector: 'app-measurements-table',
+  templateUrl: './measurements-table.component.html',
+  styleUrls: ['./measurements-table.component.scss']
 })
-export class MeasurementsComponent implements OnInit {
+export class MeasurementsTableComponent implements OnInit {
+
+  @Input() patientId: any;
 
   modalRef: MdbModalRef<ModalMeasurementsComponent> | null = null;
   dataResponse: any;
   pagesRespone: any;
-  patientId: any;
-  currentPage: any;
-  realPage: any;
-  pageStep: any;
-  toShow: any;
+  currentPage: number = 0;
+  pageStep: number = 10;
+  section: number = 0;
   pagesVisible: any;
   lastPageIndex: any;
   retrievedPages = false;
   retrievedTable = false;
 
-  constructor(private modalService: MdbModalService, private service: MeasurementService) {
-    this.patientId = 2;
-    this.currentPage = 0;
-    this.pageStep = 10;
-
-    this.readPagesCount();
-    this.readPaginatingData();
-  }
+  constructor(private modalService: MdbModalService, private service: MeasurementService) {}
 
   ngOnInit(): void {
-
+    this.readPagesCount();
+    this.readPaginatingData();
   }
 
   openModal(selectedId: number, dateSelected: string, carbsIntake: any, glucoseProvided:any) {
@@ -83,7 +77,7 @@ export class MeasurementsComponent implements OnInit {
   }
 
   getPageVisible(): void {
-    if (this.pageStep / this.pagesRespone <= 1)
+    if ((this.section + 1) * this.pageStep / this.pagesRespone <= 1)
       this.pagesVisible = this.pageStep;
     else
       this.pagesVisible = this.pagesRespone % this.pageStep;
@@ -95,8 +89,15 @@ export class MeasurementsComponent implements OnInit {
   }
 
   manipulatePageValue(value:any): void {
-    this.currentPage += value;
+    this.section += value;
+    if (value > 0)
+      this.currentPage = (this.pageStep * this.section);
+    else
+      this.currentPage = (this.pageStep * this.section + this.pageStep - 1);
+    this.getPageVisible();
     this.readPaginatingData();
+    console.log(this.currentPage);
+    this.lastPageIndex = Math.floor(this.pagesRespone / this.pageStep);
   }
 
 }

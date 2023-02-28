@@ -1,6 +1,6 @@
-<app-navbar></app-navbar>
+<app-navbar [patientId]="patientId"></app-navbar>
 
 <div class="row w-100">
     <app-sidenav class="col-sm-2 p-0"></app-sidenav>
-    <app-main-content class="col-sm-10 p-0"></app-main-content>
+    <app-main-content [patientId]="patientId" class="col-sm-10 p-0"></app-main-content>
 </div>
