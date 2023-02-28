@@ -1,3 +1,4 @@
+import { CryptoService } from './../../services/crypto.service';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private localStoreService: LocalStorageService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cryptoService: CryptoService
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +44,9 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.service.get("http://localhost:9000/login?email=" + this.loginForm.get('email').value + "&password=" + this.loginForm.get('password').value).subscribe({
+    console.log("Email: " + this.loginForm.get('email').value + " - password: " + this.loginForm.get('password').value);
+    this.service.get("http://localhost:9000/login?email=" + this.loginForm.get('email').value +
+     "&password=" + this.loginForm.get('password').value).subscribe({
       next: res => {
         this.loginRespone = res;
         if (this.loginRespone.id > 0) {
@@ -54,3 +58,6 @@ export class LoginComponent implements OnInit {
     });
   }
 }
+
+// this.service.get("http://localhost:9000/login?email=" + this.loginForm.get('email').value +
+//      "&password=" + this.cryptoService.encrypt(this.loginForm.get('password').value, this.loginForm.get('password').value)).subscribe({
