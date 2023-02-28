@@ -19,8 +19,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MainContentComponent } from './main-content/main-content.component';
-import { ModalMeasurementsComponent } from './modal-measurements/modal-measurements.component';
-import { MeasurementsComponent } from './pages/measurements/measurements.component';
+import { ModalMeasurementsComponent } from './measurements-modal/measurements-modal.component';
 import { MeasurementsTableComponent } from './measurements-table/measurements-table.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ConsultationsComponent } from './pages/consultations/consultations.component';
@@ -29,6 +28,7 @@ import { SignupComponent } from './signup/signup.component';
 import { GoodByeComponent } from './pages/goodbye/goodbye.component';
 import { LoginComponent } from './pages/login/login.component';
 import { InspectorComponent } from './pages/inspector/inspector.component';
+import { MeasurementsComponent } from './pages/measurements/measurements.component';
 
 
 @NgModule({
