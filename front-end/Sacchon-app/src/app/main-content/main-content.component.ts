@@ -37,7 +37,7 @@ export class MainContentComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-<<<<<<< HEAD
+
 
     // const hasShownAlert = localStorage.getItem('hasShownAlert');
     // if (hasShownAlert) {
@@ -51,8 +51,7 @@ export class MainContentComponent implements OnInit{
     // }
 
 
-=======
->>>>>>> 0c9de449c618f3bc3f1ce76aecbee9e9bd31641e
+
     this.consultationService.getConsultations(this.patientId).subscribe({
       next: consultations => {
         this.response = consultations;
