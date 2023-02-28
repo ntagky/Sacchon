@@ -1,8 +1,9 @@
 import { LocalStorageService } from './../../services/local-storage.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -18,14 +19,25 @@ export class LoginComponent implements OnInit {
   constructor(
     private service: LoginService,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
-    private localStore: LocalStorageService
-  ) { }
+    private localStoreService: LocalStorageService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ["", [Validators.required]],
       password: ["", [Validators.required, Validators.min(1)]],
+    });
+
+    if (this.route.snapshot.paramMap.get("inactive") != null)
+      this.showSuccess();
+  }
+
+  showSuccess() {
+    this.toastr.error('It seems that you have logged out.', 'Login again', {
+      timeOut: 3500,
     });
   }
 
@@ -34,7 +46,7 @@ export class LoginComponent implements OnInit {
       next: res => {
         this.loginRespone = res;
         if (this.loginRespone.id > 0) {
-          this.localStore.saveData("user", this.loginRespone.id + "");
+          this.localStoreService.saveData("user", this.loginRespone.id + "");
           this.router.navigateByUrl('/')
         } else
           this.invalidData = true;

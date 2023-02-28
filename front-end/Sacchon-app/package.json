@@ -29,6 +29,7 @@
     "mdb-angular-ui-kit": "^4.0.0",
     "ngx-print-element": "^2.0.18",
     "ngx-skeleton-loader": "^7.0.0",
+    "ngx-toastr": "^16.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "web-animations-js": "^2.3.2",

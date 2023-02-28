@@ -18,15 +18,17 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MainContentComponent } from './main-content/main-content.component';
-import { ModalMeasurementsComponent } from './modal-measurements/modal-measurements.component';
+import { ModalMeasurementsComponent } from './measurements-modal/measurements-modal.component';
+import { MeasurementsTableComponent } from './measurements-table/measurements-table.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ConsultationsComponent } from './pages/consultations/consultations.component';
 import { ConsultationsTableComponent } from './consultations-table/consultations-table.component';
 import { SignupComponent } from './signup/signup.component';
-import { MeasurementsPageComponent } from './pages/measurements-page/measurements-page.component';
-import { DeleteButtonComponent } from './delete-button/delete-button.component';
-import { DataInspectorComponent } from './pages/data-inspector/data-inspector.component';
+import { GoodByeComponent } from './pages/goodbye/goodbye.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ToastrModule } from 'ngx-toastr';
+import { InspectorComponent } from './pages/inspector/inspector.component';
+import { MeasurementsComponent } from './pages/measurements/measurements.component';
 
 
 @NgModule({
@@ -39,12 +41,12 @@ import { LoginComponent } from './pages/login/login.component';
     ConsultationsComponent,
     ConsultationsTableComponent,
     SignupComponent,
-    MeasurementsPageComponent,
     ModalMeasurementsComponent,
-    MeasurementsPageComponent,
-    DataInspectorComponent,
-    DeleteButtonComponent,
-    LoginComponent
+    GoodByeComponent,
+    LoginComponent,
+    MeasurementsTableComponent,
+    InspectorComponent,
+    MeasurementsComponent
   ],
   imports: [
     BrowserModule,
@@ -53,14 +55,15 @@ import { LoginComponent } from './pages/login/login.component';
     HttpClientModule,
     ReactiveFormsModule,
     NgxSkeletonLoaderModule,
-    BrowserAnimationsModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
     MatInputModule,
     MatFormFieldModule,
     MdbModalModule,
-    NgxChartsModule
+    NgxChartsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,7 @@
+import { LocalStorageService } from './../services/local-storage.service';
 import { DoctorService } from './../services/doctor.service';
 import { MedicationService } from './../services/medication.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ConsultationsService } from '../services/consultations.service';
 
 @Component({
@@ -10,6 +11,8 @@ import { ConsultationsService } from '../services/consultations.service';
 })
 
 export class MainContentComponent implements OnInit{
+
+  @Input() patientId: any;
 
   response: any;
   details: any;
@@ -22,15 +25,16 @@ export class MainContentComponent implements OnInit{
   consultationId: any;
   data: any;
 
-  patientId = 3;
-
   welcomeMessage = "Sacchon";
   mottoMessage = "Control diabetes, live without limits";
 
-  constructor(private consultationService: ConsultationsService, private medicationService: MedicationService, private doctorService: DoctorService) {}
+  constructor(
+    private consultationService: ConsultationsService,
+    private medicationService: MedicationService,
+    private doctorService: DoctorService
+  ) { }
 
   ngOnInit(): void {
-
     this.consultationService.getConsultations(this.patientId).subscribe({
       next: consultations => {
         this.response = consultations;

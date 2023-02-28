@@ -7,12 +7,9 @@ import { Injectable } from '@angular/core';
 })
 export class DeleteService {
 
-
-
   constructor(private http:HttpClient) { }
 
-  delete(){
-
-    return this.http.delete('http://localhost:9000/delete/2')
+  delete(url: string){
+    return this.http.delete(url);
   }
 }

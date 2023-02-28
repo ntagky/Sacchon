@@ -2,5 +2,6 @@
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 @import '~ngx-print-element/styles.css';
+@import '../node_modules/ngx-toastr/toastr.css';
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

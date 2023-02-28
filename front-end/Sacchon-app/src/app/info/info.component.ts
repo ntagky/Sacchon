@@ -1,7 +1,8 @@
+import { LocalStorageService } from './../services/local-storage.service';
 import { DeleteService } from './../services/delete.service';
 import { InfoService } from './../services/info.service';
 import { Component, OnInit } from '@angular/core';
-import {Router, RouterModule} from  '@angular/router';
+import { Router } from  '@angular/router';
 
 @Component({
   selector: 'app-info',
@@ -10,27 +11,35 @@ import {Router, RouterModule} from  '@angular/router';
 })
 export class InfoComponent implements OnInit {
 
+  userId: number;
   data:any;
-  patientId = 4;
   deleteRespone: any;
 
-  constructor(private infoService: InfoService, private deleteService: DeleteService, private router: Router){}
+  constructor(
+    private infoService: InfoService,
+    private deleteService: DeleteService,
+    private router: Router,
+    private localStoreService: LocalStorageService
+  ){
+    this.userId = Number(localStoreService.getData("user"));
+  }
 
   ngOnInit():void{
     this.getData();
   }
 
   getData(){
-    this.infoService.get().subscribe({
+    this.infoService.get('http://localhost:9000/patient/' + this.userId).subscribe({
        next: response => this.data = response
     }
   )}
 
   deleteData(){
-    this.deleteService.delete().subscribe({
+    this.deleteService.delete('http://localhost:9000/delete/' + this.userId).subscribe({
       next: data => {
         this.deleteRespone = data;
-        this.router.navigateByUrl('/delete')
+        this.localStoreService.clearData();
+        this.router.navigateByUrl('/goodbye');
       }
     }
   )}
