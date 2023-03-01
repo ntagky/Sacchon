@@ -12,10 +12,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(to right, #ff00ff, #00ffff);
+  background-color: green;
   color: white;
   padding: 1rem;
-  border: 1px solid #d22b74;
+  border: 1px solid;
   border-radius: 0.25rem;
   margin-bottom: 1rem;
   position: fixed;
@@ -35,17 +35,17 @@
   }
 }
 
-@keyframes glow {
-  0% {
-    background-image: linear-gradient(to right, #0b436c, #00ffff);
-  }
-  50% {
-    background-image: linear-gradient(to right, #35b9ba, #d22b74);
-  }
-  100% {
-    background-image: linear-gradient(to right, #0b436c, #d22b74);
-  }
-}
+// @keyframes glow {
+//   0% {
+//     background-image: linear-gradient(to right, #0b436c, #00ffff);
+//   }
+//   50% {
+//     background-image: linear-gradient(to right, #35b9ba, #d22b74);
+//   }
+//   100% {
+//     background-image: linear-gradient(to right, #0b436c, #d22b74);
+//   }
+// }
 
 .main_motto{
     color:#35B9BA;
