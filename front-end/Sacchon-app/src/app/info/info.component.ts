@@ -14,7 +14,7 @@ export class InfoComponent implements OnInit {
   userId: number;
   deleteRespone: any;
 
-  constructor(private infoService: InfoService, private deleteService: DeleteService, private router: Router, private localStoreService: LocalStorageService) { 
+  constructor(private infoService: InfoService, private deleteService: DeleteService, private router: Router, private localStoreService: LocalStorageService) {
     this.userId = Number(localStoreService.getData("user"));
   }
 
@@ -27,7 +27,7 @@ export class InfoComponent implements OnInit {
       next: response => this.data = response
     })
   }
-  
+
   deleteData() {
     this.deleteService.delete(this.userId).subscribe({
       next: data => {
