@@ -3,17 +3,19 @@ import { LocalStorageService } from './../services/local-storage.service';
 import { InfoService } from './../services/info.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SidenavComponent } from '../sidenav/sidenav.component';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 
-@Component({ selector: 'app-info', 
-            templateUrl: './info.component.html', 
+@Component({ selector: 'app-info',
+            templateUrl: './info.component.html',
             styleUrls: ['./info.component.scss'] })
 export class InfoComponent implements OnInit {
   data: any;
   userId: number;
   deleteRespone: any;
 
-  constructor(private infoService: InfoService, private deleteService: DeleteService, private router: Router, private localStoreService: LocalStorageService) { 
+  constructor(private infoService: InfoService, private deleteService: DeleteService, private router: Router, private localStoreService: LocalStorageService) {
     this.userId = Number(localStoreService.getData("user"));
   }
 
@@ -26,7 +28,7 @@ export class InfoComponent implements OnInit {
       next: response => this.data = response
     })
   }
-  
+
   deleteData() {
     this.deleteService.delete(this.userId).subscribe({
       next: data => {
