@@ -28,11 +28,6 @@ public class PatientServiceImpl implements PatientService {
     private final GlucoseRepository glucoseRepository;
     private final GlucoseRecordRepository glucoseRecordRepository;
 
-    @Override
-    public long getPatientCount(){
-        long patientOptional = patientRepository.countPatients();
-        return patientOptional;
-    }
 
     @Override
     public void deletePatientById(long patientId) {
@@ -61,14 +56,6 @@ public class PatientServiceImpl implements PatientService {
         return carbsRepository.getCarbsReadingsBetweenDatesByPatientId(id,startingDate,endingDate);
     }
 
-    @Override
-    public List<PatientDto> readPatient() {
-        return patientRepository
-                .findAll()
-                .stream()
-                .map(PatientDto::new)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public List<PatientDto> readPatientById(long id)  {
@@ -100,18 +87,6 @@ public class PatientServiceImpl implements PatientService {
         return action;
     }
 
-//    @Override
-//    public boolean deletePatientById(long id) {
-//        boolean action;
-//        try {
-//            Patient dbCustomer = readPatientDb(id);
-//            patientRepository.delete(dbCustomer);
-//            action = true;
-//        } catch (PatientException e) {
-//            action = false;
-//        }
-//        return action;
-//    }
 
     @Override
     public long registerPatient(PatientDto patientDto) {

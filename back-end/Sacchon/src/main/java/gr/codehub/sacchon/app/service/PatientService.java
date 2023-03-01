@@ -11,14 +11,12 @@ public interface PatientService {
 
 //    PatientDto createPatient(PatientDto patient);
     List<PastCarbReadingsDto> getPreviousCarbReadingsByPatientIdBetweenDates(long id, LocalDate startingDate, LocalDate endingDate);
-    List<PatientDto> readPatient();
-    List<PatientDto> readPatientById(long id); // giati List ???
+
+    List<PatientDto> readPatientById(long id);
     Long findDoctorIdByPatientId(long id);
     boolean updatePatient(PatientDto patient, long id);
 
-    public void updateEmailByPatientId(long id, String email);
-
-    long getPatientCount();
+    void updateEmailByPatientId(long id, String email);
 
     void deletePatientById(long patientId);
 
@@ -30,22 +28,22 @@ public interface PatientService {
 
     void deleteCarbsFromPatientInSpecificDate(long id, LocalDate dateGiven);
 
-    public void updateFirstNameByPatientId(long id, String firstName);
+     void updateFirstNameByPatientId(long id, String firstName);
 
-    public void updateLastNameByPatientId(long id, String lastName);
+     void updateLastNameByPatientId(long id, String lastName);
 
-    public void updateGenderByPatientId(long id, String gender);
+     void updateGenderByPatientId(long id, String gender);
 
-    public void updateHeightByPatientId(long id, int height);
-    public void updateWeightByPatientId(long id,double weight);
+     void updateHeightByPatientId(long id, int height);
+     void updateWeightByPatientId(long id,double weight);
 
-    public void updateMedicalRecordNumberByPatientId(long id, String medicalRecordNumber);
+     void updateMedicalRecordNumberByPatientId(long id, String medicalRecordNumber);
 
-    public void updatePhoneNumberByPatientId(long id, String phoneNumber);
+     void updatePhoneNumberByPatientId(long id, String phoneNumber);
 
-    public void updateBirthDateByPatientId(long id, LocalDate birthDate);
+     void updateBirthDateByPatientId(long id, LocalDate birthDate);
 
-    public void updateAddressByPatientId(long id, String address);
+     void updateAddressByPatientId(long id, String address);
 
     InsightsData getInsightsData(long id, LocalDate staringDate, LocalDate endingDate);
 }

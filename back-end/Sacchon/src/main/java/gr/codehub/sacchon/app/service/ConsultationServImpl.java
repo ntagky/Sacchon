@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ConsultationServImpl implements ConsultationService {
     private final ConsultationRepository consultationRepository;
-    private final MedicationService medicationService;
+
 
     @Override
     public ConsultationDto createConsultation(ConsultationReceivedDto consultationDto){
@@ -118,18 +118,6 @@ public class ConsultationServImpl implements ConsultationService {
         return dtos;
     }
 
-//    @Override
-//    public List<Long> findPatientsWaitingForConsultation(LocalDate dateBefore) {
-//        List<Long> patientIds = consultationRepository.findPatientsWaitingForConsultation(dateBefore);
-//
-//        patientIds.forEach(patient -> {
-//            // consultationRepository.findConsultationByPatientId()
-//            carbsRepository.findCarbsByPatientId(patient);
-//        });
-//
-//
-//        return null;
-//    }
 
 
     @Override

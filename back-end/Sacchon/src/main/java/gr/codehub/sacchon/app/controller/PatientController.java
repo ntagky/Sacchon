@@ -34,9 +34,9 @@ import java.util.List;
   • update /modify incorrect submitted data
   • delete incorrect submitted data
 
-   @RestController: This annotation is used to define the class as a Spring Rest Controller
-   @AllArgsConstructor: This annotation is used to generate a constructor with arguments for all fields in the class
-   @Slf4j: This annotation is used to enable logging in the class using the Simple Logging Facade for Java (SLF4J) API
+   RestController: This annotation is used to define the class as a Spring Rest Controller
+   AllArgsConstructor: This annotation is used to generate a constructor with arguments for all fields in the class
+   Slf4j: This annotation is used to enable logging in the class using the Simple Logging Facade for Java (SLF4J) API
 
    @author Christos Tzoulias
    @version 1.0
@@ -202,13 +202,7 @@ public class PatientController {
         return consultationService.findConsultationInfoByPatientId(id);
     }
 
-//    @PostMapping("/signup/patient")
-//    //http://localhost:9000/api/signup/patient
-//    public ResponseEntity<?> createPatientDto(@RequestBody PatientDto PatientDto){
-//        log.info("The end point PatientDto has been used");
-//        patientService.registerPatient(PatientDto);
-//        return ResponseEntity.ok().build();
-//    }
+
 
     @PostMapping("/signup/patient")
     public long signUp(@RequestBody PatientDto patientDto) {
@@ -313,13 +307,7 @@ public class PatientController {
         return true;
     }
 
-    @PutMapping("/patient/update/{id}")
-    public boolean updatePatientDto(@RequestBody PatientDto patientDto,
-                                   @PathVariable(name="id") int id){
-        log.info("The end point doctor with id has been used");
-        return false;
-//         doctorService.updateDoctor(doctor, id);
-    }
+
 
   @PutMapping("/patient/update/{id}/email")
     public void updatePatientEmail(@PathVariable(name="id") int id,
