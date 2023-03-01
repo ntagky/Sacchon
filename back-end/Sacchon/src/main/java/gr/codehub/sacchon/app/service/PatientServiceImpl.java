@@ -4,9 +4,11 @@ import gr.codehub.sacchon.app.dto.InsightsData;
 import gr.codehub.sacchon.app.dto.MeasurementsDto;
 import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
-import gr.codehub.sacchon.app.exception.PatientException;
+import gr.codehub.sacchon.app.exception.*;
 import gr.codehub.sacchon.app.model.Patient;
 import gr.codehub.sacchon.app.repository.*;
+import gr.codehub.sacchon.app.validators.EmailValidators;
+import gr.codehub.sacchon.app.validators.RegistrationValidators;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,141 +31,221 @@ public class PatientServiceImpl implements PatientService {
     private final GlucoseRepository glucoseRepository;
     private final GlucoseRecordRepository glucoseRecordRepository;
 
+    private final EmailValidators emailValidators;
+
+    private final RegistrationValidators registrationValidators;
+
 
     @Override
-    public void deletePatientById(long patientId) {
+    public void deletePatientById(long patientId) throws PatientException {
 
-        //DBO REMOVAL
+        Optional<Patient> patientOptional = patientRepository.findById(patientId);
 
-        patientRepository.deleteDboPatientAllergies(patientId);
-        patientRepository.deleteDboPatientMedications(patientId);
-        patientRepository.deleteDboPatientConditions(patientId);
-//        patientRepository.deleteDboConsultationMedications(patientId);
+        if (patientOptional.isPresent()) {
 
-        //SCHEMA REMOVAL
 
-        patientRepository.deleteCarbsByPatientId(patientId);
-        patientRepository.deleteMedicationsByPatientId(patientId);
-        patientRepository.deleteConsultationsByPatientId(patientId);
-        patientRepository.deleteGlucoseRecordByPatientId(patientId);
-        patientRepository.deleteGlucoseByPatientId(patientId);
-        patientRepository.deletePatientById(patientId);
+            patientRepository.deletePatientAllergies(patientId);
+            patientRepository.deletePatientMedications(patientId);
+            patientRepository.deletePatientConditions(patientId);
+            patientRepository.deleteCarbsByPatientId(patientId);
+            patientRepository.deleteMedicationsByPatientId(patientId);
+            patientRepository.deleteConsultationsByPatientId(patientId);
+            patientRepository.deleteGlucoseRecordByPatientId(patientId);
+            patientRepository.deleteGlucoseByPatientId(patientId);
+            patientRepository.deletePatientById(patientId);
+        }
+        else throw new PatientException("Patient not found id= " + patientId);
 
     }
 
 
     @Override
-    public List<PastCarbReadingsDto> getPreviousCarbReadingsByPatientIdBetweenDates(long id, LocalDate startingDate, LocalDate endingDate) {
-        return carbsRepository.getCarbsReadingsBetweenDatesByPatientId(id,startingDate,endingDate);
+    public List<PastCarbReadingsDto> getPreviousCarbReadingsByPatientIdBetweenDates(long id, LocalDate startingDate, LocalDate endingDate)
+    throws PatientException,DateValidationException {
+
+        if (startingDate == null || endingDate == null || startingDate.isAfter(endingDate)) {
+            throw new DateValidationException("Invalid starting and/or ending date");
+        }
+
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+        return carbsRepository.getCarbsReadingsBetweenDatesByPatientId(id,startingDate,endingDate);}
+        else throw new PatientException("Patient not found id= " + id);
     }
 
 
     @Override
-    public List<PatientDto> readPatientById(long id)  {
-        return patientRepository.DisplayAccountData(id).stream().map(PatientDto::new)            .collect(Collectors.toList());}
+    public List<PatientDto> readPatientById(long id) throws PatientException  {
+
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+        return patientRepository.DisplayAccountData(id).stream().map(PatientDto::new)
+                .collect(Collectors.toList());}
+        else throw new PatientException("Patient not found id= " + id);}
 
     @Override
-    public Long findDoctorIdByPatientId(long id) {
-        return patientRepository.findDoctorIdByPatientId(id);
-    }
+    public Long findDoctorIdByPatientId(long id) throws PatientException  {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+
+        return patientRepository.findDoctorIdByPatientId(id);}
+
+        else throw new PatientException("Patient not found id= " + id);}
+
 
     private Patient readPatientDb(long id) throws PatientException {
         Optional<Patient> patientOptional = patientRepository.findById(id);
         if (patientOptional.isPresent())
             return   patientOptional.get() ;
-        throw new PatientException("Customer not found id= " + id);
+        else throw new PatientException("Patient not found id= " + id);
     }
+//    @Override
+//    public boolean updatePatient(PatientDto patient, long id) {
+//        boolean action;
+//        try {
+//            Patient dbpatient = readPatientDb(id);
+//            //// dbpatient.setName(patient.getName());  //todo:implement
+//            ///  dbpatient.setEmail(customer.getEmail());
+//            patientRepository.save(dbpatient);
+//            action = true;
+//        } catch (PatientException e) {
+//            action = false;
+//        }
+//        return action;
+//    }
+
+
     @Override
-    public boolean updatePatient(PatientDto patient, long id) {
-        boolean action;
+    public long registerPatient(PatientDto patientDto) throws RegistrationException,RegisterValidationException {
+
         try {
-            Patient dbpatient = readPatientDb(id);
-            //// dbpatient.setName(patient.getName());  //todo:implement
-            ///  dbpatient.setEmail(customer.getEmail());
-            patientRepository.save(dbpatient);
-            action = true;
-        } catch (PatientException e) {
-            action = false;
+            Optional<String> existingEmailOptional = patientRepository.findPatientByEmail(patientDto.getEmail());
+            if (existingEmailOptional.isPresent()) {
+                throw new RegistrationException("Patient with email " + patientDto.getEmail() + " already exists.");
+            }
+
+            registrationValidators.validatePatientData(patientDto);
+            Patient patient = patientDto.asPatient();
+            return patientRepository.save(patient).getId();
+        } catch (RegisterValidationException e) {
+            throw new RegisterValidationException("Something went wrong!");
         }
-        return action;
-    }
-
-
-    @Override
-    public long registerPatient(PatientDto patientDto) {
-
-        Patient patient = patientDto.asPatient();
-
-//        patientRepository.createPatient(patient.getFirstName(), patient.getLastName(), patient.getPassword(), patient.getEmail(),
-//                patient.getMedicalRecordNumber(), patient.getAddress(), patient.getGender(), patient.getDateOfBirth(),
-//                patient.getBloodType().name(), patient.getDiabetesType().name(), patient.getHeight(), patient.getWeight(), patient.getSignedDate()
-//                ,patient.getPhoneNumber());
-
-        return patientRepository.save(patient).getId();
     }
 
     @Override
-    public void updateDoctorIdFromPatient(long patientId, long doctorId) {
+    public void updateDoctorIdFromPatient(long patientId, long doctorId){
         patientRepository.updateDoctorIdFromPatient(patientId, doctorId);
     }
 
     @Override
-    public LocalDate findDateAssignedFromPatientId(long id) {
-        return patientRepository.findDateAssignedFromPatientId(id);
+    public LocalDate findDateAssignedFromPatientId(long id) throws PatientException {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent())
+            return patientRepository.findDateAssignedFromPatientId(id);
+        else throw new PatientException("Patient not found id= " + id);
+
     }
 
     @Override
-    public void deleteCarbsFromPatientInSpecificDate(long id, LocalDate dateGiven) {
-        carbsRepository.deleteCarbsFromPatientInSpecificDate(id, dateGiven);
+    public void deleteCarbsFromPatientInSpecificDate(long id, LocalDate dateGiven)
+            throws PatientException, DateValidationException {
+
+        if (dateGiven == null) {
+            throw new DateValidationException("Invalid date value/format");
+        }
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+            carbsRepository.deleteCarbsFromPatientInSpecificDate(id, dateGiven);
+        } else throw new PatientException("Patient not found id= " + id);
+
     }
 
     @Override
-    public void updateEmailByPatientId(long id, String email) {
-        patientRepository.updateEmailFromPatientById(id,email);
+    public void updateEmailByPatientId(long id, String email) throws PatientException {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (!emailValidators.isValidEmail(email)) {
+            throw new PatientException("Invalid email.");
+
+        }
+        if (patientOptional.isPresent()) {
+            patientRepository.updateEmailFromPatientById(id, email);
+        }
+        else throw new PatientException("Patient not found id= " + id);
     }
 
     @Override
-    public void updateFirstNameByPatientId(long id, String firstName) {
-        patientRepository.updateFirstNameFromPatientById(id,firstName);
+    public void updateFirstNameByPatientId(long id, String firstName)
+    throws PatientException{
+
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+        patientRepository.updateFirstNameFromPatientById(id,firstName);}
+        else throw new PatientException("Patient not found id= " + id);
     }
     @Override
-    public void updateLastNameByPatientId(long id, String lastName) {
-        patientRepository.updateLastNameFromPatientById(id,lastName);
+    public void updateLastNameByPatientId(long id, String lastName)
+            throws PatientException{
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+        patientRepository.updateLastNameFromPatientById(id,lastName);}
+        else throw new PatientException("Patient not found id= " + id);
     }
 
     @Override
-    public void updateGenderByPatientId(long id, String gender) {
-        patientRepository.updateGenderFromPatientById(id,gender);
+    public void updateGenderByPatientId(long id, String gender)  throws PatientException {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+        patientRepository.updateGenderFromPatientById(id,gender);}
+        else throw new PatientException("Patient not found id= " + id);
     }
 
     @Override
-    public void updateHeightByPatientId(long id, int height) {
-        patientRepository.updateHeightFromPatientById(id,height);
+    public void updateHeightByPatientId(long id, int height)  throws PatientException {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+        patientRepository.updateHeightFromPatientById(id,height);}
+        else throw new PatientException("Patient not found id= " + id);
     }
 
     @Override
-    public void updateWeightByPatientId(long id, double weight) {
-        patientRepository.updateWeightFromPatientById(id,weight);
+    public void updateWeightByPatientId(long id, double weight) throws PatientException {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+            patientRepository.updateWeightFromPatientById(id, weight);
+        } else throw new PatientException("Patient not found id= " + id);
     }
 
     @Override
-    public void updateMedicalRecordNumberByPatientId(long id, String medicalRecordNumber) {
-        patientRepository.updateMedicalRecordNumberFromPatientById(id,medicalRecordNumber);
+    public void updateMedicalRecordNumberByPatientId(long id, String medicalRecordNumber)
+            throws PatientException {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+            patientRepository.updateMedicalRecordNumberFromPatientById(id, medicalRecordNumber);
+        } else throw new PatientException("Patient not found id= " + id);
     }
 
     @Override
-    public void updatePhoneNumberByPatientId(long id, String phoneNumber) {
-        patientRepository.updatePhoneNumberFromPatientById(id,phoneNumber);
+    public void updatePhoneNumberByPatientId(long id, String phoneNumber) throws PatientException {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+            patientRepository.updatePhoneNumberFromPatientById(id, phoneNumber);
+        } else throw new PatientException("Patient not found id= " + id);
     }
 
     @Override
-    public void updateBirthDateByPatientId(long id, LocalDate birthDate) {
-        patientRepository.updateBirthDateFromPatientById(id,birthDate);
+    public void updateBirthDateByPatientId(long id, LocalDate birthDate) throws PatientException {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+            patientRepository.updateBirthDateFromPatientById(id, birthDate);
+        } else throw new PatientException("Patient not found id= " + id);
     }
 
     @Override
-    public void updateAddressByPatientId(long id, String address) {
-        patientRepository.updateAddressFromPatientById(id,address);
+    public void updateAddressByPatientId(long id, String address) throws PatientException {
+        Optional<Patient> patientOptional = patientRepository.findById(id);
+        if (patientOptional.isPresent()) {
+            patientRepository.updateAddressFromPatientById(id, address);
+        } else throw new PatientException("Patient not found id= " + id);
     }
 
     @Override

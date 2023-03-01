@@ -1,9 +1,7 @@
 package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.*;
-import gr.codehub.sacchon.app.exception.CarbsException;
-import gr.codehub.sacchon.app.exception.GlucoseException;
-import gr.codehub.sacchon.app.exception.GlucoseRecordException;
+import gr.codehub.sacchon.app.exception.*;
 import gr.codehub.sacchon.app.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,13 +54,13 @@ public class PatientController {
     private DoctorService doctorService;
 
     @GetMapping("/patient/{id}")
-    public List<PatientDto> findPatientById(@PathVariable("id") long id){
+    public List<PatientDto> findPatientById(@PathVariable("id") long id) throws PatientException {
         log.info("The end point /patient/id has been used.");
         return patientService.readPatientById(id);
     }
 
     @DeleteMapping("/delete/{patientId}")
-    public ResponseEntity<?> deletePatientById(@PathVariable("patientId") long patientId) {
+    public ResponseEntity<?> deletePatientById(@PathVariable("patientId") long patientId) throws PatientException {
         log.info("The end point /delete/patientId has been used.");
         patientService.deletePatientById(patientId);
         return ResponseEntity.noContent().build();
@@ -193,7 +191,7 @@ public class PatientController {
             @PathVariable(name="id") long patientId,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
-    ) {
+    ) throws PatientException, DateValidationException {
         log.info("The end point /patient/id/carbs/query/all has been used.");
         return patientService.getPreviousCarbReadingsByPatientIdBetweenDates(
                 patientId, startingDate, endingDate);
@@ -220,7 +218,7 @@ public class PatientController {
     }
 
     @PostMapping("/signup/patient")
-    public long signUp(@RequestBody PatientDto patientDto) {
+    public long signUp(@RequestBody PatientDto patientDto) throws RegistrationException,RegisterValidationException {
         LocalDate curDate = LocalDate.now();
         patientDto.setSignedDate(curDate);
         log.info("The end point /signup/patient has been used");
@@ -229,37 +227,37 @@ public class PatientController {
     }
 
     @GetMapping("/patient/{id}/doctor")
-    public DoctorDto getDoctorByPatientId(@PathVariable("id") long id){
+    public DoctorDto getDoctorByPatientId(@PathVariable("id") long id) throws PatientException{
         log.info("The end point /patient/id/doctor has been used.");
         long doctorId = patientService.findDoctorIdByPatientId(id);
         return doctorService.readDoctorNameAndEmailById(doctorId);
     }
 
-    @PutMapping("/patient/{id}")
-    public boolean updatePatientDto(@RequestBody PatientDto PatientDto,
-                                     @PathVariable(name="id") long id){
-        log.info("The end point /patient/id has been used.");
-        return patientService.updatePatient(PatientDto, id);
-    }
+//    @PutMapping("/patient/{id}")
+//    public boolean updatePatientDto(@RequestBody PatientDto PatientDto,
+//                                     @PathVariable(name="id") long id){
+//        log.info("The end point /patient/id has been used.");
+//        return patientService.updatePatient(PatientDto, id);
+//    }
 
     @DeleteMapping("/patient/{id}")
-    public void deletePatientDto(@PathVariable(name="id") long id){
+    public void deletePatientDto(@PathVariable(name="id") long id) throws PatientException{
         log.info("The end point /patient/id has been used.");
         patientService.deletePatientById(id);
     }
 
     @GetMapping("/patient/{id}/signed-date")
-    public LocalDate getPersonsAssignedDate(@PathVariable("id") long id) {
+    public LocalDate getPersonsAssignedDate(@PathVariable("id") long id) throws PatientException {
         log.info("The end point /patient/id/signed-date has been used.");
         return patientService.findDateAssignedFromPatientId(id);
     }
 
     @GetMapping("/patient/{id}/data/query")
-    public List<PersonDataDto> getPersonDataPaginating(
+    public List<PersonDataDto> getPersonDataPaginating (
             @PathVariable("id") long id,
             @RequestParam(name="start") long startingPosition,
             @RequestParam(name="step") long step
-    ){
+    )throws PatientException{
         log.info("The end point /patient/id/data/query has been used.");
         List<PersonDataDto> personDataDtoList = new ArrayList<>();
         LocalDate assignedDate = patientService.findDateAssignedFromPatientId(id);
@@ -302,7 +300,7 @@ public class PatientController {
     public long getDateCountFromPerson(
             @PathVariable("id") long id,
             @RequestParam("step") long step
-    ){
+    )throws PatientException{
         log.info("The end point /patient/id/data/paginator has been used.");
         return patientService.findDateAssignedFromPatientId(id).until(LocalDate.now(), ChronoUnit.DAYS) / step + 1;
     }
@@ -324,64 +322,73 @@ public class PatientController {
     public boolean deleteCarbsFromPatientInSpecificDate(
             @PathVariable(name="id") long id,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date
-    ){
+    )throws PatientException, DateValidationException{
         patientService.deleteCarbsFromPatientInSpecificDate(id, date);
         return true;
     }
     @PutMapping("/patient/update/{id}/email")
     public void updatePatientEmail(@PathVariable(name="id") int id,
-                                                @RequestParam("email") String email){
+                                                @RequestParam("email") String email)
+            throws PatientException{
         patientService.updateEmailByPatientId(id,email);
     }
     @PutMapping("/patient/update/{id}/firstname")
     public void updatePatientFirstName(@PathVariable(name="id") int id,
-                                   @RequestParam("firstName") String firstName){
+                                   @RequestParam("firstName") String firstName)
+            throws PatientException{
         patientService.updateFirstNameByPatientId(id,firstName);
     }
     @PutMapping("/patient/update/{id}/lastname")
     public void updatePatientLastName(@PathVariable(name="id") int id,
-                                       @RequestParam("lastName") String lastName){
+                                       @RequestParam("lastName") String lastName) throws PatientException{
         patientService.updateLastNameByPatientId(id,lastName);
     }
 
     @PutMapping("/patient/update/{id}/address")
     public void updatePatientAddress(@PathVariable(name="id") int id,
-                                      @RequestParam("address") String address){
+                                      @RequestParam("address") String address)
+            throws PatientException{
         patientService.updateAddressByPatientId(id,address);
     }
 
     @PutMapping("/patient/update/{id}/gender")
-    public void updatePatientGender(@PathVariable(name="id") int id,
-                                     @RequestParam("gender") String gender){
-        patientService.updateGenderByPatientId(id,gender);
+    public void updatePatientGender(@PathVariable(name = "id") int id,
+                                    @RequestParam("gender") String gender)
+            throws PatientException {
+        patientService.updateGenderByPatientId(id, gender);
     }
 
     @PutMapping("/patient/update/{id}/phonenumber")
     public void updatePatientPhoneNumber(@PathVariable(name="id") int id,
-                                         @RequestParam("phonenumber") String phonenumber){
+                                         @RequestParam("phonenumber") String phonenumber)
+            throws PatientException{
         patientService.updatePhoneNumberByPatientId(id,phonenumber);
     }
 
     @PutMapping("/patient/update/{id}/medicalrecordnumber")
     public void updatePatientMedicalRecordNumber(@PathVariable(name="id") int id,
-                                                 @RequestParam("medicalRecordNumber") String medicalRecordNumber){
+                                                 @RequestParam("medicalRecordNumber") String medicalRecordNumber)
+            throws PatientException{
         patientService.updateMedicalRecordNumberByPatientId(id,medicalRecordNumber);
     }
 
     @PutMapping("/patient/update/{id}/height")
-    public void updatePatientHeight(@PathVariable(name="id") int id,
-                                                 @RequestParam("height") int height){
-        patientService.updateHeightByPatientId(id,height);
+    public void updatePatientHeight(@PathVariable(name = "id") int id,
+                                    @RequestParam("height") int height)
+            throws PatientException {
+        patientService.updateHeightByPatientId(id, height);
     }
 
     @PutMapping("/patient/update/{id}/weight")
     public void updatePatientWeight(@PathVariable(name="id") int id,
-                                                 @RequestParam("weight") double weight){
+                                    @RequestParam("weight") double weight)
+            throws PatientException{
         patientService.updateWeightByPatientId(id,weight);
     }
     @PutMapping("/patient/update/{id}/birthdate")
     public void updatePatientWeight(@PathVariable(name="id") int id,
-                                    @RequestParam("birthDate") LocalDate birthDate){
+                                    @RequestParam("birthDate") LocalDate birthDate)
+            throws PatientException{
         patientService.updateBirthDateByPatientId(id,birthDate);
     }
 

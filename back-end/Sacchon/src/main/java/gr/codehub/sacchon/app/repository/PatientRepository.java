@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
@@ -101,17 +102,17 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT_ALLERGIES  WHERE patient_id=:patientId", nativeQuery = true)
-    void deleteDboPatientAllergies(@Param("patientId") long patientId);
+    void deletePatientAllergies(@Param("patientId") long patientId);
 
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT_CONDITIONS  WHERE patient_id=:patientId", nativeQuery = true)
-    void deleteDboPatientConditions(@Param("patientId") long patientId);
+    void deletePatientConditions(@Param("patientId") long patientId);
 
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM " + SacchonApplication.SCHEMA + ".PATIENT_CONDITIONS  WHERE patient_id=:patientId", nativeQuery = true)
-    void deleteDboPatientMedications(@Param("patientId") long patientId);
+    void deletePatientMedications(@Param("patientId") long patientId);
 
 
     // query for table Patient (set doctor_id to null when doctor is deleted)
@@ -195,4 +196,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query(value = "SELECT EMAIL FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE DATE_OF_BIRTH LIKE :currentDate", nativeQuery = true)
     List<String> findPatientsWithBirthday(@Param("currentDate") String currentDate);
 
+
+    @Query(value = "SELECT EMAIL FROM " + SacchonApplication.SCHEMA + ".PATIENT " +
+            "WHERE PATIENT.EMAIL = :email", nativeQuery = true)
+    Optional<String> findPatientByEmail(@Param("email") String email);
 }
