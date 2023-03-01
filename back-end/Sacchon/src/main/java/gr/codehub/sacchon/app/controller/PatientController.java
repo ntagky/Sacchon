@@ -226,16 +226,19 @@ public class PatientController {
     }
 
     @PutMapping("/patient/{id}")
-    //http://localhost:9000/api/patient/{{id}}
     public boolean updatePatientDto(@RequestBody PatientDto PatientDto,
                                      @PathVariable(name="id") long id){
         return patientService.updatePatient(PatientDto, id);
     }
 
     @DeleteMapping("/patient/{id}")
-    //http://localhost:9000/api/patient/{{id}}
     public void deletePatientDto(@PathVariable(name="id") long id){
         patientService.deletePatientById(id);
+    }
+
+    @GetMapping("/patient/{id}/signed-date")
+    public LocalDate getPersonsAssignedDate(@PathVariable("id") long id) {
+        return patientService.findDateAssignedFromPatientId(id);
     }
 
     @GetMapping("/patient/{id}/data/query")
