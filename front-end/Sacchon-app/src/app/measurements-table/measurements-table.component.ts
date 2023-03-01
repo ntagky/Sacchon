@@ -33,6 +33,7 @@ export class MeasurementsTableComponent implements OnInit {
   openModal(selectedId: number, dateSelected: string, carbsIntake: any, glucoseProvided:any) {
     this.modalRef = this.modalService.open(ModalMeasurementsComponent, {
       data: {
+        patientId: this.patientId,
         id: selectedId,
         date: dateSelected,
         carbs: carbsIntake,
@@ -96,7 +97,6 @@ export class MeasurementsTableComponent implements OnInit {
       this.currentPage = (this.pageStep * this.section + this.pageStep - 1);
     this.getPageVisible();
     this.readPaginatingData();
-    console.log(this.currentPage);
     this.lastPageIndex = Math.floor(this.pagesRespone / this.pageStep);
   }
 

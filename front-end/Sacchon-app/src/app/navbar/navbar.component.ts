@@ -11,16 +11,20 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit{
 
   @Input() patientId: any;
+  @Input() page: any;
 
   response: any;
   firstName: any;
   lastName: any;
   initials: any;
+  toPage: string = '/login';
 
   constructor(private patientService: PatientService, private localStorageService: LocalStorageService, private router: Router){}
 
   ngOnInit(): void {
     if (this.patientId > 0) {
+      this.toPage = '/home';
+
       this.patientService.getPatient(this.patientId).subscribe({
         next: patient => {
           this.response = patient;
@@ -31,6 +35,7 @@ export class NavbarComponent implements OnInit{
           this.initials = this.firstName[0] + this.lastName[0];
         }
       })
+
     }
   }
 

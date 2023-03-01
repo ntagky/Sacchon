@@ -33,6 +33,7 @@ import { InspectorComponent } from './pages/inspector/inspector.component';
 import { MeasurementsComponent } from './pages/measurements/measurements.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AiDiagnosisComponent } from './pages/ai-diagnosis/ai-diagnosis.component';
+import { InfoComponent } from './info/info.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { AiDiagnosisComponent } from './pages/ai-diagnosis/ai-diagnosis.componen
     InspectorComponent,
     MeasurementsComponent,
     NotFoundComponent,
-    AiDiagnosisComponent
+    AiDiagnosisComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
