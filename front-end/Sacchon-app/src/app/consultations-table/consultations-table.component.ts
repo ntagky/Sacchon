@@ -8,7 +8,6 @@ import { LocalStorageService } from '../services/local-storage.service';
   templateUrl: './consultations-table.component.html',
   styleUrls: ['./consultations-table.component.scss']
 })
-
 export class ConsultationsTableComponent implements OnInit{
 
   userId: number;
