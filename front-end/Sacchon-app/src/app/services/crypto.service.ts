@@ -59,8 +59,8 @@ export class CryptoService {
   }
 
   encrypt(passPhrase: any, plainText: any) {
-    let iv = CryptoJS.lib.WordArray.random(this._ivSize / 8).toString(CryptoJS.enc.Hex);
-    let salt = CryptoJS.lib.WordArray.random(this.keySize / 8).toString(CryptoJS.enc.Hex);
+    let iv = "1"; // CryptoJS.lib.WordArray.random(this._ivSize / 8).toString(CryptoJS.enc.Hex);
+    let salt = "2"; // CryptoJS.lib.WordArray.random(this.keySize / 8).toString(CryptoJS.enc.Hex);
     let ciphertext = this.encryptWithIvSalt(salt, iv, passPhrase, plainText);
     return salt + iv + ciphertext;
   }

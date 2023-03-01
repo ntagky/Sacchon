@@ -1,3 +1,4 @@
+import { AiDiagnosisComponent } from './pages/ai-diagnosis/ai-diagnosis.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { LocalStorageService } from './services/local-storage.service';
 import { LoginComponent } from './pages/login/login.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'inspector', component: InspectorComponent },
   { path: 'info', component: InfoComponent},
   { path: 'signout', component: LoginComponent},
+  { path: 'ai-diagnosis', component: AiDiagnosisComponent},
   { path: '**', component: NotFoundComponent}
 ];
 
@@ -42,10 +44,8 @@ export class AppRoutingModule {
     ) {
     // Redirect user to login page if there is none stored user-id
     if (Number(localStoreService.getData("user")) <= 0) {
-      if (this.location.path() != "/login")
+      if (this.location.path() != "/login" && this.location.path() != "/signup")
         this.router.navigate(['/login', {inactive: JSON.stringify(true)}]);
-      else
-        this.router.navigate(['/login'])
     }
   }
 }

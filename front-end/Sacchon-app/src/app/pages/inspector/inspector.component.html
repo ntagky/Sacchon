@@ -12,12 +12,12 @@
         <div class="col-6" style="text-align: right;">
           <mat-form-field>
             <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [rangePicker]="picker">
-              <input matStartDate placeholder="Start date">
-              <input matEndDate placeholder="End date">
+            <mat-date-range-input [rangePicker]="picker" [min]="dateSigned" [max]="lastDate">
+              <input matStartDate placeholder="Start date" readonly="true" id="lastMonth" [(ngModel)]="lastMonth" name="lastMonth" (dateInput)="addEvent(true, $event)">
+              <input matEndDate placeholder="End date" readonly="true" id="dateToday" [(ngModel)]="dateToday" name="dateToday" (dateInput)="addEvent(false, $event)">
             </mat-date-range-input>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
+            <mat-date-range-picker #picker ></mat-date-range-picker>
           </mat-form-field>
         </div>
       </div>
@@ -28,8 +28,7 @@
             <h6 class="card-text">Total Measurements</h6>
             <ngx-skeleton-loader *ngIf="isRetrieving" count="2" appearance="line"></ngx-skeleton-loader>
             <h2 class="card-title" *ngIf="!isRetrieving">{{ measurements }}</h2>
-            <p class="card-text" *ngIf="!isRetrieving">Since {{ dateSigned }}</p>
-          </div>
+             </div>
         </div>
 
         <div class="col-5 col-sm-3 col-md-2 flex-grow-1 card m-2 shadow p-3 mb-5 bg-white rounded">
@@ -37,24 +36,21 @@
             <h6 class="card-text">Total Consultations</h6>
             <ngx-skeleton-loader *ngIf="isRetrieving" count="2" appearance="line"></ngx-skeleton-loader>
             <h2 class="card-title" *ngIf="!isRetrieving">{{ consultations }}</h2>
-            <p class="card-text" *ngIf="!isRetrieving">Since {{ dateSigned }}</p>
-          </div>
+            </div>
         </div>
         <div class="col-5 col-sm-3 col-md-2 flex-grow-1 card m-2 shadow p-3 mb-5 bg-white rounded">
           <div class="card-body">
             <h6 class="card-text">Average Carbs</h6>
             <ngx-skeleton-loader *ngIf="isRetrieving" count="2" appearance="line"></ngx-skeleton-loader>
             <h2 class="card-title" *ngIf="!isRetrieving">{{ averageCarbs }}</h2>
-            <p class="card-text" *ngIf="!isRetrieving">Since {{ dateSigned }}</p>
-          </div>
+             </div>
         </div>
         <div class="col-5 col-sm-3 col-md-2 flex-grow-1 card m-2 shadow p-3 mb-5 bg-white rounded">
           <div class="card-body">
             <h6 class="card-text">Average Glucose</h6>
             <ngx-skeleton-loader *ngIf="isRetrieving" count="2" appearance="line"></ngx-skeleton-loader>
             <h2 class="card-title" *ngIf="!isRetrieving">{{ averageGlucose | number : '.0-3' }}</h2>
-            <p class="card-text" *ngIf="!isRetrieving">Since {{ dateSigned }}</p>
-          </div>
+             </div>
         </div>
       </div>
 
@@ -72,7 +68,7 @@
           <ngx-charts-line-chart [view]="[containerRef.offsetWidth, 400]" [scheme]="colorSchemeGlucose"
             [results]="glucoseChart" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
             [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisGlucoseLabel">
+            [yAxisLabel]="yAxisGlucoseLabel" (select)="onSelect($event)">
           </ngx-charts-line-chart>
         </div>
       </div>

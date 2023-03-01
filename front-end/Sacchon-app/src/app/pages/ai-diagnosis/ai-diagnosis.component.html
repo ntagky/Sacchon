@@ -1,0 +1,64 @@
+<app-navbar></app-navbar>
+<body class="bg-image" style="background-image: url('assets/bg-top.png'); height: 100vh; background-color:rgb(248, 248, 248)">
+  <div class="card-group" [formGroup]="diagnosisForm">
+    <div class="card m-3 p-2">
+      <div class="card-body">
+        <h5 class="card-title">Pregnancies</h5>
+        <input type="text" class="form-control " formControlName="pregnancies" name="pregnancies" placeholder="Pregnancies"/>
+        <p class="card-text mt-2">Number of times pregnant</p>
+      </div>
+    </div>
+    <div class="card m-3 p-2">
+      <div class="card-body">
+        <h5 class="card-title">Glucose</h5>
+        <input type="text" class="form-control " formControlName="glucose" name="glucose" placeholder="mg/dL"/>
+        <p class="card-text mt-2">Plasma glucose concentration a 2 hours in an oral glucose tolerance test</p>
+      </div>
+    </div>
+    <div class="card m-3 p-2">
+      <div class="card-body">
+        <h5 class="card-title">Blood Pressure</h5>
+        <input type="text" class="form-control " formControlName="bloodPressure" name="bloodPressure" placeholder="mm Hg"/>
+        <p class="card-text mt-2">Diastolic blood pressure (mm Hg)</p>
+      </div>
+    </div>
+    <div class="card m-3 p-2">
+      <div class="card-body">
+        <h5 class="card-title">Skin Thickness</h5>
+        <input type="text" class="form-control " formControlName="skinThickness" name="skinThickness" placeholder="mm"/>
+        <p class="card-text mt-2">Triceps skin fold thickness (mm)</p>
+      </div>
+    </div>
+    <div class="card m-3 p-2">
+      <div class="card-body">
+        <h5 class="card-title">Insulin</h5>
+        <input type="text" class="form-control " formControlName="insulin" name="insulin" placeholder="mu U/ml"/>
+        <p class="card-text mt-2">2-Hour serum insulin (mu U/ml)</p>
+      </div>
+    </div>
+    <div class="card m-3 p-2">
+      <div class="card-body">
+        <h5 class="card-title">BMI</h5>
+        <input type="text" class="form-control " formControlName="bmi" name="bmi" placeholder="BMI"/>
+        <p class="card-text mt-2">Body mass index (weight in kg/(height in m)^2)</p>
+      </div>
+    </div>
+    <div class="card m-3 p-2">
+      <div class="card-body">
+        <h5 class="card-title">Age</h5>
+        <input type="text" class="form-control " formControlName="age" name="age" placeholder="Years"/>
+        <p class="card-text mt-2">Age (years)</p>
+      </div>
+    </div>
+    <div class="card m-3 p-2">
+      <div class="card-body">
+        <h5 class="card-title">Diabetes Pedigree Function</h5>
+        <input type="text" class="form-control " formControlName="dpf" name="dpf" placeholder="DPF"/>
+        <p class="card-text mt-2">Diabetes pedigree function</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn my_button btn-m" type="submit" [disabled]="!diagnosisForm.valid" (click)="requestOutput()">Login</button>
+
+</body>

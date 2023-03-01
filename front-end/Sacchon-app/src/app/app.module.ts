@@ -14,6 +14,8 @@ import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ToastrModule } from 'ngx-toastr';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -30,6 +32,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { InspectorComponent } from './pages/inspector/inspector.component';
 import { MeasurementsComponent } from './pages/measurements/measurements.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AiDiagnosisComponent } from './pages/ai-diagnosis/ai-diagnosis.component';
 
 
 @NgModule({
@@ -48,7 +51,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     MeasurementsTableComponent,
     InspectorComponent,
     MeasurementsComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AiDiagnosisComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +69,9 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     MdbModalModule,
     NgxChartsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatMomentDateModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

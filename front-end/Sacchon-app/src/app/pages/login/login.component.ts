@@ -1,4 +1,3 @@
-import { CryptoService } from './../../services/crypto.service';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -23,9 +22,10 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private localStoreService: LocalStorageService,
-    private toastr: ToastrService,
-    private cryptoService: CryptoService
-  ) {}
+    private toastr: ToastrService
+  ) {
+    this.localStoreService.saveData("user", "0");
+  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    console.log("Email: " + this.loginForm.get('email').value + " - password: " + this.loginForm.get('password').value);
     this.service.get("http://localhost:9000/login?email=" + this.loginForm.get('email').value +
      "&password=" + this.loginForm.get('password').value).subscribe({
       next: res => {

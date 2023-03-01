@@ -11,11 +11,14 @@
     <div class="col-6 col-sm-push-0 vh-100 d-flex justify-content-center align-items-center">
       <div class="wrapper">
         <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="login()">
-           <h2 class="form-signin-heading">Please login</h2>
-           <input type="text" class="form-control" formControlName="email" name="email" placeholder="Email address" autofocus="" />
-           <input type="password" class="form-control" formControlName="password" name="password" placeholder="Password"/>
-           <button class="btn my_button btn-m" type="submit">Login</button>
-           <p class="mt-3" style="color: crimson;" *ngIf="invalidData">Invalid email or password.</p>
+          <h2 class="form-signin-heading">Please login</h2>
+          <input type="text" class="form-control" formControlName="email" name="email" placeholder="Email address" autofocus="" />
+          <input type="password" class="form-control" formControlName="password" name="password" placeholder="Password"/>
+          <button class="btn my_button btn-m" type="submit">Login</button>
+          <p class="mt-3" style="color: crimson;" *ngIf="invalidData">Invalid email or password.</p>
+          <p class="mt-3"> Need an account?
+            <a routerLink="/signup" style="color: black;"><u>Sign up now!</u> </a>
+          </p>
         </form>
      </div>
     </div>

@@ -4,9 +4,13 @@
       <a routerLink="/home">
         <img class="ms-1 logo" src="assets/logo.png" alt="Sacchon logo"/>
       </a>
-      <a routerLink="/home">
-        <h4 class="mb-0 ms-3">Sacchon</h4>
-      </a>
+      <div class="row justify-content-center p-3">
+        <a class="col-auto" style="align-self: center;" routerLink="/ai-diagnosis">AI-Diagnosis</a>
+        <a class="col-auto" routerLink="/home">
+          <h4 class="mb-0 ms-3">Sacchon</h4>
+        </a>
+      </div>
+
     </div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="patientId > 0">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
