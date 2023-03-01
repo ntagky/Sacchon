@@ -20,7 +20,6 @@ import java.util.*;
  * Its aim is to create and populate the database with entities. If the
  * user is running the application in test mode it populates the DEVELOP database
  * while if the user runs it in production mode it populates the PRODUCTION database.
- *
  * The creation of the population is done using randomized seeds to achieve maximum randomization.
  */
 @Configuration
@@ -126,7 +125,6 @@ public class InitialConfiguration {
         int monthBorn;
         int dayBorn;
         List<String> allergies;
-//        List<String> medications;
         List<String> conditions;
 
         for (int i = 0; i < population; i++) {
@@ -158,10 +156,6 @@ public class InitialConfiguration {
             createRandomListSequence(allergiesList, allergies, 0.35, random);
             patient.setAllergies(allergies);
 
-//            medications = new ArrayList<>();
-//            createRandomListSequence(medicationNamesList, medications, 0.2, random);
-//            patient.setMedications(medications);
-
             conditions = new ArrayList<>();
             createRandomListSequence(conditionsList, conditions, 0.1, random);
             patient.setConditions(conditions);
@@ -179,22 +173,14 @@ public class InitialConfiguration {
     private void createMedication(MedicationRepository medicationRepository, int population, Consultation assignedConsultation) {
         ArrayList<Medication> medicationArrayList = new ArrayList<>();
         Medication medication;
-        List<String> medicationNames;
 
         for (int i = 0; i < population; i++) {
             medication = new Medication();
 
             medication.setId(0L);
-
-//            medicationNames = new ArrayList<>();
-//            createRandomListSequence(medicationNamesList, medicationNames, 0.2, random);
-//            medication.setName(medicationNames.get(i));
-            medication.setMedName("sffs");
-
+            medication.setMedName(medicationNamesList.get(random.nextInt(medicationNamesList.size())));
             medication.setDosage("2 pills per day");
-
             medication.setConsultation(assignedConsultation);
-
             medicationArrayList.add(medication);
         }
 
@@ -266,9 +252,6 @@ public class InitialConfiguration {
         ArrayList<Consultation> consultationArrayList = new ArrayList<>();
         Consultation consultation;
 
-//        List<String> medications = new ArrayList<>();
-//        createRandomListSequence(medicationNamesList, medications, 2, random);
-
         for (int i = 0; i < population; i++) {
             consultation = new Consultation();
 
@@ -278,7 +261,7 @@ public class InitialConfiguration {
             consultation.setDoctorEmail(assignedDoctor.getEmail());
             consultation.setDateCreated(localDates[i]);
             consultation.setSeenConsultation(random.nextBoolean());
-//            consultation.setMedications(medications);
+            consultation.setMedications(null);
             consultation.setDetails(detailsList.get(random.nextInt(detailsList.size())));
             consultation.setPatient(assignedPerson);
             consultation.setDoctor(assignedDoctor);
@@ -302,12 +285,12 @@ public class InitialConfiguration {
 
             System.out.println("Saving dummy objects..");
 
-            int patientPopulation = 5;
+            int patientPopulation = 3;
             int doctorPopulation = 1;
             int chiefDoctorPopulation = 1;
             int[] measurementPersonPopulation = new int[patientPopulation];
-            int measurementOrigin = 10;
-            int measurementBound = 140;
+            int measurementOrigin = 25;
+            int measurementBound = 50;
             for (int i = 0; i < patientPopulation; i++)
                 measurementPersonPopulation[i] = random.nextInt(measurementOrigin, measurementBound);
 
@@ -345,8 +328,8 @@ public class InitialConfiguration {
                             localDates[i] = glucoseArrayList.get((i + 1) * 31).getDate();
 
                         List<Consultation> consultationsList = createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
-                        Consultation randomCons = consultationsList.get(random.nextInt(consultationsList.size()));
-                        createMedication(medicationRepository, maxConsultation, randomCons);
+                        final int[] i = {0};
+                        consultationsList.forEach(consultation -> createMedication(medicationRepository, 1, consultationsList.get(i[0]++)));
                     }
                 }
                 idx[0]++;

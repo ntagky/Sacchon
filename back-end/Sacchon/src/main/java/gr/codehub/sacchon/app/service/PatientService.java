@@ -13,7 +13,7 @@ public interface PatientService {
     List<PastCarbReadingsDto> getPreviousCarbReadingsByPatientIdBetweenDates(long id, LocalDate startingDate, LocalDate endingDate);
     List<PatientDto> readPatient();
     List<PatientDto> readPatientById(long id); // giati List ???
-    long findDoctorIdByPatientId(long id);
+    Long findDoctorIdByPatientId(long id);
     boolean updatePatient(PatientDto patient, long id);
 
     public void updateEmailByPatientId(long id, String email);

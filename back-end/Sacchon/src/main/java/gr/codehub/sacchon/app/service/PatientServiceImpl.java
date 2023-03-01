@@ -75,7 +75,7 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.DisplayAccountData(id).stream().map(PatientDto::new)            .collect(Collectors.toList());}
 
     @Override
-    public long findDoctorIdByPatientId(long id) {
+    public Long findDoctorIdByPatientId(long id) {
         return patientRepository.findDoctorIdByPatientId(id);
     }
 
