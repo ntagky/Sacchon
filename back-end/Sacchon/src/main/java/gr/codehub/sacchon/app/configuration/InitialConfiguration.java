@@ -21,19 +21,23 @@ import java.util.*;
  * user is running the application in test mode it populates the DEVELOP database
  * while if the user runs it in production mode it populates the PRODUCTION database.
  * The creation of the population is done using randomized seeds to achieve maximum randomization.
+ * Developers have the opportunity to choose their own size of populations and create instances
+ * depicting a real-life production environment. Glucose levels are generated through a Gaussian
+ * distribution in order to implement more realistic scenarios and outliers.
  */
 @Configuration
 public class InitialConfiguration {
 
-    private final Random random = new Random(42);
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    private final LinkedList<String> namesMaleLinkedList = new LinkedList<>(List.of("Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore", "Amiri", "Kevin", "Jason", "Jeffrey", "Jacob", "Gary", "Eric", "Nicolas", "Jonathan", "Tyler"));
-    private final LinkedList<String> namesFemaleLinkedList = new LinkedList<>(List.of("Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper", "Debra", "Maria", "Olivia", "Joyce", "Ruth", "Janet", "Samantha", "Stella", "Helen", "Evelyn"));
+    private final Random RANDOM = new Random(42);
+    private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private final LinkedList<String> namesMaleLinkedList = new LinkedList<>(List.of("Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore", "Amiri", "Kevin", "Jason", "Jeffrey", "Jacob", "Gary", "Eric", "Nicolas", "Jonathan", "Tyler", "Samuel", "Gregory", "Alexander", "Frank", "Patrick"));
+    private final LinkedList<String> namesFemaleLinkedList = new LinkedList<>(List.of("Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper", "Debra", "Maria", "Olivia", "Joyce", "Ruth", "Janet", "Samantha", "Stella", "Helen", "Evelyn", "Katherine", "Christine", "Debra", "Rachel", "Carolyn"));
     private final List<String> lastNamesLinkedList = new ArrayList<>(List.of("Smith", "Johnson", "William", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Wilson", "Anderson", "Thomas", "Taylor", "Jackson", "Martin", "Moore", "Lee", "Perez", "Thompson", "White", "Walker", "Hill", "Torres", "Scot", "Young"));
-    private final List<String> allergiesList = new ArrayList<>(List.of("Grass Pollen", "Dust", "Peanut", "Milk", "Egg", "Animal Fur", "Bee", "Wasp", "Fish", "Crustaceans", "Wheat", "Soy"));
-    private final List<String> medicationNamesList = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
-    private final List<String> conditionsList = new ArrayList<>(List.of("Heart Disease", "Cancer", "Asthma", "Emphysema", "Alzheimer Disease", "Substance Abuse", "Pneumonia", "Kidney Disease", "Mental Health Conditions"));
-    private final List<String> detailsList = new ArrayList<>(List.of("Take 2 pills per day", "Don't mix with alcohol", "After each meal", "Before bed only", "One before eating lunch, one after", "At the morning"));
+    private final List<String> ALLERGIES_LIST = new ArrayList<>(List.of("Grass Pollen", "Dust", "Peanut", "Milk", "Egg", "Animal Fur", "Bee", "Wasp", "Fish", "Crustaceans", "Wheat", "Soy"));
+    private final List<String> MEDICATION_NAMES_LIST = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
+    private final List<String> CONDITIONS_LIST = new ArrayList<>(List.of("Heart Disease", "Cancer", "Asthma", "Emphysema", "Alzheimer Disease", "Substance Abuse", "Pneumonia", "Kidney Disease", "Mental Health Conditions"));
+    private final List<String> DOSOLOGE_LIST = new ArrayList<>(List.of("Take 2 pills per day", "After each meal", "Before bed only", "One before eating lunch, one after", "At the morning"));
+    private final List<String> DETAILS_LIST = new ArrayList<>(List.of("Read carefully the label on the container.", "Don't mix with alcohol", "Do not mix medicine into hot drinks.", "Take medicine with a full glass of water.", "Read directions, warnings and interaction precautions printed on medicine label.", "Don’t take vitamin pills at the same time you take medicine", "Take medicine on time", "Store your medicines in a cool, dry place."));
 
     private String convertToTens(int number) { return number > 10 ? String.valueOf(number) : "0" + number; }
 
@@ -50,7 +54,7 @@ public class InitialConfiguration {
     private LocalDate getDateBeforeToday(int minusDays) {
         Date date;
         try {
-            date = sdf.parse(LocalDate.now().toString());
+            date = DATE_FORMAT.parse(LocalDate.now().toString());
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             calendar.add(Calendar.DATE, -minusDays);
@@ -71,14 +75,14 @@ public class InitialConfiguration {
             chiefDoctor = new ChiefDoctor();
             firstName = (namesMaleLinkedList.size() + namesFemaleLinkedList.size()) % 2 == 0 ? namesMaleLinkedList.pop() : namesFemaleLinkedList.pop();
             lastName = lastNamesLinkedList.get(i);
-            yearBorn = 1985 - random.nextInt(40);
+            yearBorn = 1985 - RANDOM.nextInt(40);
 
             chiefDoctor.setId(0L);
             chiefDoctor.setFirstName(firstName);
             chiefDoctor.setLastName(lastName);
             chiefDoctor.setEmail("ch." + firstName.toLowerCase().charAt(0) + lastName.toLowerCase() + yearBorn + "@gmail.com");
             chiefDoctor.setPassword(RandomStringUtils.random(12, true, true));
-            chiefDoctor.setSignedDate(getDateBeforeToday(random.nextInt(150)));
+            chiefDoctor.setSignedDate(getDateBeforeToday(RANDOM.nextInt(150)));
 
             chiefDoctorArrayList.add(chiefDoctor);
         }
@@ -97,14 +101,14 @@ public class InitialConfiguration {
             doctor = new Doctor();
             firstName = (namesMaleLinkedList.size() + namesFemaleLinkedList.size()) % 2 == 0 ? namesMaleLinkedList.pop() : namesFemaleLinkedList.pop();
             lastName = lastNamesLinkedList.get(i);
-            yearBorn = 1995 - random.nextInt(40);
+            yearBorn = 1995 - RANDOM.nextInt(40);
 
             doctor.setId(0L);
             doctor.setFirstName(firstName);
             doctor.setLastName(lastName);
             doctor.setEmail(firstName.toLowerCase().charAt(0) + lastName.toLowerCase() + yearBorn + "@gmail.com");
             doctor.setPassword(RandomStringUtils.random(12, true, true));
-            doctor.setSignedDate(getDateBeforeToday(random.nextInt(assignedBefore, assignedBefore + 30)));
+            doctor.setSignedDate(getDateBeforeToday(RANDOM.nextInt(assignedBefore, assignedBefore + 30)));
 
             doctor.setPatients(null);
             doctor.setConsultations(null);
@@ -131,9 +135,9 @@ public class InitialConfiguration {
             patient = new Patient();
             firstName = (namesMaleLinkedList.size() + namesFemaleLinkedList.size()) % 2 == 0 ? namesMaleLinkedList.pop() : namesFemaleLinkedList.pop();
             lastName = lastNamesLinkedList.get(i);
-            yearBorn = 2005 - random.nextInt(50);
-            monthBorn = random.nextInt(12) + 1;
-            dayBorn = random.nextInt(27) + 1;
+            yearBorn = 2005 - RANDOM.nextInt(50);
+            monthBorn = RANDOM.nextInt(12) + 1;
+            dayBorn = RANDOM.nextInt(27) + 1;
 
             patient.setPhoneNumber("69"+RandomStringUtils.random(8, false, true));
             patient.setId(0L);
@@ -144,20 +148,20 @@ public class InitialConfiguration {
 
             patient.setMedicalRecordNumber(convertToTens(dayBorn) + convertToTens(monthBorn) + yearBorn + "" + RandomStringUtils.random(5, false, true));
             patient.setPassword(RandomStringUtils.random(12, true, true));
-            patient.setAddress(random.nextInt(1000) + " Address St.");
+            patient.setAddress(RANDOM.nextInt(1000) + " Address St.");
             patient.setGender(i % 2 == 0 ? "Male" : "Female");
             patient.setDateOfBirth(LocalDate.of(yearBorn, monthBorn, dayBorn));
-            patient.setBloodType(BloodType.values()[random.nextInt(BloodType.values().length)]);
-            patient.setDiabetesType(DiabetesType.values()[random.nextInt(DiabetesType.values().length)]);
-            patient.setHeight(150 + random.nextInt(50));
-            patient.setWeight(50 + random.nextInt(70));
+            patient.setBloodType(BloodType.values()[RANDOM.nextInt(BloodType.values().length)]);
+            patient.setDiabetesType(DiabetesType.values()[RANDOM.nextInt(DiabetesType.values().length)]);
+            patient.setHeight(150 + RANDOM.nextInt(50));
+            patient.setWeight(50 + RANDOM.nextInt(70));
 
             allergies = new ArrayList<>();
-            createRandomListSequence(allergiesList, allergies, 0.35, random);
+            createRandomListSequence(ALLERGIES_LIST, allergies, 0.35, RANDOM);
             patient.setAllergies(allergies);
 
             conditions = new ArrayList<>();
-            createRandomListSequence(conditionsList, conditions, 0.1, random);
+            createRandomListSequence(CONDITIONS_LIST, conditions, 0.1, RANDOM);
             patient.setConditions(conditions);
 
             patient.setCarbs(null);
@@ -178,8 +182,8 @@ public class InitialConfiguration {
             medication = new Medication();
 
             medication.setId(0L);
-            medication.setMedName(medicationNamesList.get(random.nextInt(medicationNamesList.size())));
-            medication.setDosage("2 pills per day");
+            medication.setMedName(MEDICATION_NAMES_LIST.get(RANDOM.nextInt(MEDICATION_NAMES_LIST.size())));
+            medication.setDosage(DOSOLOGE_LIST.get(RANDOM.nextInt(DOSOLOGE_LIST.size())));
             medication.setConsultation(assignedConsultation);
             medicationArrayList.add(medication);
         }
@@ -196,7 +200,7 @@ public class InitialConfiguration {
 
             carbs.setId(0L);
             carbs.setDate(getDateBeforeToday(population - i));
-            carbs.setMeasurement(random.nextInt(1500, 3000));
+            carbs.setMeasurement(RANDOM.nextInt(1500, 3000));
             carbs.setPatient(assignedPerson);
 
             carbsArrayList.add(carbs);
@@ -228,7 +232,7 @@ public class InitialConfiguration {
         GlucoseRecord glucoseRecord;
 
         List<Integer> hours = Arrays
-                .stream(random.ints(population, 8, 23).toArray())
+                .stream(RANDOM.ints(population, 8, 23).toArray())
                 .boxed()
                 .distinct()
                 .sorted()
@@ -238,8 +242,8 @@ public class InitialConfiguration {
             glucoseRecord = new GlucoseRecord();
 
             glucoseRecord.setId(0L);
-            glucoseRecord.setTime(LocalTime.of(hour, random.nextInt(60), random.nextInt(59)));
-            glucoseRecord.setMeasurement(BigDecimal.valueOf(Math.abs(random.nextGaussian()) * 100 + 100));
+            glucoseRecord.setTime(LocalTime.of(hour, RANDOM.nextInt(60), RANDOM.nextInt(59)));
+            glucoseRecord.setMeasurement(BigDecimal.valueOf(Math.abs(RANDOM.nextGaussian()) * 100 + 100));
             glucoseRecord.setGlucose(assignedGlucose);
 
             glucoseRecordArrayList.add(glucoseRecord);
@@ -260,9 +264,9 @@ public class InitialConfiguration {
             consultation.setDoctorLastName(assignedDoctor.getLastName());
             consultation.setDoctorEmail(assignedDoctor.getEmail());
             consultation.setDateCreated(localDates[i]);
-            consultation.setSeenConsultation(random.nextBoolean());
+            consultation.setSeenConsultation(RANDOM.nextBoolean());
             consultation.setMedications(null);
-            consultation.setDetails(detailsList.get(random.nextInt(detailsList.size())));
+            consultation.setDetails(DETAILS_LIST.get(RANDOM.nextInt(DETAILS_LIST.size())));
             consultation.setPatient(assignedPerson);
             consultation.setDoctor(assignedDoctor);
 
@@ -271,6 +275,17 @@ public class InitialConfiguration {
 
         return consultationRepository.saveAll(consultationArrayList);
     }
+
+    private final int PATIENT_POPULATION = 3;
+    private final int DOCTOR_POPULATION = 1;
+    private final int CHIEF_DOCTOR_POPULATION = 1;
+    private final int[] PERSONS_MEASUREMENT_POPULATION = new int[PATIENT_POPULATION];
+    private final int MEASUREMENTS_AMOUNT_ORIGIN = 70;
+    private final int MEASUREMENTS_AMOUNT_BOUND = 120;
+    private final int GLUCOSE_AMOUNT_ORIGIN = 1;
+    private final int GLUCOSE_AMOUNT_BOUND = 6;
+    private final int MEDICATIONS_AMOUNT_ORIGIN = 1; // > 0
+    private final int MEDICATIONS_AMOUNT_BOUND = 3; // < medication
 
     @Bean
     CommandLineRunner PatientCommandLineRunner(
@@ -285,14 +300,8 @@ public class InitialConfiguration {
 
             System.out.println("Saving dummy objects..");
 
-            int patientPopulation = 3;
-            int doctorPopulation = 1;
-            int chiefDoctorPopulation = 1;
-            int[] measurementPersonPopulation = new int[patientPopulation];
-            int measurementOrigin = 25;
-            int measurementBound = 50;
-            for (int i = 0; i < patientPopulation; i++)
-                measurementPersonPopulation[i] = random.nextInt(measurementOrigin, measurementBound);
+            for (int i = 0; i < PATIENT_POPULATION; i++)
+                PERSONS_MEASUREMENT_POPULATION[i] = RANDOM.nextInt(MEASUREMENTS_AMOUNT_ORIGIN, MEASUREMENTS_AMOUNT_BOUND);
 
             Collections.shuffle(namesMaleLinkedList);
             Collections.shuffle(namesFemaleLinkedList);
@@ -300,28 +309,28 @@ public class InitialConfiguration {
 
             assert namesMaleLinkedList.size() == namesFemaleLinkedList.size()
                     : "Provide same length of male and female names";
-            assert patientPopulation + doctorPopulation + chiefDoctorPopulation <= namesMaleLinkedList.size() + namesFemaleLinkedList.size()
+            assert PATIENT_POPULATION + DOCTOR_POPULATION + CHIEF_DOCTOR_POPULATION <= namesMaleLinkedList.size() + namesFemaleLinkedList.size()
                     : "Provided less population than the sum of names.";
 
-            createChiefDoctors(chiefDoctorRepository, chiefDoctorPopulation);
-            List<Doctor> doctorList = createDoctors(doctorRepository, doctorPopulation, measurementBound);
-            List<Patient> patientArrayList = createPatients(patientRepository, patientPopulation, measurementPersonPopulation);
+            createChiefDoctors(chiefDoctorRepository, CHIEF_DOCTOR_POPULATION);
+            List<Doctor> doctorList = createDoctors(doctorRepository, DOCTOR_POPULATION, MEASUREMENTS_AMOUNT_BOUND);
+            List<Patient> patientArrayList = createPatients(patientRepository, PATIENT_POPULATION, PERSONS_MEASUREMENT_POPULATION);
 
             int[] idx = {0};
             patientArrayList.forEach(patient -> {
-                createCarbs(carbsRepository, measurementPersonPopulation[idx[0]], patient);
+                createCarbs(carbsRepository, PERSONS_MEASUREMENT_POPULATION[idx[0]], patient);
 
-                List<Glucose> glucoseArrayList = createGlucose(glucoseRepository, measurementPersonPopulation[idx[0]], patient);
-                glucoseArrayList.forEach(glucose -> createGlucoseRecords(glucoseRecordRepository, random.nextInt(1, 6), glucose));
+                List<Glucose> glucoseArrayList = createGlucose(glucoseRepository, PERSONS_MEASUREMENT_POPULATION[idx[0]], patient);
+                glucoseArrayList.forEach(glucose -> createGlucoseRecords(glucoseRecordRepository, RANDOM.nextInt(GLUCOSE_AMOUNT_ORIGIN, GLUCOSE_AMOUNT_BOUND), glucose));
 
-                int maxConsultation = measurementPersonPopulation[idx[0]] / 31;
+                int maxConsultation = PERSONS_MEASUREMENT_POPULATION[idx[0]] / 31;
                 if (maxConsultation > 0) {
-                    boolean isWaiting = random.nextInt(0, 2) == 0;
+                    boolean isWaiting = RANDOM.nextInt(0, 2) == 0;
                     if (isWaiting)
                         maxConsultation -= 1;
 
                     if (maxConsultation> 0) {
-                        Doctor randomDoctor = doctorList.get(random.nextInt(doctorList.size()));
+                        Doctor randomDoctor = doctorList.get(RANDOM.nextInt(doctorList.size()));
                         patientRepository.updateDoctorIdFromPatient(patient.getId(), randomDoctor.getId());
                         LocalDate[] localDates = new LocalDate[maxConsultation];
                         for (int i = 0; i < maxConsultation; i++)
@@ -329,7 +338,7 @@ public class InitialConfiguration {
 
                         List<Consultation> consultationsList = createConsultation(consultationRepository, maxConsultation, patient, randomDoctor, localDates);
                         final int[] i = {0};
-                        consultationsList.forEach(consultation -> createMedication(medicationRepository, 1, consultationsList.get(i[0]++)));
+                        consultationsList.forEach(consultation -> createMedication(medicationRepository, RANDOM.nextInt(MEDICATIONS_AMOUNT_ORIGIN,MEDICATIONS_AMOUNT_BOUND), consultationsList.get(i[0]++)));
                     }
                 }
                 idx[0]++;

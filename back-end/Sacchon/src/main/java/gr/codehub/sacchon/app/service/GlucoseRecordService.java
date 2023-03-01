@@ -1,9 +1,6 @@
 package gr.codehub.sacchon.app.service;
 
-import gr.codehub.sacchon.app.dto.GlucoseRecordDto;
-import gr.codehub.sacchon.app.dto.GlucoseRecordFromDayDto;
-import gr.codehub.sacchon.app.dto.GlucoseRecordUpdaterDto;
-import gr.codehub.sacchon.app.dto.PastGlucoseMeasurementDto;
+import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.GlucoseRecordException;
 
 import java.math.BigDecimal;
@@ -12,7 +9,7 @@ import java.util.List;
 
 public interface GlucoseRecordService {
 
-    GlucoseRecordDto createGlucoseRecord(GlucoseRecordDto glucoseRecordDto);
+    long createGlucoseRecordForPatientOnSpecificDate(long patientId, LocalDate localDate, GlucoseRecordUpdaterDto glucoseRecordUpdaterDto);
     List<GlucoseRecordDto> readGlucoseRecord();
     GlucoseRecordDto readGlucoseRecordById(long id) throws GlucoseRecordException;
     BigDecimal readAverageDailyGlucoseByGlucoseId(long id);
@@ -22,4 +19,5 @@ public interface GlucoseRecordService {
     public List<PastGlucoseMeasurementDto> getGlucoseReadingsBetweenDatesByPatientId(long patientId, LocalDate startingDate, LocalDate endingDate);
     Integer readGlucoseRecordCountByGlucoseId(Long glucoseId);
     List<GlucoseRecordFromDayDto> readGlucoseRecordByGlucoseId(long glucoseId);
+    InsightsGlucoseRecordsData readGlucoseRecordByGlucoseIdForInsights(long glucoseId);
 }

@@ -14,11 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InsightsData {
-    private LocalDate dateSigned;
+    private String daysDescription;
     private long measurements;
     private long consultations;
     private int averageCarbs;
     private BigDecimal averageGlucose;
-    private List<MeasurementsDto<Integer>> carbsList;
-    private List<MeasurementsDto<BigDecimal>> glucoseList;
+    private List<MeasurementsDto<Integer, LocalDate>> carbsList;
+    private List<MeasurementsDto<BigDecimal, LocalDate>> glucoseList;
 }

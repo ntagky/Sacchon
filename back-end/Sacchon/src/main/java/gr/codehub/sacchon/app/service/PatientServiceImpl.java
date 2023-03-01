@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -167,10 +168,12 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public InsightsData getInsightsData(long id, LocalDate startingDate, LocalDate endingDate) {
+        String daysDescription = (LocalDate.now().equals(endingDate) ? "Last " : "In ") + ChronoUnit.DAYS.between(startingDate, endingDate) + " days";
+
         LocalDate dateIndex = startingDate;
 
-        List<MeasurementsDto<Integer>> carbsList = new ArrayList<>();
-        List<MeasurementsDto<BigDecimal>> glucoseList = new ArrayList<>();
+        List<MeasurementsDto<Integer, LocalDate>> carbsList = new ArrayList<>();
+        List<MeasurementsDto<BigDecimal, LocalDate>> glucoseList = new ArrayList<>();
 
         Long longHolder;
         while (dateIndex.isBefore(endingDate)) {
@@ -205,7 +208,7 @@ public class PatientServiceImpl implements PatientService {
             averageCarbs = carbsList.stream().map(MeasurementsDto::getValue).mapToInt(Integer::intValue).sum() / carbsList.size();
 
         return new InsightsData(
-                startingDate,
+                daysDescription,
                 carbsList.size() + glucoseList.size(),
                 consultationCount,
                 averageCarbs,

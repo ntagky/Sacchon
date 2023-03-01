@@ -118,14 +118,12 @@ public class GlucoseServImpl implements GlucoseService {
 
     @Override
     public Long createGlucoseByPatientIdAtDate(long patientId, LocalDate date, GlucoseRecordUpdaterDto glucoseRecordUpdaterDto) {
-        System.out.println("3");
         Glucose glucose = glucoseRepository.save(new Glucose(
                 0L,
                 date,
                 null,
                 patientRepository.findById(patientId).get()
         ));
-        System.out.println("3");
         return glucoseRecordRepository.save(glucoseRecordUpdaterDto.asGlucoseRecord(glucose)).getId();
     }
 

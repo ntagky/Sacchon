@@ -19,11 +19,10 @@ public class NetworkServImpl implements NetworkService {
                 .toArray();
 
         Object[] normalized = scaler.predict(valuesMap);
-
         return model.predict(normalized);
     }
 
-    public Object[] getNetworkOutput(Double pregnancies, Double glucose, Double bloodPressure, Double skinThickness, Double insulin, Double bmi, Double age, Double dpf) {
+    public Object[] getNetworkOutput(Double pregnancies, Double glucose, Double bloodPressure, Double skinThickness, Double insulin, Double bmi, Double dpf, Double age) {
         Map<String, Double> values = Map.of(
                 "Pregnancies", pregnancies,
                 "Glucose", glucose,
@@ -31,8 +30,8 @@ public class NetworkServImpl implements NetworkService {
                 "SkinThickness", skinThickness,
                 "Insulin", insulin,
                 "BMI", bmi,
-                "DiabetesPedigreeFunction", age,
-                "Age", dpf
+                "DiabetesPedigreeFunction", dpf,
+                "Age", age
         );
 
         return getPredictedProbability(values);

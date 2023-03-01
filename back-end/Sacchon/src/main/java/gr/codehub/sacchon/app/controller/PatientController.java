@@ -55,21 +55,22 @@ public class PatientController {
     private ConsultationService consultationService;
     private DoctorService doctorService;
 
-
     @GetMapping("/patient/{id}")
     public List<PatientDto> findPatientById(@PathVariable("id") long id){
+        log.info("The end point /patient/id has been used.");
         return patientService.readPatientById(id);
     }
 
     @DeleteMapping("/delete/{patientId}")
     public ResponseEntity<?> deletePatientById(@PathVariable("patientId") long patientId) {
+        log.info("The end point /delete/patientId has been used.");
         patientService.deletePatientById(patientId);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/patient/{id}/carbs")
     public List<CarbsFromPersonDto> writeCarbsToPatientById(@PathVariable(name="id") long id) {
-        log.info("The end point PatientDto & CarbsDto has been used");
+        log.info("The end point /patient/id/carbs has been used.");
         return carbsService.readCarbsByPatientId(id);
     }
 
@@ -78,7 +79,7 @@ public class PatientController {
             @PathVariable(name="id") long id,
             @RequestBody CarbsFromPersonDto carbsFromPersonDto
     ) {
-        log.info("The end point PatientDto & CarbsDto has been used");
+        log.info("The end point /patient/id/carbs has been used.");
         return carbsService.createCarbsByPatientId(id, carbsFromPersonDto);
     }
 
@@ -87,7 +88,7 @@ public class PatientController {
             @PathVariable(name="carbsId") long id,
             @PathVariable(name="measurement") int measurement
     ) {
-        log.info("The end point PatientDto & CarbsDto has been used");
+        log.info("The end point /patient/carbs/id/update/measurement has been used.");
         return carbsService.updateCarbsById(id, measurement);
     }
 
@@ -96,12 +97,13 @@ public class PatientController {
             @PathVariable(name="id") int patientId,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date,
             @PathVariable(name="measurement") int measurement) {
-        log.info("The end point PatientDto & CarbsDto has been used");
+        log.info("The end point /patient/id/carbs/date/update/measurement has been used.");
         return carbsService.updateCarbsFromPatientIdAndDate(patientId, date, measurement);
     }
 
     @DeleteMapping("/patient/carbs/{id}/delete")
     public void deleteCarbsById(@PathVariable(name="id") long id) throws CarbsException {
+        log.info("The end point /patient/carbs/id/delete has been used.");
         carbsService.deleteCarbsById(id);
     }
 
@@ -110,8 +112,18 @@ public class PatientController {
             @PathVariable(name="recordId") long recordId,
             @RequestBody GlucoseRecordUpdaterDto glucoseRecordUpdaterDto
     ) {
-        log.info("The end point PatientDto & CarbsDto has been used");
+        log.info("The end point /patient/glucose/record/recordId/update has been used.");
         return glucoseRecordService.updateRecordById(recordId, glucoseRecordUpdaterDto);
+    }
+
+    @PostMapping("/patient/{patientId}/glucose/{date}/record/create")
+    public long createGlucoseRecordDtoFromGlucoseId(
+            @PathVariable(name="patientId") long patientId,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date,
+            @RequestBody GlucoseRecordUpdaterDto glucoseRecordUpdaterDto
+    ) {
+        log.info("The end point /patient/patientId/glucose/date/record/create has been used.");
+        return glucoseRecordService.createGlucoseRecordForPatientOnSpecificDate(patientId, date, glucoseRecordUpdaterDto);
     }
 
     @PostMapping("/patient/{id}/glucose")
@@ -119,7 +131,7 @@ public class PatientController {
             @PathVariable(name="id") long id,
             @RequestBody GlucoseInitiatorDto glucoseInitiatorDto
     ) {
-        log.info("The end point PatientDto & CarbsDto has been used");
+        log.info("The end point /patient/id/glucose has been used.");
         return glucoseService.createGlucoseByPatientId(id, glucoseInitiatorDto);
     }
 
@@ -129,17 +141,19 @@ public class PatientController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date,
             @RequestBody GlucoseRecordUpdaterDto glucoseRecordUpdaterDto
     ) {
-        log.info("The end point PatientDto & CarbsDto has been used");
+        log.info("The end point /patient/id/glucose/date has been used.");
         return glucoseService.createGlucoseByPatientIdAtDate(patientId, date, glucoseRecordUpdaterDto);
     }
 
     @DeleteMapping("/patient/glucose/record/{id}/delete")
     public void deleteGlucoseRecordById(@PathVariable(name="id") long id) throws GlucoseRecordException {
+        log.info("The end point /patient/glucose/record/id/delete has been used.");
         glucoseRecordService.deleteGlucoseRecordById(id);
     }
 
     @DeleteMapping("/patient/glucose/{id}/delete")
     public void deleteGlucoseById(@PathVariable(name="id") long id) throws GlucoseException {
+        log.info("The end point /patient/glucose/{id}/delete has been used.");
         glucoseService.deleteGlucoseById(id);
     }
 
@@ -148,6 +162,7 @@ public class PatientController {
             @PathVariable(name="id") long id,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date
     ) throws GlucoseException {
+        log.info("The end point /patient/id/glucose/date/delete has been used.");
         glucoseService.deleteGlucoseByPatientIdAndDate(id, date);
     }
 
@@ -157,7 +172,7 @@ public class PatientController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
     ) {
-        log.info("The end point @DailyAverageCarbsByPatientIdOnSpecificDates has been used.");
+        log.info("The end point /patient/id/carbs/query has been used.");
         return carbsService.readAverageCarbsIntakeByPatientIdOnSpecificDates(
                 patientId, startingDate, endingDate);
     }
@@ -168,7 +183,7 @@ public class PatientController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
             ) {
-        log.info("The end point @DailyAverageGlucoseByPatientIdOnSpecificDates has been used.");
+        log.info("The end point /patient/id/glucose/query has been used.");
         return glucoseService.readDailyAverageGlucoseByPatientIdOnSpecificDates(
                 patientId, startingDate, endingDate);
     }
@@ -179,42 +194,43 @@ public class PatientController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
     ) {
+        log.info("The end point /patient/id/carbs/query/all has been used.");
         return patientService.getPreviousCarbReadingsByPatientIdBetweenDates(
                 patientId, startingDate, endingDate);
     }
 
     @GetMapping("/patient/{id}/glucose")
     public List<GlucoseFromPersonDto> getGlucoseDtoFromPatientById(@PathVariable(name="id") long id) {
-        log.info("The end point PatientDto & GlucoseDto has been used");
+        log.info("The end point /patient/id/glucose has been used.");
         return glucoseService.readGlucoseByPatientId(id);
     }
 
     // ConsultationDto contains every consultation info
     @GetMapping("/patient/{id}/consultation")
     public List<ConsultationDto> getConsultationOfPatientById(@PathVariable(name="id") long id) {
-        log.info("The end point patient/{id}/consultation has been used");
+        log.info("The end point patient/id/consultation has been used.");
         return consultationService.readConsultationByPatientId(id);
     }
 
     // ConsultationBasicInfoDto contains basic consultation info (medication, dosage etc)
     @GetMapping("/patient/{id}/consultationinfo")
     public List<ConsultationBasicInfoDto> getConsultationInfoByPatientId(@PathVariable(name="id") int id){
+        log.info("The end point /patient/id/consultationinfo has been used.");
         return consultationService.findConsultationInfoByPatientId(id);
     }
-
-
 
     @PostMapping("/signup/patient")
     public long signUp(@RequestBody PatientDto patientDto) {
         LocalDate curDate = LocalDate.now();
         patientDto.setSignedDate(curDate);
-        log.info("The end point signup/patient has been used");
+        log.info("The end point /signup/patient has been used");
         return patientService.registerPatient(patientDto);
 //        return ResponseEntity.ok(patientDto);
     }
 
     @GetMapping("/patient/{id}/doctor")
     public DoctorDto getDoctorByPatientId(@PathVariable("id") long id){
+        log.info("The end point /patient/id/doctor has been used.");
         long doctorId = patientService.findDoctorIdByPatientId(id);
         return doctorService.readDoctorNameAndEmailById(doctorId);
     }
@@ -222,16 +238,19 @@ public class PatientController {
     @PutMapping("/patient/{id}")
     public boolean updatePatientDto(@RequestBody PatientDto PatientDto,
                                      @PathVariable(name="id") long id){
+        log.info("The end point /patient/id has been used.");
         return patientService.updatePatient(PatientDto, id);
     }
 
     @DeleteMapping("/patient/{id}")
     public void deletePatientDto(@PathVariable(name="id") long id){
+        log.info("The end point /patient/id has been used.");
         patientService.deletePatientById(id);
     }
 
     @GetMapping("/patient/{id}/signed-date")
     public LocalDate getPersonsAssignedDate(@PathVariable("id") long id) {
+        log.info("The end point /patient/id/signed-date has been used.");
         return patientService.findDateAssignedFromPatientId(id);
     }
 
@@ -241,6 +260,7 @@ public class PatientController {
             @RequestParam(name="start") long startingPosition,
             @RequestParam(name="step") long step
     ){
+        log.info("The end point /patient/id/data/query has been used.");
         List<PersonDataDto> personDataDtoList = new ArrayList<>();
         LocalDate assignedDate = patientService.findDateAssignedFromPatientId(id);
         LocalDate indexDate = LocalDate.now().minusDays(startingPosition);
@@ -282,6 +302,7 @@ public class PatientController {
             @PathVariable("id") long id,
             @RequestParam("step") long step
     ){
+        log.info("The end point /patient/id/data/paginator has been used.");
         return patientService.findDateAssignedFromPatientId(id).until(LocalDate.now(), ChronoUnit.DAYS) / step + 1;
     }
 
@@ -290,7 +311,7 @@ public class PatientController {
             @PathVariable(name="id") long patientId,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date
     ) {
-        log.info("The end point PatientDto & GlucoseDto has been used");
+        log.info("The end point /patient/id/glucose/date has been used.");
         Long glucoseId = glucoseService.findGlucoseIdInSpecificDateByPatientId(patientId, date);
         if (glucoseId == null)
             return null;
@@ -306,14 +327,11 @@ public class PatientController {
         patientService.deleteCarbsFromPatientInSpecificDate(id, date);
         return true;
     }
-
-
-
-  @PutMapping("/patient/update/{id}/email")
+    @PutMapping("/patient/update/{id}/email")
     public void updatePatientEmail(@PathVariable(name="id") int id,
                                                 @RequestParam("email") String email){
         patientService.updateEmailByPatientId(id,email);
-  }
+    }
     @PutMapping("/patient/update/{id}/firstname")
     public void updatePatientFirstName(@PathVariable(name="id") int id,
                                    @RequestParam("firstName") String firstName){
@@ -373,7 +391,21 @@ public class PatientController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
     ){
+        log.info("The end point /patient/id/insights/query has been used.");
         return patientService.getInsightsData(id, startingDate, endingDate);
+    }
+
+    @GetMapping("/patient/{id}/glucose/{date}/insights")
+    public InsightsGlucoseRecordsData getGlucoseRecordsFromPatientByIdInSpecificDate(
+            @PathVariable(name="id") long patientId,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable(name="date") LocalDate date
+    ) {
+        log.info("The end point /patient/id/glucose/date/insights has been used.");
+        Long glucoseId = glucoseService.findGlucoseIdInSpecificDateByPatientId(patientId, date);
+        if (glucoseId == null)
+            return null;
+
+        return glucoseRecordService.readGlucoseRecordByGlucoseIdForInsights(glucoseId);
     }
 
 }

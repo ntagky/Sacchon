@@ -1,9 +1,6 @@
 package gr.codehub.sacchon.app.service;
 
-import gr.codehub.sacchon.app.dto.GlucoseRecordDto;
-import gr.codehub.sacchon.app.dto.GlucoseRecordFromDayDto;
-import gr.codehub.sacchon.app.dto.GlucoseRecordUpdaterDto;
-import gr.codehub.sacchon.app.dto.PastGlucoseMeasurementDto;
+import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.GlucoseRecordException;
 import gr.codehub.sacchon.app.model.GlucoseRecord;
 import gr.codehub.sacchon.app.repository.GlucoseRecordRepository;
@@ -14,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,11 +23,14 @@ public class GlucoseRecordServImpl implements GlucoseRecordService {
     private final GlucoseRepository glucoseRepository;
 
     @Override
-    public GlucoseRecordDto createGlucoseRecord(GlucoseRecordDto carbsDto) {
-        return new GlucoseRecordDto(
-                glucoseRecordRepository.save(carbsDto.asGlucoseMeasurementRecord())
-        );
+    public long createGlucoseRecordForPatientOnSpecificDate(long patientId, LocalDate localDate, GlucoseRecordUpdaterDto glucoseRecordUpdaterDto) {
+        return glucoseRecordRepository.save(
+                glucoseRecordUpdaterDto.asGlucoseRecord(
+                        glucoseRepository.findGlucoseInSpecificDateByPatientId(patientId, localDate)
+                )
+        ).getId();
     }
+
     @Override
     public List<GlucoseRecordDto> readGlucoseRecord() {
         return glucoseRecordRepository
@@ -108,5 +109,18 @@ public class GlucoseRecordServImpl implements GlucoseRecordService {
                 .stream()
                 .map(GlucoseRecordFromDayDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public InsightsGlucoseRecordsData readGlucoseRecordByGlucoseIdForInsights(long glucoseId) {
+        List<MeasurementsDto<BigDecimal, LocalTime>> measurementsDtoList = new ArrayList<>();
+        List<GlucoseRecord> glucoseRecordList = glucoseRecordRepository.readGlucoseRecordByGlucoseId(glucoseId);
+        glucoseRecordList.forEach(
+                glucoseRecord -> measurementsDtoList.add(
+                        new MeasurementsDto<>(glucoseRecord.getMeasurement(), glucoseRecord.getTime()
+                        )
+                )
+        );
+        return new InsightsGlucoseRecordsData(measurementsDtoList);
     }
 }

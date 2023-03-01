@@ -47,25 +47,25 @@ public class DoctorController {
 
     @GetMapping("/doctor")
     public List<DoctorDto> getDoctorsDto(){
-        log.info("The end point doctor has been used");
+        log.info("The end point /doctor has been used.");
         return doctorService.readDoctor();
     }
 
     @GetMapping("doctor/email/{match}")
     public List<DoctorDto> readDoctorByEmailNative(@PathVariable("match") String match){
-        log.info("The end point doctor/email/{match} has been used");
+        log.info("The end point doctor/email/match has been used.");
         return doctorService.readDoctorByEmailNativeService(match);
     }
 
     @GetMapping("/doctor/{id}/basicinfo")
     public DoctorDto getDoctorNameAndEmailById(@PathVariable(name="id") long id) {
-        log.info("The end point doctor/id/ has been used");
+        log.info("The end point doctor/id/basicinfo has been used.");
         return doctorService.readDoctorNameAndEmailById(id);
     }
 
     @GetMapping("/doctor/{id}")
     public DoctorDto getDoctorInfoById(@PathVariable(name="id") long id) {
-        log.info("The end point doctor/id/ has been used");
+        log.info("The end point doctor/id/ has been used.");
         return doctorService.readDoctorById(id);
     }
 
@@ -73,7 +73,7 @@ public class DoctorController {
     public long signUp(@RequestBody DoctorDto doctorDto){
         LocalDate curDate = LocalDate.now();
         doctorDto.setSignedDate(curDate);
-        log.info("The end point signup/doctor has been used");
+        log.info("The end point signup/doctor has been used.");
         return doctorService.registerDoctor(doctorDto);
 //        return ResponseEntity.ok(doctorDto);
     }
@@ -88,7 +88,7 @@ public class DoctorController {
     @GetMapping("/doctor/patients/waiting/query")
     public List<PatientDto> getPatientsWithNoConsultation() {
         LocalDate dateGiven = LocalDate.now().minusMonths(1).plusDays(1);
-        log.info("The end point doctor/patients/waiting/query has been used");
+        log.info("The end point doctor/patients/waiting/query has been used.");
         return doctorService.readPatientsWithNoConsultation(dateGiven);
     }
 
@@ -101,13 +101,13 @@ public class DoctorController {
     @PutMapping("/doctor/update/{id}")
     public boolean updateDoctorDto(@RequestBody DoctorDto doctor,
                                      @PathVariable(name="id") int id){
-        log.info("The end point doctor with id has been used");
+        log.info("The end point doctor with id has been used.");
         return doctorService.updateDoctor(doctor, id);
     }
 
     @DeleteMapping("/doctor/delete/{id}")
     public void deleteDoctorDto(@PathVariable(name="id") long id){
-        log.info("The end point doctor/delete/{id} with id has been used");
+        log.info("The end point doctor/delete/id has been used.");
         doctorService.deleteDoctorById(id);
     }
 

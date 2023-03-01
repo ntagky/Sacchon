@@ -34,41 +34,43 @@ public class ConsultationController {
     @GetMapping("/patient/{id}/consultations")
     public List<AllConsultationsReceivedForOnePatientDto> getConsultationsByPatientId
             (@PathVariable("id") long id){
+        log.info("The end point /patient/id/consultations has been used.");
         return consultationService.getAllConsultationsReceivedForPatient(id);
     }
 
     @GetMapping("/consultation")
     public List<ConsultationDto> getConsultationDto(){
-        log.info("The end point consultation has been used");
+        log.info("The end point /consultation has been used.");
         return consultationService.readConsultation();
     }
 
     @GetMapping("/consultation/{id}")
     public ConsultationDto getConsultationDto(@PathVariable(name="id") long id) throws ConsultationException {
-        log.info("The end point consultation with id has been used");
+        log.info("The end point /consultation/id has been used.");
         return consultationService.readConsultation(id);
     }
 
     @GetMapping("/consultation/{id}/info")
     public List<ConsultationBasicInfoDto> getConsultationInfoByPatientId(@PathVariable(name="id") long id){
+        log.info("The end point /consultation/id/info has been used.");
         return consultationService.findConsultationInfoByPatientId(id);
     }
 
     @PostMapping("/consultation")
     public ConsultationDto createConsultationDto(@RequestBody ConsultationReceivedDto consultation){
-        log.info("The end point consultation has been used");
+        log.info("The end point /consultation has been used.");
         return consultationService.createConsultation(consultation);
     }
 
     @DeleteMapping("/consultation/{id}")
     public boolean deleteConsultationDto(@PathVariable(name="id")  long id){
-        log.info("The end point consultation with id has been used");
+        log.info("The end point /consultation/id has been used.");
         return consultationService.deleteConsultation(id);
     }
 
     @GetMapping("/consultation/{id}/medication")
     public List<MedicationDto> getMedicationsByConsId(@PathVariable(name="id") long id){
-        log.info("The end point consultation/{id}/medication has been used");
+        log.info("The end point /consultation/id/medication has been used.");
         return medicationService.findMedications(id);
     }
 }

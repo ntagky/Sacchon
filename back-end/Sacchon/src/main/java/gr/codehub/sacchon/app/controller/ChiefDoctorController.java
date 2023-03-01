@@ -44,7 +44,7 @@ public class ChiefDoctorController {
 
     @GetMapping("/chiefdoctor")
     public List<ChiefDoctorDto> getChiefDoctorDto(){
-        log.info("The end point chiefdoctor has been used");
+        log.info("The end point /chiefdoctor has been used.");
         return chiefDoctorService.readChiefDoctor();
     }
 
@@ -54,26 +54,26 @@ public class ChiefDoctorController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
     ) {
-
+        log.info("The end point /doctor/consultations/{id}/dates has been used.");
         return chiefDoctorService.getConsultationsBetweenDatesGiven(doctorId,startingDate,endingDate);
     }
 
     @GetMapping("/chiefdoctor/{id}")
     public ChiefDoctorDto getChiefDoctorDto(@PathVariable(name="id")  long id) throws ChiefDoctorException {
-        log.info("The end point chiefdoctor with id has been used");
+        log.info("The end point /chiefdoctor/id with id has been used.");
         return chiefDoctorService.readChiefDoctor(id);
     }
 
     @PostMapping("/chiefdoctor")
     public  ChiefDoctorDto  createChiefDoctorDto(@RequestBody ChiefDoctorDto chiefDoctor){
-        log.info("The end point chiefdoctor has been used");
+        log.info("The end point /chiefdoctor has been used.");
         return chiefDoctorService.createChiefDoctor(chiefDoctor);
     }
 
     @PutMapping("/chiefdoctor/{id}")
     public boolean updateChiefDoctorDto(@RequestBody ChiefDoctorDto chiefDoctor,
                                    @PathVariable(name="id")  int id){
-        log.info("The end point chiefdoctor with id has been used");
+        log.info("The end point /chiefdoctor/id with id has been used.");
         return chiefDoctorService.updateChiefDoctor(chiefDoctor, id);
     }
 
@@ -81,7 +81,7 @@ public class ChiefDoctorController {
     public List<PatientDto> readPatientsWaitingConsultationDto(
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="dateBefore") LocalDate dateBefore
     ){
-        log.info("The end point @chiefDoctor seeking patients waiting consultation has been used.");
+        log.info("The end point /chief/consultation/waiting/query has been used.");
         return chiefDoctorService.readPatientsIdWaitingForConsultation(dateBefore);
     }
 
@@ -90,7 +90,7 @@ public class ChiefDoctorController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
     ){
-        log.info("The end point @chiefDoctor seeking patients with the number of consultations within range has been used.");
+        log.info("The end point /chief/consultation/range/query has been used.");
         return chiefDoctorService.readPatientsWithConsultationBetween(startingDate, endingDate);
     }
 
@@ -99,7 +99,7 @@ public class ChiefDoctorController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
     ){
-        log.info("The end point @chiefDoctor seeking inactive patients has been used.");
+        log.info("The end point /chief/patient/absence/query has been used.");
         return chiefDoctorService.readInactivePatientsWithinRange(startingDate, endingDate);
     }
 
@@ -108,17 +108,16 @@ public class ChiefDoctorController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="start") LocalDate startingDate,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="end") LocalDate endingDate
     ){
-        log.info("The end point @chiefDoctor seeking inactive patients has been used.");
+        log.info("The end point /chief/doctor/absence/query has been used.");
         return chiefDoctorService.readInactiveDoctorsWithinRange(startingDate, endingDate);
     }
-
-
 
     @GetMapping("/readings/glucose/{patientId}")
     public List<PastGlucoseMeasurementDto> getGlucoseReadingsByPatientId(
             @PathVariable long patientId,
             @RequestParam(name = "start_date") LocalDate startDate,
             @RequestParam(name = "end_date") LocalDate endDate) {
+        log.info("The end point /chief/doctor/absence/query has been used.");
         return glucoseRecordService.getGlucoseReadingsBetweenDatesByPatientId(patientId, startDate, endDate);
     }
 }
