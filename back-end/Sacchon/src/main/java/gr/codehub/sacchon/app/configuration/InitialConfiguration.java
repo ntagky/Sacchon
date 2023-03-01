@@ -276,7 +276,7 @@ public class InitialConfiguration {
         return consultationRepository.saveAll(consultationArrayList);
     }
 
-    private final int PATIENT_POPULATION = 3;
+    private final int PATIENT_POPULATION = 1;
     private final int DOCTOR_POPULATION = 1;
     private final int CHIEF_DOCTOR_POPULATION = 1;
     private final int[] PERSONS_MEASUREMENT_POPULATION = new int[PATIENT_POPULATION];
@@ -284,8 +284,8 @@ public class InitialConfiguration {
     private final int MEASUREMENTS_AMOUNT_BOUND = 120;
     private final int GLUCOSE_AMOUNT_ORIGIN = 1;
     private final int GLUCOSE_AMOUNT_BOUND = 6;
-    private final int MEDICATIONS_AMOUNT_ORIGIN = 1; // > 0
-    private final int MEDICATIONS_AMOUNT_BOUND = 3; // < medication
+    private final int MEDICATIONS_AMOUNT_ORIGIN = 1;
+    private final int MEDICATIONS_AMOUNT_BOUND = 4;
 
     @Bean
     CommandLineRunner PatientCommandLineRunner(

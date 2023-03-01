@@ -286,7 +286,8 @@ public class PatientController {
                             indexDate,
                             indexDate
                     ).stream().findFirst().orElseGet(() -> new BigDecimal(0)),
-                    glucoseRecordService.readGlucoseRecordCountByGlucoseId(glucoseService.findGlucoseIdInSpecificDateByPatientId(id, indexDate)),
+                    glucoseRecordService.readGlucoseRecordCountByGlucoseId(
+                            glucoseService.findGlucoseIdInSpecificDateByPatientId(id, indexDate)),
                     consultationPureDto.getId(),
                     consultationPureDto.getStatus()
             ));

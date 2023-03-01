@@ -21,9 +21,8 @@ public class PatientDto extends PersonDto {
     private int height;
     private double weight;
     private List<String> allergies;
-//    private List<String> medications;
+    private List<String> medications;
     private List<String> conditions;
-
 
     public PatientDto(Patient patient){
         if (patient != null){
@@ -33,6 +32,7 @@ public class PatientDto extends PersonDto {
             super.setEmail(patient.getEmail());
             super.setSignedDate(patient.getSignedDate());
             super.setPhoneNumber(patient.getPhoneNumber());
+            super.setPassword(patient.getPassword());
             medicalRecordNumber = patient.getMedicalRecordNumber();
             address = patient.getAddress();
             gender = patient.getGender();
@@ -42,7 +42,6 @@ public class PatientDto extends PersonDto {
             height = patient.getHeight();
             weight = patient.getWeight();
             allergies = patient.getAllergies();
-//            medications = patient.getMedications();
             conditions = patient.getConditions();
         }
     }
@@ -54,6 +53,7 @@ public class PatientDto extends PersonDto {
         patient.setLastName(super.getLastName());
         patient.setEmail(super.getEmail());
         patient.setSignedDate(super.getSignedDate());
+        patient.setPassword(super.getPassword());
         patient.setMedicalRecordNumber(medicalRecordNumber);
         patient.setAddress(address);
         patient.setGender(gender);
@@ -63,7 +63,6 @@ public class PatientDto extends PersonDto {
         patient.setHeight(height);
         patient.setWeight(weight);
         patient.setAllergies(allergies);
-//        patient.setMedications(medications);
         patient.setConditions(conditions);
         return patient;
     }

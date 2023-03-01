@@ -217,6 +217,4 @@ public class PatientServiceImpl implements PatientService {
                 glucoseList
         );
     }
-
-
 }

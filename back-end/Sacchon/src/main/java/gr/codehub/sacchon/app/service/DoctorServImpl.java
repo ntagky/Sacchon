@@ -1,5 +1,6 @@
 package gr.codehub.sacchon.app.service;
 
+import gr.codehub.sacchon.app.SacchonApplication;
 import gr.codehub.sacchon.app.dto.ConsultationWriterDto;
 import gr.codehub.sacchon.app.dto.DoctorDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
@@ -26,6 +27,7 @@ public class DoctorServImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
     private final ConsultationRepository consultationRepository;
     private final PatientRepository patientRepository;
+    private final EmailService emailService;
 
     @Override
     public DoctorDto createDoctor(DoctorDto doctorDto){
@@ -153,6 +155,9 @@ public class DoctorServImpl implements DoctorService {
         Optional<Patient> patient = patientRepository.findById(consultationWriterDto.getPatientId());
         if (doctor.isEmpty() || patient.isEmpty())
             return -1;
+
+        if (!SacchonApplication.DEBUG_MODE)
+            emailService.newConsultation(patient.get().getEmail(), (doctor.get().getLastName() + doctor.get().getFirstName()));
 
         return consultationRepository.save(
                 new Consultation(

@@ -28,22 +28,22 @@ public interface PatientService {
 
     void deleteCarbsFromPatientInSpecificDate(long id, LocalDate dateGiven);
 
-     void updateFirstNameByPatientId(long id, String firstName);
+    void updateFirstNameByPatientId(long id, String firstName);
 
-     void updateLastNameByPatientId(long id, String lastName);
+    void updateLastNameByPatientId(long id, String lastName);
 
-     void updateGenderByPatientId(long id, String gender);
+    void updateGenderByPatientId(long id, String gender);
 
-     void updateHeightByPatientId(long id, int height);
-     void updateWeightByPatientId(long id,double weight);
+    void updateHeightByPatientId(long id, int height);
+    void updateWeightByPatientId(long id,double weight);
 
-     void updateMedicalRecordNumberByPatientId(long id, String medicalRecordNumber);
+    void updateMedicalRecordNumberByPatientId(long id, String medicalRecordNumber);
 
-     void updatePhoneNumberByPatientId(long id, String phoneNumber);
+    void updatePhoneNumberByPatientId(long id, String phoneNumber);
 
-     void updateBirthDateByPatientId(long id, LocalDate birthDate);
+    void updateBirthDateByPatientId(long id, LocalDate birthDate);
 
-     void updateAddressByPatientId(long id, String address);
+    void updateAddressByPatientId(long id, String address);
 
     InsightsData getInsightsData(long id, LocalDate staringDate, LocalDate endingDate);
 }

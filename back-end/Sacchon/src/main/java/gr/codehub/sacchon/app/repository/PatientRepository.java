@@ -191,4 +191,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query(value = "SELECT ID FROM " + SacchonApplication.SCHEMA + ".PATIENT " +
             "WHERE PATIENT.EMAIL = :email AND PATIENT.PASSWORD = :password", nativeQuery = true)
     Long findPatientByEmailAndPassword(@Param("email") String email, @Param("password") String password);
+
+    @Query(value = "SELECT EMAIL FROM " + SacchonApplication.SCHEMA + ".PATIENT WHERE DATE_OF_BIRTH LIKE :currentDate", nativeQuery = true)
+    List<String> findPatientsWithBirthday(@Param("currentDate") String currentDate);
+
 }
