@@ -5,9 +5,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 
-@Component({ selector: 'app-info',
-            templateUrl: './info.component.html',
-            styleUrls: ['./info.component.scss'] })
+@Component({
+  selector: 'app-info',
+  templateUrl: './info.component.html',
+  styleUrls: ['./info.component.scss'] })
 export class InfoComponent implements OnInit {
   data: any;
   userId: number;
@@ -30,7 +31,6 @@ export class InfoComponent implements OnInit {
         //   this.avatarUrl = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
         // else if (this.data[0].gender == "Female")
         //   this.avatarUrl = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2.webp"
-
       }
     })
   }

@@ -35,7 +35,6 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AiDiagnosisComponent } from './pages/ai-diagnosis/ai-diagnosis.component';
 import { InfoComponent } from './info/info.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
