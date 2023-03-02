@@ -3,10 +3,7 @@ package gr.codehub.sacchon.app.service;
 import gr.codehub.sacchon.app.dto.InsightsData;
 import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
-import gr.codehub.sacchon.app.exception.DateValidationException;
-import gr.codehub.sacchon.app.exception.PatientException;
-import gr.codehub.sacchon.app.exception.RegisterValidationException;
-import gr.codehub.sacchon.app.exception.RegistrationException;
+import gr.codehub.sacchon.app.exception.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,6 +36,7 @@ public interface PatientService {
      void updateGenderByPatientId(long id, String gender) throws PatientException;
 
      void updateHeightByPatientId(long id, int height) throws PatientException;
+
      void updateWeightByPatientId(long id,double weight) throws PatientException;
 
      void updateMedicalRecordNumberByPatientId(long id, String medicalRecordNumber)
@@ -50,5 +48,7 @@ public interface PatientService {
 
      void updateAddressByPatientId(long id, String address) throws PatientException;
 
-    InsightsData getInsightsData(long id, LocalDate staringDate, LocalDate endingDate);
+     InsightsData getInsightsData(long id, LocalDate staringDate, LocalDate endingDate);
+
+     void updateSeenConsultation(long consultationId, int status) throws ConsultationException;
 }

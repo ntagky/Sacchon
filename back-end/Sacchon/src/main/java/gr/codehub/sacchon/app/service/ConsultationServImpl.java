@@ -111,6 +111,7 @@ public class ConsultationServImpl implements ConsultationService {
             dto.setDoctor_email((String) result[3]);
             dto.setDate_created(((java.sql.Date) result[4]).toLocalDate());
             dto.setDetails((String) result[5]);
+            dto.setSeenConsultation((boolean) result[6]);
             dtos.add(dto);
         }
         return dtos;

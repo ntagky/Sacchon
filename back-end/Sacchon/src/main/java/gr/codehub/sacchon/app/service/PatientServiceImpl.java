@@ -5,6 +5,7 @@ import gr.codehub.sacchon.app.dto.MeasurementsDto;
 import gr.codehub.sacchon.app.dto.PastCarbReadingsDto;
 import gr.codehub.sacchon.app.dto.PatientDto;
 import gr.codehub.sacchon.app.exception.*;
+import gr.codehub.sacchon.app.model.ConsultationSeenStatus;
 import gr.codehub.sacchon.app.model.Patient;
 import gr.codehub.sacchon.app.repository.*;
 import gr.codehub.sacchon.app.validators.EmailValidators;
@@ -298,5 +299,14 @@ public class PatientServiceImpl implements PatientService {
                 carbsList,
                 glucoseList
         );
+    }
+
+    @Override
+    public void updateSeenConsultation(long consultationId, int status) throws ConsultationException {
+        try {
+            consultationRepository.updateSeenConsultationById(consultationId, status);
+        } catch (Exception c) {
+            throw new ConsultationException("Could not found consultation to update.");
+        }
     }
 }

@@ -29,24 +29,26 @@ import java.util.*;
 public class InitialConfiguration {
 
     private final Random RANDOM = new Random(42);
+    private int maleNamePointer = 0;
+    private int femaleNamePointer = 0;
     private final int PATIENT_POPULATION = 3;
     private final int DOCTOR_POPULATION = 1;
     private final int CHIEF_DOCTOR_POPULATION = 1;
     private final int[] PERSONS_MEASUREMENT_POPULATION = new int[PATIENT_POPULATION];
-    private final int MEASUREMENTS_AMOUNT_ORIGIN = 70;
-    private final int MEASUREMENTS_AMOUNT_BOUND = 120;
-    private final int GLUCOSE_AMOUNT_ORIGIN = 1;
-    private final int GLUCOSE_AMOUNT_BOUND = 6;
+    private final int MEASUREMENTS_AMOUNT_ORIGIN = 1000;
+    private final int MEASUREMENTS_AMOUNT_BOUND = 1200;
+    private final int GLUCOSE_AMOUNT_ORIGIN = 2;
+    private final int GLUCOSE_AMOUNT_BOUND = 7;
     private final int MEDICATIONS_AMOUNT_ORIGIN = 1;
     private final int MEDICATIONS_AMOUNT_BOUND = 4;
     private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private final LinkedList<String> namesMaleLinkedList = new LinkedList<>(List.of("Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore", "Amiri", "Kevin", "Jason", "Jeffrey", "Jacob", "Gary", "Eric", "Nicolas", "Jonathan", "Tyler", "Samuel", "Gregory", "Alexander", "Frank", "Patrick"));
     private final LinkedList<String> namesFemaleLinkedList = new LinkedList<>(List.of("Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper", "Debra", "Maria", "Olivia", "Joyce", "Ruth", "Janet", "Samantha", "Stella", "Helen", "Evelyn", "Katherine", "Christine", "Debra", "Rachel", "Carolyn"));
-    private final List<String> lastNamesLinkedList = new ArrayList<>(List.of("Smith", "Johnson", "William", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Wilson", "Anderson", "Thomas", "Taylor", "Jackson", "Martin", "Moore", "Lee", "Perez", "Thompson", "White", "Walker", "Hill", "Torres", "Scot", "Young"));
+    private final List<String> lastNamesLinkedList = new ArrayList<>(List.of("Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Wilson", "Anderson", "Thomas", "Taylor", "Jackson", "Martin", "Moore", "Lee", "Perez", "Thompson", "White", "Walker", "Hill", "Torres", "Scot", "Young"));
     private final List<String> ALLERGIES_LIST = new ArrayList<>(List.of("Grass Pollen", "Dust", "Peanut", "Milk", "Egg", "Animal Fur", "Bee", "Wasp", "Fish", "Crustaceans", "Wheat", "Soy"));
     private final List<String> MEDICATION_NAMES_LIST = new ArrayList<>(List.of("Atorvastatin", "Levothyroxine", "Metformin", "Lisinopril", "Amlodipine", "Metoprolol", "Albuterol", "Omeprazole", "Losartan", "Gabapentin", "Hydrochlorothiazide", "Sertraline", "Simvastatin", "Montelukast", "Escitalopram", "Rosuvastatin", "Bupropion", "Furosemide", "Pantoprazole"));
     private final List<String> CONDITIONS_LIST = new ArrayList<>(List.of("Heart Disease", "Cancer", "Asthma", "Emphysema", "Alzheimer Disease", "Substance Abuse", "Pneumonia", "Kidney Disease", "Mental Health Conditions"));
-    private final List<String> DOSOLOGE_LIST = new ArrayList<>(List.of("Take 2 pills per day", "After each meal", "Before bed only", "One before eating lunch, one after", "At the morning"));
+    private final List<String> DOSOLOGE_LIST = new ArrayList<>(List.of("2 pills/day", "3 pills/day", "1 pills/day", "1 pills/2 days", "1 pills/week"));
     private final List<String> DETAILS_LIST = new ArrayList<>(List.of("Read carefully the label on the container.", "Don't mix with alcohol", "Do not mix medicine into hot drinks.", "Take medicine with a full glass of water.", "Read directions, warnings and interaction precautions printed on medicine label.", "Don’t take vitamin pills at the same time you take medicine", "Take medicine on time", "Store your medicines in a cool, dry place."));
 
     private String convertToTens(int number) { return number > 10 ? String.valueOf(number) : "0" + number; }
@@ -74,23 +76,35 @@ public class InitialConfiguration {
         }
     }
 
+    private String getFirstNameFromList(int i, boolean isFirstName) {
+        String name;
+        if (isFirstName) {
+            if (i % 2 == 0)
+                name = namesMaleLinkedList.get(maleNamePointer % namesMaleLinkedList.size());
+            else
+                name = namesFemaleLinkedList.get(femaleNamePointer % namesFemaleLinkedList.size());
+
+            maleNamePointer += i % 2 == 0 ? 1 : 0;
+            femaleNamePointer += i % 2 == 1 ? 1 : 0;
+        } else
+            name = lastNamesLinkedList.get(i % 2 == 0 ? maleNamePointer / lastNamesLinkedList.size() : femaleNamePointer / lastNamesLinkedList.size());
+
+        return name;
+    }
+
     private void createChiefDoctors(ChiefDoctorRepository chiefDoctorRepository, int population) {
         ArrayList<ChiefDoctor> chiefDoctorArrayList = new ArrayList<>();
         ChiefDoctor chiefDoctor;
-        String firstName;
-        String lastName;
         int yearBorn;
 
         for (int i = 0; i < population; i++) {
             chiefDoctor = new ChiefDoctor();
-            firstName = (namesMaleLinkedList.size() + namesFemaleLinkedList.size()) % 2 == 0 ? namesMaleLinkedList.pop() : namesFemaleLinkedList.pop();
-            lastName = lastNamesLinkedList.get(i);
             yearBorn = 1985 - RANDOM.nextInt(40);
 
             chiefDoctor.setId(0L);
-            chiefDoctor.setFirstName(firstName);
-            chiefDoctor.setLastName(lastName);
-            chiefDoctor.setEmail("ch." + firstName.toLowerCase().charAt(0) + lastName.toLowerCase() + yearBorn + "@gmail.com");
+            chiefDoctor.setFirstName(getFirstNameFromList(i, true));
+            chiefDoctor.setLastName(getFirstNameFromList(i, false));
+            chiefDoctor.setEmail("ch." + chiefDoctor.getFirstName().toLowerCase().charAt(0) + chiefDoctor.getLastName().toLowerCase() + yearBorn + "@gmail.com");
             chiefDoctor.setPassword(RandomStringUtils.random(12, true, true));
             chiefDoctor.setSignedDate(getDateBeforeToday(RANDOM.nextInt(150)));
 
@@ -103,20 +117,16 @@ public class InitialConfiguration {
     private List<Doctor> createDoctors(DoctorRepository doctorRepository, int population, int assignedBefore) {
         ArrayList<Doctor> doctorArrayList = new ArrayList<>();
         Doctor doctor;
-        String firstName;
-        String lastName;
         int yearBorn;
 
         for (int i = 0; i < population; i++) {
             doctor = new Doctor();
-            firstName = (namesMaleLinkedList.size() + namesFemaleLinkedList.size()) % 2 == 0 ? namesMaleLinkedList.pop() : namesFemaleLinkedList.pop();
-            lastName = lastNamesLinkedList.get(i);
             yearBorn = 1995 - RANDOM.nextInt(40);
 
             doctor.setId(0L);
-            doctor.setFirstName(firstName);
-            doctor.setLastName(lastName);
-            doctor.setEmail(firstName.toLowerCase().charAt(0) + lastName.toLowerCase() + yearBorn + "@gmail.com");
+            doctor.setFirstName(getFirstNameFromList(i, true));
+            doctor.setLastName(getFirstNameFromList(i, false));
+            doctor.setEmail(doctor.getFirstName().toLowerCase().charAt(0) + doctor.getLastName().toLowerCase() + yearBorn + "@gmail.com");
             doctor.setPassword(RandomStringUtils.random(12, true, true));
             doctor.setSignedDate(getDateBeforeToday(RANDOM.nextInt(assignedBefore, assignedBefore + 30)));
 
@@ -133,8 +143,6 @@ public class InitialConfiguration {
     private List<Patient> createPatients(PatientRepository patientRepository, int population, int[] assignedBefore) {
         ArrayList<Patient> patientArrayList = new ArrayList<>();
         Patient patient;
-        String firstName;
-        String lastName;
         int yearBorn;
         int monthBorn;
         int dayBorn;
@@ -143,17 +151,15 @@ public class InitialConfiguration {
 
         for (int i = 0; i < population; i++) {
             patient = new Patient();
-            firstName = (namesMaleLinkedList.size() + namesFemaleLinkedList.size()) % 2 == 0 ? namesMaleLinkedList.pop() : namesFemaleLinkedList.pop();
-            lastName = lastNamesLinkedList.get(i);
             yearBorn = 2005 - RANDOM.nextInt(50);
             monthBorn = RANDOM.nextInt(12) + 1;
             dayBorn = RANDOM.nextInt(27) + 1;
 
             patient.setPhoneNumber("69"+RandomStringUtils.random(8, false, true));
             patient.setId(0L);
-            patient.setFirstName(firstName);
-            patient.setLastName(lastName);
-            patient.setEmail(firstName.toLowerCase().charAt(0) + lastName.toLowerCase() + yearBorn + "@gmail.com");
+            patient.setFirstName(getFirstNameFromList(i, true));
+            patient.setLastName(getFirstNameFromList(i, false));
+            patient.setEmail(patient.getFirstName().toLowerCase().charAt(0) + patient.getLastName().toLowerCase() + yearBorn + "@gmail.com");
             patient.setSignedDate(getDateBeforeToday(assignedBefore[i]));
 
             patient.setMedicalRecordNumber(convertToTens(dayBorn) + convertToTens(monthBorn) + yearBorn + "" + RandomStringUtils.random(5, false, true));
@@ -308,7 +314,7 @@ public class InitialConfiguration {
 
             assert namesMaleLinkedList.size() == namesFemaleLinkedList.size()
                     : "Provide same length of male and female names";
-            assert PATIENT_POPULATION + DOCTOR_POPULATION + CHIEF_DOCTOR_POPULATION <= namesMaleLinkedList.size() + namesFemaleLinkedList.size()
+            assert PATIENT_POPULATION + DOCTOR_POPULATION + CHIEF_DOCTOR_POPULATION <= namesMaleLinkedList.size() * lastNamesLinkedList.size() + namesFemaleLinkedList.size() * lastNamesLinkedList.size()
                     : "Provided less population than the sum of names.";
 
             createChiefDoctors(chiefDoctorRepository, CHIEF_DOCTOR_POPULATION);

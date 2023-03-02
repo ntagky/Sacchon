@@ -200,4 +200,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query(value = "SELECT EMAIL FROM " + SacchonApplication.SCHEMA + ".PATIENT " +
             "WHERE PATIENT.EMAIL = :email", nativeQuery = true)
     Optional<String> findPatientByEmail(@Param("email") String email);
+
+    @Query(value = "SELECT EMAIL FROM " + SacchonApplication.SCHEMA + ".PATIENT " +
+            "WHERE ", nativeQuery = true)
+    List<String> findPatientWithInactivityInDate(LocalDate today);
 }

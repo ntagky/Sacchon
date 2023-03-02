@@ -2,6 +2,7 @@ package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.*;
 import gr.codehub.sacchon.app.exception.*;
+import gr.codehub.sacchon.app.model.ConsultationSeenStatus;
 import gr.codehub.sacchon.app.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -407,6 +408,12 @@ public class PatientController {
             return null;
 
         return glucoseRecordService.readGlucoseRecordByGlucoseIdForInsights(glucoseId);
+    }
+
+    @PutMapping("/patient/consultation/{id}/seen")
+    public void updateConsultationSeen(@PathVariable(name="id") int id)
+            throws ConsultationException{
+        patientService.updateSeenConsultation(id, ConsultationSeenStatus.SEEN.ordinal());
     }
 
 }

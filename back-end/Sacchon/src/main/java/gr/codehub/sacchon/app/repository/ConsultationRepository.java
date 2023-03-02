@@ -43,7 +43,7 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
             @Param("endingDate") LocalDate endingDate
     );
 
-    @Query(value = "SELECT id, doctor_first_name,doctor_last_name,doctor_email,date_created,details FROM " + SacchonApplication.SCHEMA + ".CONSULTATION WHERE CONSULTATION.PATIENT_ID = :patientId",
+    @Query(value = "SELECT id, doctor_first_name,doctor_last_name,doctor_email,date_created,details,seen_consultation FROM " + SacchonApplication.SCHEMA + ".CONSULTATION WHERE CONSULTATION.PATIENT_ID = :patientId",
             nativeQuery = true)
     List<Object[]> findAllConsultationsReceivedForPatient(@Param("patientId") long patientId);
 
@@ -69,9 +69,9 @@ public interface ConsultationRepository extends JpaRepository<Consultation, Long
     // query: updates seenConsultation after medications have been modified
     @Transactional
     @Modifying
-    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".CONSULTATION SET seen_consultation = 0" +
+    @Query(value = "UPDATE " + SacchonApplication.SCHEMA + ".CONSULTATION SET seen_consultation = :status" +
             " WHERE id = :consultationId", nativeQuery = true)
-    void updateSeenConsultationById(@Param("consultationId") long consultationId);
+    void updateSeenConsultationById(@Param("consultationId") long consultationId, @Param("status") int status);
 
     @Query(value = "SELECT CONSULTATION.ID FROM " + SacchonApplication.SCHEMA + ".CONSULTATION" +
             " WHERE CONSULTATION.DATE_CREATED <= :dateGiven AND CONSULTATION.DATE_CREATED > :previousDays" +

@@ -19,5 +19,6 @@ public class AllConsultationsReceivedForOnePatientDto {
     private String doctor_email;
     private LocalDate date_created;
     private String details;
+    private boolean seenConsultation;
 
 }
