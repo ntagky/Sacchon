@@ -40,16 +40,14 @@ export class MainContentComponent implements OnInit{
   ngOnInit(): void {
 
 
-    // const hasShownAlert = localStorage.getItem('hasShownAlert');
-    // if (hasShownAlert) {
-    //   this.showAlert = false;
-    // } else {
 
-      // localStorage.setItem('hasShownAlert', 'true');
+
+
+
       setTimeout(() => {
         this.showAlert = false;
       }, 5000);
-    // }
+
 
 
 

@@ -10,6 +10,8 @@ import { Component, OnInit } from '@angular/core';
 export class AiDiagnosisComponent implements OnInit {
 
   diagnosisForm: any;
+  diabetesPercentage: any = "Let our network estimate whether or not you have diabetes.";
+  output: number = -1;
 
   constructor(
     private fb: FormBuilder,
@@ -37,13 +39,16 @@ export class AiDiagnosisComponent implements OnInit {
     var skinThickness = this.diagnosisForm.get("skinThickness").value;
     var insulin = this.diagnosisForm.get("insulin").value;
     var bmi = this.diagnosisForm.get("bmi").value;
-    var age = this.diagnosisForm.get("age").value;
     var dpf = this.diagnosisForm.get("dpf").value;
+    var age = this.diagnosisForm.get("age").value;
 
-    console.log('http://localhost:9000/network/inputs?pregnancies=' + pregnancies + '&glucose=' + glucose + '&bloodPressure=' + bloodPressure + '&skinThickness=' + skinThickness + '&insulin=' + insulin + '&bmi=' + bmi + '&age=' + age + '&dpf=' + dpf);
-    this.networkService.get('http://localhost:9000/network/inputs?pregnancies=' + pregnancies + '&glucose=' + glucose + '&bloodPressure=' + bloodPressure + '&skinThickness=' + skinThickness + '&insulin=' + insulin + '&bmi=' + bmi + '&age=' + age + '&dpf=' + dpf).subscribe({
+    console.log('http://localhost:9000/network/inputs?pregnancies=' + pregnancies + '&glucose=' + glucose + '&bloodPressure=' + bloodPressure + '&skinThickness=' + skinThickness + '&insulin=' + insulin + '&bmi=' + bmi + '&dpf=' + dpf + '&age=' + age);
+    this.networkService.get('http://localhost:9000/network/inputs?pregnancies=' + pregnancies + '&glucose=' + glucose + '&bloodPressure=' + bloodPressure + '&skinThickness=' + skinThickness + '&insulin=' + insulin + '&bmi=' + bmi + '&dpf=' + dpf + '&age=' + age).subscribe({
       next: res => {
         console.log(res);
+        var a: any = res;
+        this.output = (Number(a[1]) * 100)
+        this.diabetesPercentage = this.output.toFixed(2) + "% to have diabetes";
       }
     });
   }

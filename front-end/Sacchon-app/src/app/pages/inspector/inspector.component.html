@@ -28,6 +28,7 @@
             <h6 class="card-text">Total Measurements</h6>
             <ngx-skeleton-loader *ngIf="isRetrieving" count="2" appearance="line"></ngx-skeleton-loader>
             <h2 class="card-title" *ngIf="!isRetrieving">{{ measurements }}</h2>
+            <p>{{ daysDescription }}</p>
              </div>
         </div>
 
@@ -36,6 +37,7 @@
             <h6 class="card-text">Total Consultations</h6>
             <ngx-skeleton-loader *ngIf="isRetrieving" count="2" appearance="line"></ngx-skeleton-loader>
             <h2 class="card-title" *ngIf="!isRetrieving">{{ consultations }}</h2>
+            <p>{{ daysDescription }}</p>
             </div>
         </div>
         <div class="col-5 col-sm-3 col-md-2 flex-grow-1 card m-2 shadow p-3 mb-5 bg-white rounded">
@@ -43,6 +45,7 @@
             <h6 class="card-text">Average Carbs</h6>
             <ngx-skeleton-loader *ngIf="isRetrieving" count="2" appearance="line"></ngx-skeleton-loader>
             <h2 class="card-title" *ngIf="!isRetrieving">{{ averageCarbs }}</h2>
+            <p>{{ daysDescription }}</p>
              </div>
         </div>
         <div class="col-5 col-sm-3 col-md-2 flex-grow-1 card m-2 shadow p-3 mb-5 bg-white rounded">
@@ -50,7 +53,8 @@
             <h6 class="card-text">Average Glucose</h6>
             <ngx-skeleton-loader *ngIf="isRetrieving" count="2" appearance="line"></ngx-skeleton-loader>
             <h2 class="card-title" *ngIf="!isRetrieving">{{ averageGlucose | number : '.0-3' }}</h2>
-             </div>
+            <p>{{ daysDescription }}</p>
+          </div>
         </div>
       </div>
 
@@ -71,7 +75,23 @@
             [yAxisLabel]="yAxisGlucoseLabel" (select)="onSelect($event)">
           </ngx-charts-line-chart>
         </div>
+        <ngx-charts-bar-vertical class="mt-4"
+          [hidden]="barChartHidden"
+          [view]="[containerRef.offsetWidth, 400]"
+          [scheme]="colorSchemeGlucose"
+          [results]="glucoseDayBar"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisTimeLabel"
+          [yAxisLabel]="yAxisGlucoseLabel">
+        </ngx-charts-bar-vertical>
       </div>
     </div>
   </div>
 </div>
+
+

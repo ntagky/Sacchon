@@ -25,6 +25,7 @@ export class InspectorComponent {
   public showLegend = true;
   public showXAxisLabel = true;
   public xAxisLabel: string =  "Date";
+  public xAxisTimeLabel: string =  "Time";
   public showYAxisLabel = true;
   public yAxisCarbsLabel: string = "g";
   public yAxisGlucoseLabel: string = "mg/dL";
@@ -44,10 +45,19 @@ export class InspectorComponent {
     name: 'Customer Usage',
   };
 
+  colorSchemeGlucose1: Color = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
+    group: ScaleType.Ordinal,
+    selectable: true,
+    name: 'Customer Usage',
+  };
+
   isRetrieving: boolean = true;
   responseMeasurements: any;
+  responseDaysRecords: any;
   startingDate: any;
   dateSigned: any;
+  daysDescription: any;
   lastDate: Date = new Date();
   dateToday: Date = new Date();
   lastMonth: Date = new Date(new Date().setDate(new Date().getDate() - 30));
@@ -58,6 +68,8 @@ export class InspectorComponent {
   averageGlucose: any;
   carbsChart: any = [];
   glucoseChart: any = [];
+  glucoseDayBar: any = [];
+  barChartHidden: boolean = true;
 
   constructor(
     private service: InspectorService,
@@ -78,13 +90,24 @@ export class InspectorComponent {
     });
   }
 
+  convertVariableToDateFormat(dt: any) {
+    try {
+      return dt.toISOString().slice(0, 10);
+    } catch {
+      // Date already formatted
+      return dt;
+    }
+  }
+
   readDataInDates(start: any, end: any) {
-    start = start.toISOString().slice(0, 10);
-    end = end.toISOString().slice(0, 10);
+    start = this.convertVariableToDateFormat(start);
+    end = this.convertVariableToDateFormat(end)
+
     this.service.get("http://localhost:9000/patient/" + this.userId + "/insights/query?start=" + start + "&end="+ end).subscribe({
       next: res => {
         this.responseMeasurements = res;
-        // this.dateSigned = this.responseMeasurements.dateSigned;
+        console.log(this.responseMeasurements.daysDescription);
+        this.daysDescription = this.responseMeasurements.daysDescription;
         this.measurements = this.responseMeasurements.measurements;
         this.consultations = this.responseMeasurements.consultations;
         this.averageCarbs = this.responseMeasurements.averageCarbs;
@@ -108,7 +131,7 @@ export class InspectorComponent {
         Object.assign(this, this.carbsChart);
         Object.assign(this, this.glucoseChart);
       }
-    })
+    });
   }
 
   addEvent(isStart: any, event: any) {
@@ -117,12 +140,25 @@ export class InspectorComponent {
     else if (!isStart && event.target.value != null)
       this.toDate = event.target.value.format('yyyy-MM-DD');
 
-    if (this.startingDate < this.toDate)
-      this.readDataInDates(this.lastMonth, this.dateToday);
+    console.log(this.startingDate);
+    if (this.startingDate < this.toDate && event.target.value != null) {
+      this.readDataInDates(this.startingDate, this.toDate);
+    }
   }
 
-  onSelect(event: any) {
-    console.log(event.name);
+  onSelect(dateSelected: any) {
+    this.barChartHidden = false;
+    this.service.get("http://localhost:9000/patient/" + this.userId + "/glucose/" + dateSelected.name + "/insights").subscribe({
+      next: res => {
+        this.responseDaysRecords = res;
+        console.log("Donw");
+        console.log(this.responseDaysRecords.glucoseList);
+
+        this.glucoseDayBar = this.responseDaysRecords.glucoseList;
+
+        Object.assign(this, this.glucoseDayBar);
+      }
+    })
   }
 }
 

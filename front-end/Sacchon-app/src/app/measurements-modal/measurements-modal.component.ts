@@ -10,8 +10,7 @@ import { MeasurementService } from '../services/measurements.service';
 })
 export class ModalMeasurementsComponent implements OnInit {
 
-  @Input() patientId: any;
-
+  patientId: number | null = null;
   id: number | null = null;
   date: string | null = null;
   carbs: number | null = null;
@@ -35,6 +34,7 @@ export class ModalMeasurementsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("user is " + this.patientId);
     this.createForm = this.fb.group({
       date: this.date,
       carbsMeasurement: [this.carbs, [Validators.required, Validators.min(1)]],
@@ -195,17 +195,27 @@ export class ModalMeasurementsComponent implements OnInit {
   }
 
   saveGlucoseRecord(idx: Number): void {
-    let currentForm = this.createForm.controls["glucoseMeasurement"].at(idx);
-    if (currentForm.value['startingMeasurement'] == '') {
-      console.log("Creating..");
-      this.createGlucoseRecord(idx);
-    } else {
-      console.log("Updating..");
-      this.updateGlucoseRecord(idx);
+    let toCreate: boolean = true;
+    let form;
+    for (let index = 0; index < this.createForm.controls["glucoseMeasurement"].length; index++) {
+      form = this.createForm.controls["glucoseMeasurement"].at(index);
+      if (form.value['startingMeasurement'] != '') {
+        toCreate = false;
+        break;
+      }
     }
+
+    if (toCreate)
+      this.createGlucoseRecordAndInstance(idx);
+    else
+      if (this.createForm.controls["glucoseMeasurement"].at(idx).value['startingMeasurement'] == '')
+        this.createGlucoseGlucoseRecord(idx)
+      else
+        this.updateGlucoseRecord(idx);
+
   }
 
-  createGlucoseRecord(idx: any) {
+  createGlucoseRecordAndInstance(idx: any) {
     const currentForm = this.createForm.controls["glucoseMeasurement"].at(idx);
     const data = {
       hour: currentForm.value['hour'],
@@ -220,6 +230,32 @@ export class ModalMeasurementsComponent implements OnInit {
 
         currentForm.patchValue({
           'id': res,
+          'measurement': data.measurement,
+          'startingMeasurement': data.measurement,
+          'hour': data.hour,
+          'startingHour': data.hour,
+          'minute': data.minute,
+          'startingMinute': data.minute,
+        });
+
+        this.getActiveGlucoseRecords();
+      }
+    })
+  }
+
+  createGlucoseGlucoseRecord(idx: Number) {
+    const currentForm = this.createForm.controls["glucoseMeasurement"].at(idx);
+    const data = {
+      hour: currentForm.value['hour'],
+      minute: currentForm.value['minute'],
+      second: 0,
+      measurement: currentForm.value['measurement'],
+    };
+
+    this.service.postData(data, "http://localhost:9000/patient/" + this.patientId + "/glucose/" + this.date + "/record/create").subscribe({
+      next: res => {
+        this.response = res;
+        currentForm.patchValue({
           'measurement': data.measurement,
           'startingMeasurement': data.measurement,
           'hour': data.hour,

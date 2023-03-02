@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   loginRespone: any;
   loginForm: any;
   invalidData: boolean = false;
+  page: string = "Login";
 
   constructor(
     private service: LoginService,
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
       password: ["", [Validators.required, Validators.min(1)]],
     });
 
-    if (this.route.snapshot.paramMap.get("inactive") != null)
+    if (this.route.snapshot.paramMap.get("unauthorized") != null)
       this.showSuccess();
   }
 
@@ -57,6 +58,3 @@ export class LoginComponent implements OnInit {
     });
   }
 }
-
-// this.service.get("http://localhost:9000/login?email=" + this.loginForm.get('email').value +
-//      "&password=" + this.cryptoService.encrypt(this.loginForm.get('password').value, this.loginForm.get('password').value)).subscribe({

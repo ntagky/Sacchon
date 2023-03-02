@@ -43,9 +43,10 @@ export class AppRoutingModule {
     private location: Location
     ) {
     // Redirect user to login page if there is none stored user-id
-    if (Number(localStoreService.getData("user")) <= 0) {
-      if (this.location.path() != "/login" && this.location.path() != "/signup")
-        this.router.navigate(['/login', {inactive: JSON.stringify(true)}]);
+    let nonAuthorizedEndPoints = ["/login", "/signup", "/ai-diagnosis"];
+    if (Number(localStoreService.getData("user")) <= 0 || localStoreService.getData("user") == null) {
+      if (!nonAuthorizedEndPoints.includes(this.location.path()))
+        this.router.navigate(['/login', {unauthorized: JSON.stringify(true)}]);
     }
   }
 }
