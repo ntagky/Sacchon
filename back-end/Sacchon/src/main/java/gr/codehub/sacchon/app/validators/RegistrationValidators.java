@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 /**Validation regarding  empty register values and patient age
@@ -18,8 +17,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegistrationValidators {
     public void validatePatientData(PatientDto patientDto) throws RegisterValidationException {
-
-
         if (org.apache.commons.lang3.StringUtils.isEmpty(patientDto.getFirstName()) ||
                 org.apache.commons.lang3.StringUtils.isEmpty(patientDto.getLastName()) ||
                 org.apache.commons.lang3.StringUtils.isEmpty(patientDto.getEmail()) ||
@@ -31,5 +28,6 @@ public class RegistrationValidators {
         LocalDate dateOfBirth = patientDto.getDateOfBirth();
         if (dateOfBirth != null && dateOfBirth.plusYears(18).isAfter(today)) {
             throw new RegisterValidationException("Patient must be at least 18 years old.");
-        }}
+        }
+    }
 }

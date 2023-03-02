@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @Slf4j
 public class NetworkController {
-
     private NetworkService networkService;
 
     @GetMapping("/network/inputs")
@@ -51,5 +50,4 @@ public class NetworkController {
                 age
         );
     }
-
 }

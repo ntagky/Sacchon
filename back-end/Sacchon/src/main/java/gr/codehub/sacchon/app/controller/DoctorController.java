@@ -75,15 +75,7 @@ public class DoctorController {
         doctorDto.setSignedDate(curDate);
         log.info("The end point signup/doctor has been used.");
         return doctorService.registerDoctor(doctorDto);
-//        return ResponseEntity.ok(doctorDto);
     }
-
-    //    @GetMapping("/doctor/patients/waiting/query")
-//    public List<PatientDto> getPatientsWithNoConsultation
-//            (@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(name="dateGiven") LocalDate dateGiven) {
-//        log.info("The end point doctor/patients/waiting/query has been used");
-//        return doctorServices.readPatientsWithNoConsultation(dateGiven);
-//    }
 
     @GetMapping("/doctor/patients/waiting/query")
     public List<PatientDto> getPatientsWithNoConsultation() {
@@ -91,12 +83,6 @@ public class DoctorController {
         log.info("The end point doctor/patients/waiting/query has been used.");
         return doctorService.readPatientsWithNoConsultation(dateGiven);
     }
-
-//    @PostMapping("/doctor")
-//    public DoctorDto createDoctorDto(@RequestBody DoctorDto doctor){
-//        log.info("The end point doctor has been used");
-//        return doctorService.createDoctor(doctor);
-//    }
 
     @PutMapping("/doctor/update/{id}")
     public boolean updateDoctorDto(@RequestBody DoctorDto doctor,

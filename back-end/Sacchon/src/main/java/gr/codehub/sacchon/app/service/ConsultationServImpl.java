@@ -22,7 +22,6 @@ public class ConsultationServImpl implements ConsultationService {
 
     @Override
     public ConsultationDto createConsultation(ConsultationReceivedDto consultationDto){
-        //validation
         Consultation consultation = consultationDto.asConsultation();
         return new ConsultationDto(consultationRepository.save(consultation));
     }
@@ -69,7 +68,6 @@ public class ConsultationServImpl implements ConsultationService {
         return consultationRepository.findPatientWithActiveConsultation(dateGiven);
     }
 
-    // private method created for internal use
     private Consultation readConsultationDb(long id) throws ConsultationException {
         Optional<Consultation> consultationOptional = consultationRepository.findById(id);
         if (consultationOptional.isPresent())
@@ -117,8 +115,6 @@ public class ConsultationServImpl implements ConsultationService {
         }
         return dtos;
     }
-
-
 
     @Override
     public ConsultationPureDto findConsultationIdInAndStatusSpecificDate(long patientId, LocalDate dateGiven, LocalDate previousDays) {

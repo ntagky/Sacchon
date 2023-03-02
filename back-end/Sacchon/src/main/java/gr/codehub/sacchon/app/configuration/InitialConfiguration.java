@@ -29,6 +29,16 @@ import java.util.*;
 public class InitialConfiguration {
 
     private final Random RANDOM = new Random(42);
+    private final int PATIENT_POPULATION = 3;
+    private final int DOCTOR_POPULATION = 1;
+    private final int CHIEF_DOCTOR_POPULATION = 1;
+    private final int[] PERSONS_MEASUREMENT_POPULATION = new int[PATIENT_POPULATION];
+    private final int MEASUREMENTS_AMOUNT_ORIGIN = 70;
+    private final int MEASUREMENTS_AMOUNT_BOUND = 120;
+    private final int GLUCOSE_AMOUNT_ORIGIN = 1;
+    private final int GLUCOSE_AMOUNT_BOUND = 6;
+    private final int MEDICATIONS_AMOUNT_ORIGIN = 1;
+    private final int MEDICATIONS_AMOUNT_BOUND = 4;
     private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private final LinkedList<String> namesMaleLinkedList = new LinkedList<>(List.of("Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore", "Amiri", "Kevin", "Jason", "Jeffrey", "Jacob", "Gary", "Eric", "Nicolas", "Jonathan", "Tyler", "Samuel", "Gregory", "Alexander", "Frank", "Patrick"));
     private final LinkedList<String> namesFemaleLinkedList = new LinkedList<>(List.of("Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper", "Debra", "Maria", "Olivia", "Joyce", "Ruth", "Janet", "Samantha", "Stella", "Helen", "Evelyn", "Katherine", "Christine", "Debra", "Rachel", "Carolyn"));
@@ -275,17 +285,6 @@ public class InitialConfiguration {
 
         return consultationRepository.saveAll(consultationArrayList);
     }
-
-    private final int PATIENT_POPULATION = 1;
-    private final int DOCTOR_POPULATION = 1;
-    private final int CHIEF_DOCTOR_POPULATION = 1;
-    private final int[] PERSONS_MEASUREMENT_POPULATION = new int[PATIENT_POPULATION];
-    private final int MEASUREMENTS_AMOUNT_ORIGIN = 70;
-    private final int MEASUREMENTS_AMOUNT_BOUND = 120;
-    private final int GLUCOSE_AMOUNT_ORIGIN = 1;
-    private final int GLUCOSE_AMOUNT_BOUND = 6;
-    private final int MEDICATIONS_AMOUNT_ORIGIN = 1;
-    private final int MEDICATIONS_AMOUNT_BOUND = 4;
 
     @Bean
     CommandLineRunner PatientCommandLineRunner(

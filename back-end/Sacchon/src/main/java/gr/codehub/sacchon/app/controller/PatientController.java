@@ -233,13 +233,6 @@ public class PatientController {
         return doctorService.readDoctorNameAndEmailById(doctorId);
     }
 
-//    @PutMapping("/patient/{id}")
-//    public boolean updatePatientDto(@RequestBody PatientDto PatientDto,
-//                                     @PathVariable(name="id") long id){
-//        log.info("The end point /patient/id has been used.");
-//        return patientService.updatePatient(PatientDto, id);
-//    }
-
     @DeleteMapping("/patient/{id}")
     public void deletePatientDto(@PathVariable(name="id") long id) throws PatientException{
         log.info("The end point /patient/id has been used.");

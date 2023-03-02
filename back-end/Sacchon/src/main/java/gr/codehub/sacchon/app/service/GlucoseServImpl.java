@@ -94,9 +94,7 @@ public class GlucoseServImpl implements GlucoseService {
         Long glucoseId = glucoseRepository.findGlucoseInSpecificDateByPatientId(patientId, date).getId();
         if (glucoseId == null)
             return false;
-        System.out.println("Glucose id=" + glucoseId);
         glucoseRecordRepository.deleteGlucoseRecordByGlucoseId(glucoseId);
-        System.out.println("Before");
         glucoseRepository.deleteGlucoseByPatientIdAndDate(patientId, date);
         return true;
     }

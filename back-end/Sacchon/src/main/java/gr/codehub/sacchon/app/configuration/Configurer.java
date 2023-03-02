@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Component
 public class Configurer {
-
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
@@ -26,6 +25,4 @@ public class Configurer {
             }
         };
     }
-
-
 }

@@ -8,6 +8,7 @@ import gr.codehub.sacchon.app.exception.DoctorException;
 import gr.codehub.sacchon.app.model.Consultation;
 import gr.codehub.sacchon.app.model.Doctor;
 import gr.codehub.sacchon.app.model.Patient;
+import gr.codehub.sacchon.app.model.Person;
 import gr.codehub.sacchon.app.repository.ConsultationRepository;
 import gr.codehub.sacchon.app.repository.DoctorRepository;
 import gr.codehub.sacchon.app.repository.PatientRepository;
@@ -31,7 +32,6 @@ public class DoctorServImpl implements DoctorService {
 
     @Override
     public DoctorDto createDoctor(DoctorDto doctorDto){
-        //validation
         Doctor doctor = doctorDto.asDoctor();
         return new DoctorDto(doctorRepository.save(doctor));
     }
@@ -39,14 +39,6 @@ public class DoctorServImpl implements DoctorService {
     @Override
     public long registerDoctor(DoctorDto doctorDto) {
         Doctor doctor = doctorDto.asDoctor();
-//        doctorRepository.registerDoctor(
-//                doctor.getFirstName(),
-//                doctor.getLastName(),
-//                doctor.getPassword(),
-//                doctor.getEmail(),
-//                doctor.getSignedDate(),
-//                doctor.getPhoneNumber());
-
         return doctorRepository.save(doctor).getId();
     }
 
@@ -73,8 +65,8 @@ public class DoctorServImpl implements DoctorService {
 
         List<Long> allPatients = patientRepository.findAll()
                 .stream()
-                .map(p -> p.getId())
-                .collect(Collectors.toList());
+                .map(Person::getId)
+                .toList();
 
         List<Long> patientsActiveConsultation = consultationRepository.findPatientWithActiveConsultation(dateGiven);
 
@@ -105,7 +97,6 @@ public class DoctorServImpl implements DoctorService {
         return new DoctorDto(doctorRepository.DisplayAccountData(id));
     }
 
-    // private method created for internal use
     private Doctor readDoctorDb(long id) throws DoctorException{
         Optional<Doctor> doctorOptional = doctorRepository.findById(id);
         if (doctorOptional.isPresent())
@@ -113,14 +104,11 @@ public class DoctorServImpl implements DoctorService {
         throw new DoctorException("Doctor with id " + id + "is not found!");
     }
 
-
     @Override
     public boolean updateDoctor(DoctorDto doctor, long id){
         boolean action;
         try {
             Doctor dbDoctor = readDoctorDb(id);
-//            dbDoctor.setConsultations(doctor.getConsultations());
-//            dbDoctor.setPatients(doctor.getPatients);
             doctorRepository.save(dbDoctor);
             action = true;
         } catch (DoctorException e){
@@ -174,5 +162,4 @@ public class DoctorServImpl implements DoctorService {
                 )
         ).getId();
     }
-
 }

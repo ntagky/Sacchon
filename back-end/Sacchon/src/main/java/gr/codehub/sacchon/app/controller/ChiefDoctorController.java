@@ -41,7 +41,6 @@ public class ChiefDoctorController {
     private ChiefDoctorService chiefDoctorService;
     private final GlucoseRecordService glucoseRecordService;
 
-
     @GetMapping("/chiefdoctor")
     public List<ChiefDoctorDto> getChiefDoctorDto(){
         log.info("The end point /chiefdoctor has been used.");
