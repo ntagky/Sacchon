@@ -1,10 +1,13 @@
 <div class="main_content">
   <h1 class="main_title">{{ welcomeMessage }}</h1>
   <h1 class="main_motto">{{ mottoMessage }}</h1>
-    <div class="row ms-0" style="background-color: #ffe7f2; border-top: 1px solid #BCBCBC; height: calc(100vh - 226px);">
+    <div class="row ms-0" style="background-color: #ffe7f2; border-top: 1px solid #BCBCBC; height: calc(100vh - 222px);">
       <div class="col-sm-6" style="border-right: 1px solid #BCBCBC;">
         <div class="card">
-          <div class="card_body" id="printConsultation">
+          <div *ngIf="!hasActiveConsultation" class="card_body text-center">
+            <h5 class="card_title text-center">No Active Consultation</h5>
+          </div>
+          <div class="card_body" *ngIf="hasActiveConsultation" id="printConsultation">
             <h5 class="card_title text-center">Active Consultation</h5>
             <hr>
             <table class="card_text ps-0">
@@ -31,7 +34,7 @@
                 <li class="mt-2"> <span class="card_bold">Prescribed by</span>&nbsp;{{ consDoctorFirstName }} {{ consDoctorLastName }}
               </ul>
           </div>
-          <div class="text-center">
+          <div *ngIf="hasActiveConsultation" class="text-center">
             <button class="btn my_button mb-3" style="width: 30%;" [print]="['printConsultation']">Print</button>
           </div>
         </div>
@@ -43,7 +46,10 @@
       </div>
       <div class="col-sm-6">
         <div class="card text-center">
-          <div #containerRef class="card_body">
+          <div *ngIf="!hasDoctor" class="card_body text-center">
+            <h5 class="card_title text-center">No Doctor Assigned</h5>
+          </div>
+          <div #containerRef *ngIf="hasDoctor" class="card_body">
             <h5 class="card_title">Personal Doctor</h5>
             <hr style="margin-top: 0px;">
             <img class="ms-1 doctor_avatar" src="assets/doctor.jpeg" alt="doctor avatar"/>

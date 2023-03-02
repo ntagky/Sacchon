@@ -25,6 +25,8 @@ export class MainContentComponent implements OnInit{
   data: any;
   showAlert = true;
   seenResponse:any = null;
+  hasActiveConsultation: any;
+  hasDoctor: any;
 
   welcomeMessage = "Sacchon";
   mottoMessage = "Control diabetes, live without limits";
@@ -63,6 +65,12 @@ export class MainContentComponent implements OnInit{
         this.date = new Date(this.response[latest]["date_created"]);
         this.date = new Date(this.date.setMonth(this.date.getMonth()+1));
         this.date = new Date(this.date.setDate(this.date.getDate()-1));
+
+        let start = Date.parse(this.response[latest].date_created);
+        let end = Date.parse(this.date);
+        let curDate = Date.now();
+
+        this.hasActiveConsultation = curDate.valueOf() >= start.valueOf() && curDate.valueOf() <= end.valueOf();
         this.date = this.date.toLocaleDateString();
 
         this.consDoctorFirstName = 'Dr. ' + this.response[latest]["doctor_first_name"];
@@ -80,11 +88,14 @@ export class MainContentComponent implements OnInit{
       next: seenStatus => {this.seenResponse = seenStatus}
     });
 
-
-
     this.doctorService.getDoctor(this.patientId).subscribe({
       next: doctor => {
         this.response = doctor;
+        this.hasDoctor = true; 
+        
+        if(this.response===null){
+          this.hasDoctor = false;
+        }
 
         this.doctorFirstName = this.response["firstName"];
         this.doctorLastName = this.response["lastName"];
