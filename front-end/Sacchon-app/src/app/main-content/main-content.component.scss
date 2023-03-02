@@ -8,24 +8,6 @@
     font-size: 40px;
 }
 
-.alert {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: green;
-  color: white;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.25rem;
-  margin-bottom: 1rem;
-  position: fixed;
-  left: 0;
-  bottom: -100px;
-  width: 100%;
-  text-align: center;
-  animation: slideIn 0.5s ease forwards, glow 2s infinite;
-}
-
 @keyframes slideIn {
   from {
     bottom: -100px;
@@ -34,18 +16,6 @@
     bottom: 0;
   }
 }
-
-// @keyframes glow {
-//   0% {
-//     background-image: linear-gradient(to right, #0b436c, #00ffff);
-//   }
-//   50% {
-//     background-image: linear-gradient(to right, #35b9ba, #d22b74);
-//   }
-//   100% {
-//     background-image: linear-gradient(to right, #0b436c, #d22b74);
-//   }
-// }
 
 .main_motto{
     color:#35B9BA;
@@ -62,7 +32,6 @@
 .vl_sidebar{
     border-left: 2px solid #BCBCBC;
     height: 100vh;
-    // margin: auto;
     width: fit-content;
 }
 
@@ -112,7 +81,6 @@
 
 .my_button{
     background-color: #D22B74;
-    // background-color: #0B436C;
     color: white;
 }
 
@@ -121,16 +89,18 @@ a {
     color: #0B436C;
 }
 
-// .alert {
-//   position: fixed;
-//   bottom: -100px;
-//   left: 0;
-//   width: 100%;
-//   background-color: #f44336;
-//   color: white;
-//   text-align: center;
-//   padding: 20px;
-//   font-size: 1.5rem;
-//   z-index: 9999;
-//   transition: bottom 0.5s ease-in-out;
-// }
+.alert {
+    display: flex;
+    justify-content: center;
+    background-color: RGBA(25, 135, 84, var(--bs-bg-opacity, 1));
+    color: white;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    position: fixed;
+    left: 0;
+    text-align: center;
+    animation: slideIn 0.5s ease forwards, glow 2s infinite;
+    margin-left: 47%;
+    font-size: 18px;
+    width: 22%;
+}

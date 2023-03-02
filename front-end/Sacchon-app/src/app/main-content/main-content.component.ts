@@ -23,10 +23,11 @@ export class MainContentComponent implements OnInit{
   date: any;
   consultationId: any;
   data: any;
-  showAlert = true;
+  showAlert = false;
   seenResponse:any = null;
   hasActiveConsultation: any;
   hasDoctor: any;
+  seenConsultation: any;
 
   welcomeMessage = "Sacchon";
   mottoMessage = "Control diabetes, live without limits";
@@ -39,18 +40,6 @@ export class MainContentComponent implements OnInit{
 
   ngOnInit(): void {
 
-
-
-
-
-
-      setTimeout(() => {
-        this.showAlert = false;
-      }, 5000);
-
-
-
-
     this.consultationService.getConsultations(this.patientId).subscribe({
       next: consultations => {
         this.response = consultations;
@@ -59,6 +48,20 @@ export class MainContentComponent implements OnInit{
 
         this.consultationId = this.response[latest]["id"];
         this.details = this.response[latest]["details"];
+        this.seenConsultation = this.response[latest]["seenConsultation"];
+
+        if(!this.seenConsultation){
+          this.showAlert = true;
+          setTimeout(() => {
+            this.showAlert = false;
+            this.consultationService.setSeenConsultation("http://localhost:9000/patient/consultation/" + this.consultationId + "/seen").subscribe({
+              next: res => {
+                this.response = res;
+              }
+            })
+
+          }, 5000);
+        }
 
         this.date = new Date(this.response[latest]["date_created"]);
         this.date = new Date(this.date.setMonth(this.date.getMonth()+1));
@@ -102,17 +105,8 @@ export class MainContentComponent implements OnInit{
     })
   }
 
-
-
   printThisPage() {
     window.print();
   }
-
-
-
-
-
-
-
 
 }
