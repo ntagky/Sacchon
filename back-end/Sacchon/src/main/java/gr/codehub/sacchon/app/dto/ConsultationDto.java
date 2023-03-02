@@ -36,14 +36,4 @@ public class ConsultationDto {
             details = consultation.getDetails();
         }
     }
-
-    public Consultation asConsultation(){
-        Consultation consultation = new Consultation();
-        consultation.setId(id);
-        consultation.setDateCreated(dateCreated);
-        consultation.setSeenConsultation(seenConsultation);
-        consultation.setMedications(medications);
-        consultation.setDetails(details);
-        return consultation;
-    }
 }

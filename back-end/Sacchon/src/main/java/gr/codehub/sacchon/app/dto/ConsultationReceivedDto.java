@@ -19,15 +19,6 @@ public class ConsultationReceivedDto {
     private List<Medication> medications;
     private String details;
 
-    public ConsultationReceivedDto(Consultation consultation){
-        if(consultation!=null){
-            id = consultation.getId();
-            seenConsultation = consultation.isSeenConsultation();
-            medications = consultation.getMedications();
-            details = consultation.getDetails();
-        }
-    }
-
     public Consultation asConsultation(){
         Consultation consultation = new Consultation();
         consultation.setId(id);

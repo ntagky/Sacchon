@@ -13,13 +13,12 @@ import java.util.List;
 
 public interface PatientService {
 
-//    PatientDto createPatient(PatientDto patient);
     List<PastCarbReadingsDto> getPreviousCarbReadingsByPatientIdBetweenDates(long id, LocalDate startingDate, LocalDate endingDate)
         throws PatientException, DateValidationException;
 
     List<PatientDto> readPatientById(long id) throws PatientException ;
+
     Long findDoctorIdByPatientId(long id) throws PatientException;
-//    boolean updatePatient(PatientDto patient, long id);
 
     void updateEmailByPatientId(long id, String email) throws PatientException;
 

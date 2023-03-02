@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface CarbsService {
-
     CarbsDto createCarbsIntake(CarbsDto carbsDto);
     List<CarbsDto> readCarbs();
     CarbsDto readCarbsById(long id) throws CarbsException;

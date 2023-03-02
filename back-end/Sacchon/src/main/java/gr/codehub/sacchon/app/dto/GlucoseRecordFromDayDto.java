@@ -1,6 +1,5 @@
 package gr.codehub.sacchon.app.dto;
 
-import gr.codehub.sacchon.app.model.Glucose;
 import gr.codehub.sacchon.app.model.GlucoseRecord;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,9 +24,4 @@ public class GlucoseRecordFromDayDto {
         time = glucoseRecord.getTime();
         measurement = glucoseRecord.getMeasurement();
     }
-
-    public GlucoseRecord asGlucoseRecord(Glucose glucose) {
-        return new GlucoseRecord(id, time, measurement, glucose);
-    }
-
 }

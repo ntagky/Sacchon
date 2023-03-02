@@ -7,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-
 /**
  * <p>Doctor is one of the main entities of the Sacchon Diabetes Management application.
  * Doctor inherits the Person class and is connected with the Patient, Consultation and Chief Doctor classes.
@@ -23,7 +22,10 @@ import java.util.List;
  * List Consultation: the list of consultations the Doctor has prescribed
  *
  * @author Georgia Giannokosta - geogiannokosta@gmail.com
+ * @version 1.0
+ * @since 2023-02-28
  */
+
 @Getter
 @Setter
 @ToString

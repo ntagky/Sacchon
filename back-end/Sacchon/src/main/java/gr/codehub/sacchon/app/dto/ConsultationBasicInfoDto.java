@@ -32,14 +32,4 @@ public class ConsultationBasicInfoDto {
             details = consultation.getDetails();
         }
     }
-
-    public Consultation asConsultation(){
-        Consultation consultation = new Consultation();
-        consultation.setDoctorFirstName(getDoctorFirstName());
-        consultation.setDoctorFirstName(getDoctorLastName());
-        consultation.setDateCreated(dateCreated);
-        consultation.setMedications(medications);
-        consultation.setDetails(details);
-        return consultation;
-    }
 }

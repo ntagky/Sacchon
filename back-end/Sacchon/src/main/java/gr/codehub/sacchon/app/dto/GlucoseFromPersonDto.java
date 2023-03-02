@@ -2,7 +2,6 @@ package gr.codehub.sacchon.app.dto;
 
 import gr.codehub.sacchon.app.model.Glucose;
 import gr.codehub.sacchon.app.model.Measurement;
-import gr.codehub.sacchon.app.model.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,14 +32,4 @@ public class GlucoseFromPersonDto implements Measurement<List<GlucoseRecordFromD
                 .map(GlucoseRecordFromDayDto::new)
                 .collect(Collectors.toList());
     }
-
-    public Glucose asGlucose(Patient patient) {
-        return new Glucose(
-                id,
-                date,
-                null,
-                patient
-        );
-    }
-
 }

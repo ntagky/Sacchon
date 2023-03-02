@@ -9,11 +9,9 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class DoctorDto extends PersonDto{
-//    private Long id;
 
     public DoctorDto(Doctor doctor){
         if(doctor!=null){
-//            id = doctor.getId();
             super.setId(doctor.getId());
             super.setFirstName(doctor.getFirstName());
             super.setLastName(doctor.getLastName());
@@ -26,7 +24,6 @@ public class DoctorDto extends PersonDto{
 
     public Doctor asDoctor(){
         Doctor doctor = new Doctor();
-//        doctor.setId(id);
         doctor.setId(super.getId());
         doctor.setFirstName(super.getFirstName());
         doctor.setLastName(super.getLastName());

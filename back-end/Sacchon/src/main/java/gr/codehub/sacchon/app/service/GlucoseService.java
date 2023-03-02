@@ -8,8 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface GlucoseService {
-
-
     GlucoseDto createGlucose(GlucoseDto glucoseDto);
     List<GlucoseDto> readGlucose();
     List<GlucoseFromPersonDto> readGlucoseByPatientId(long id);

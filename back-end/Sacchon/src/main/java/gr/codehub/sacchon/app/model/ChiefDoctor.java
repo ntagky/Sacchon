@@ -17,6 +17,8 @@ import lombok.experimental.SuperBuilder;
  * id: unique identification number
  *
  * @author Georgia Giannokosta - geogiannokosta@gmail.com
+ * @version 1.0
+ * @since 2023-02-28
  */
 @Getter
 @Setter

@@ -22,12 +22,4 @@ public class MedicationDto {
             dosage = medication.getDosage();
         }
     }
-
-    public Medication asMedication(){
-        Medication medication = new Medication();
-        medication.setId(id);
-        medication.setMedName(medName);
-        medication.setDosage(dosage);
-        return medication;
-    }
 }

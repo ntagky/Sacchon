@@ -21,12 +21,4 @@ public class ConsultationModifiedDto {
             details = consultation.getDetails();
         }
     }
-//
-//    public Consultation asConsultation(){
-//        Consultation consultation = new Consultation();
-//        consultation.setId(id);
-//        consultation.setSeenConsultation(false);
-//        consultation.setDetails(details);
-//        return consultation;
-//    }
 }

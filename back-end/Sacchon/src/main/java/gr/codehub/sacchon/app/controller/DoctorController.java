@@ -1,8 +1,6 @@
 package gr.codehub.sacchon.app.controller;
 
 import gr.codehub.sacchon.app.dto.*;
-import gr.codehub.sacchon.app.repository.ConsultationRepository;
-import gr.codehub.sacchon.app.repository.MedicationRepository;
 import gr.codehub.sacchon.app.service.ConsultationService;
 import gr.codehub.sacchon.app.service.DoctorService;
 import gr.codehub.sacchon.app.service.MedicationService;
@@ -42,8 +40,6 @@ public class DoctorController {
     private DoctorService doctorService;
     private ConsultationService consultationService;
     private MedicationService medicationService;
-    private ConsultationRepository consultationRepository;
-    private MedicationRepository medicationRepository;
 
     @GetMapping("/doctor")
     public List<DoctorDto> getDoctorsDto(){

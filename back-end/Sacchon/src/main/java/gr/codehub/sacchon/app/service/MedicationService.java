@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface MedicationService {
     MedicationDto updateMedicationByConsultationId(MedicationDto medicationDto);
-
     List<MedicationDto> findMedications(long consultationId);
 }

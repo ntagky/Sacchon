@@ -1,7 +1,5 @@
 package gr.codehub.sacchon.app.dto;
 
-import gr.codehub.sacchon.app.model.Patient;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +15,6 @@ public class PastGlucoseMeasurementDto {
     private BigDecimal measurement;
     private LocalTime time;
     private LocalDate date;
-
 
 
     public PastGlucoseMeasurementDto(BigDecimal measurement, LocalTime time, LocalDate date) {

@@ -1,6 +1,5 @@
 package gr.codehub.sacchon.app.dto;
 
-import gr.codehub.sacchon.app.model.Consultation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,30 +19,5 @@ public class AllConsultationsReceivedForOnePatientDto {
     private String doctor_email;
     private LocalDate date_created;
     private String details;
-
-
-    public AllConsultationsReceivedForOnePatientDto(Consultation consultation){
-        if(consultation!=null){
-            id = consultation.getId();
-            doctor_first_name = consultation.getDoctor().getFirstName();
-            doctor_last_name = consultation.getDoctor().getLastName();
-            doctor_email = consultation.getDoctor().getEmail();
-            date_created = consultation.getDateCreated();
-            details = consultation.getDetails();
-        }
-    }
-
-    public Consultation asConsultation(){
-        Consultation consultation = new Consultation();
-        consultation.setId(id);
-        consultation.setDoctorFirstName(getDoctor_first_name());
-        consultation.setDoctorLastName(getDoctor_last_name());
-        consultation.setDateCreated(date_created);
-        consultation.setDetails(details);
-        consultation.setDoctorEmail(doctor_email);
-        return consultation;
-    }
-
-
 
 }
