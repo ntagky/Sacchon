@@ -2,23 +2,28 @@
   <div class="sidebar_menu">
     <div class="item mb-3">
       <i class="bi bi-house" style="font-size: 20px; margin-right: 20px;"></i>
-      <span><a routerLink="/home">Home</a></span>
+      <span><a routerLink="/home" *ngIf="page != 'Home'">Home</a></span>
+      <span><a routerLink="/home" *ngIf="page == 'Home'"><b>Home</b></a></span>
     </div>
     <div class="item mb-3">
       <i class="bi bi-capsule" style="font-size: 20px; margin-right: 20px;"></i>
-      <span><a routerLink="/consultations">Consultations</a></span>
+      <span><a routerLink="/consultations" *ngIf="page != 'Consultations'">Consultations</a></span>
+      <span><a routerLink="/consultations" *ngIf="page == 'Consultations'"><b>Consultations</b></a></span>
     </div>
     <div class="item mb-3">
       <i class="bi bi-heart-pulse" style="font-size: 20px; margin-right: 20px;"></i>
-      <span><a routerLink="/measurements">Measurements</a></span>
+      <span><a routerLink="/measurements" *ngIf="page != 'Measurements'">Measurements</a></span>
+      <span><a routerLink="/measurements" *ngIf="page == 'Measurements'"><b>Measurements</b></a></span>
     </div>
     <div class="item mb-3">
       <i class="bi bi-clipboard2-data" style="font-size: 20px; margin-right: 20px;"></i>
-      <span><a routerLink="/inspector">Visualization</a></span>
+      <span><a routerLink="/inspector" *ngIf="page != 'Visualization'">Visualization</a></span>
+      <span><a routerLink="/inspector" *ngIf="page == 'Visualization'"><b>Visualization</b></a></span>
     </div>
     <div class="item">
       <i class="bi bi-person" style="font-size: 20px; margin-right: 20px;"></i>
-      <span><a routerLink="/info">Profile</a></span>
+      <span><a routerLink="/info" *ngIf="page != 'Info'">Profile</a></span>
+      <span><a routerLink="/info" *ngIf="page == 'Info'"><b>Profile</b></a></span>
     </div>
   </div>
   <!-- <footer class="ms-3">

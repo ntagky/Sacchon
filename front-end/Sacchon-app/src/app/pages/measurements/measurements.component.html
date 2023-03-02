@@ -1,6 +1,6 @@
 <app-navbar [patientId]="userId"></app-navbar>
 
 <div class="row w-100" style="height: 100vh;">
-    <app-sidenav class="col-sm-2 p-0"></app-sidenav>
+    <app-sidenav [page]="'Measurements'" class="col-sm-2 p-0"></app-sidenav>
     <app-measurements-table [patientId]="userId" class="col-sm-10 p-3"></app-measurements-table>
 </div>

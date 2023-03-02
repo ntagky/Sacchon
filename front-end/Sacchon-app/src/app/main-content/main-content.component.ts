@@ -43,13 +43,11 @@ export class MainContentComponent implements OnInit{
     this.consultationService.getConsultations(this.patientId).subscribe({
       next: consultations => {
         this.response = consultations;
-
         let latest = this.response.length - 1;
 
         this.consultationId = this.response[latest]["id"];
         this.details = this.response[latest]["details"];
         this.seenConsultation = this.response[latest]["seenConsultation"];
-
         if(!this.seenConsultation){
           this.showAlert = true;
           setTimeout(() => {
@@ -59,7 +57,6 @@ export class MainContentComponent implements OnInit{
                 this.response = res;
               }
             })
-
           }, 5000);
         }
 
@@ -85,15 +82,11 @@ export class MainContentComponent implements OnInit{
       }
     });
 
-    this.consultationService.getLastConsultationSeenStatus(this.patientId).subscribe({
-      next: seenStatus => {this.seenResponse = seenStatus}
-    });
-
     this.doctorService.getDoctor(this.patientId).subscribe({
       next: doctor => {
         this.response = doctor;
-        this.hasDoctor = true; 
-        
+        this.hasDoctor = true;
+
         if(this.response===null){
           this.hasDoctor = false;
         }
