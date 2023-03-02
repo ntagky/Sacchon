@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_4" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.4">
+	<Header>
+		<Application name="SkLearn2PMML package" version="0.90.4"/>
+		<Timestamp>2023-02-26T19:36:28Z</Timestamp>
+	</Header>
+	<MiningBuildTask>
+		<Extension name="repr">PMMLPipeline(steps=[('normalizer', MinMaxScaler())])</Extension>
+	</MiningBuildTask>
+	<DataDictionary>
+		<DataField name="Pregnancies" optype="continuous" dataType="double"/>
+		<DataField name="Glucose" optype="continuous" dataType="double"/>
+		<DataField name="BloodPressure" optype="continuous" dataType="double"/>
+		<DataField name="SkinThickness" optype="continuous" dataType="double"/>
+		<DataField name="Insulin" optype="continuous" dataType="double"/>
+		<DataField name="BMI" optype="continuous" dataType="double"/>
+		<DataField name="DiabetesPedigreeFunction" optype="continuous" dataType="double"/>
+		<DataField name="Age" optype="continuous" dataType="double"/>
+	</DataDictionary>
+	<TransformationDictionary>
+		<DerivedField name="minMaxScaler(Pregnancies)" optype="continuous" dataType="double">
+			<Apply function="*">
+				<FieldRef field="Pregnancies"/>
+				<Constant dataType="double">0.07692307692307693</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="minMaxScaler(Glucose)" optype="continuous" dataType="double">
+			<Apply function="+">
+				<Apply function="*">
+					<FieldRef field="Glucose"/>
+					<Constant dataType="double">0.0064516129032258064</Constant>
+				</Apply>
+				<Constant dataType="double">-0.2838709677419355</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="minMaxScaler(BloodPressure)" optype="continuous" dataType="double">
+			<Apply function="+">
+				<Apply function="*">
+					<FieldRef field="BloodPressure"/>
+					<Constant dataType="double">0.01020408163265306</Constant>
+				</Apply>
+				<Constant dataType="double">-0.24489795918367346</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="minMaxScaler(SkinThickness)" optype="continuous" dataType="double">
+			<Apply function="*">
+				<FieldRef field="SkinThickness"/>
+				<Constant dataType="double">0.016666666666666666</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="minMaxScaler(Insulin)" optype="continuous" dataType="double">
+			<Apply function="*">
+				<FieldRef field="Insulin"/>
+				<Constant dataType="double">0.0024096385542168677</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="minMaxScaler(BMI)" optype="continuous" dataType="double">
+			<Apply function="+">
+				<Apply function="*">
+					<FieldRef field="BMI"/>
+					<Constant dataType="double">0.027173913043478264</Constant>
+				</Apply>
+				<Constant dataType="double">-0.4945652173913044</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="minMaxScaler(DiabetesPedigreeFunction)" optype="continuous" dataType="double">
+			<Apply function="+">
+				<Apply function="*">
+					<FieldRef field="DiabetesPedigreeFunction"/>
+					<Constant dataType="double">0.7230657989877078</Constant>
+				</Apply>
+				<Constant dataType="double">-0.05639913232104121</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="minMaxScaler(Age)" optype="continuous" dataType="double">
+			<Apply function="+">
+				<Apply function="*">
+					<FieldRef field="Age"/>
+					<Constant dataType="double">0.02127659574468085</Constant>
+				</Apply>
+				<Constant dataType="double">-0.44680851063829785</Constant>
+			</Apply>
+		</DerivedField>
+	</TransformationDictionary>
+</PMML>
