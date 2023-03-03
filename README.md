@@ -10,8 +10,8 @@ Back-end was developed using [JDK 17](https://www.oracle.com/java/technologies/j
 
 ### Steps
 * **Database** Follow the instructions found [here](https://github.com/codehub-learn/MS-SQL-Server-)
-* **Back-end** Use a compatible IDE (e.g. Intellij) and run the [back-end/Sacchon folder](https://github.com/ntagky/Sacchon/tree/main/back-end/Sacchon) 
-* **Front-end** Use the [front-end/Sacchon-app](https://github.com/ntagky/Sacchon/tree/main/front-end/Sacchon-app) folder & see the Patient Interface using:
+* **Back-end** Use a compatible IDE (e.g. Intellij) and run [back-end/Sacchon](https://github.com/ntagky/Sacchon/tree/main/back-end/Sacchon)
+* **Front-end** Use [front-end/Sacchon-app](https://github.com/ntagky/Sacchon/tree/main/front-end/Sacchon-app) & see the Patient Interface executing the following commands on your terminal:
 ```bash
 npm install
 
