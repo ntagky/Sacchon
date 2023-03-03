@@ -8,7 +8,10 @@ Sacchon is a medical application designed to help patients manage their insulin 
 
 Back-end was developed using [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) while front-end requires to have [Node.js](https://nodejs.org/en/download/) and the [Angular CLI](https://angular.io/cli) installed. The database used need the [MSSQL](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) server to run. 
 
-### Go to [front-end/Sacchon-app](https://github.com/ntagky/Sacchon/tree/main/front-end/Sacchon-app) & see the Patient Interface using:
+### Steps
+* **Database** Follow the instructions found [here](https://github.com/codehub-learn/MS-SQL-Server-)
+* **Back-end** Use a compatible IDE (e.g. Intellij) and run the [back-end/Sacchon folder](https://github.com/ntagky/Sacchon/tree/main/back-end/Sacchon) 
+* **Front-end** Use the [front-end/Sacchon-app](https://github.com/ntagky/Sacchon/tree/main/front-end/Sacchon-app) folder & see the Patient Interface using:
 ```bash
 npm install
 
