@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SacchonApplication {
 
-    public final static boolean DEBUG_MODE = true;
+    public final static boolean DEBUG_MODE = false;
     public final static String SCHEMA = DEBUG_MODE ? "DEVELOP" : "PRODUCTION";
 
     public static void main(String[] args) {
