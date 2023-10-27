@@ -53,6 +53,10 @@ Doctors' details are stored on each consultation ensuring that patients can cont
 #### Email Notifications
 Emails are send automatically using the [SMT Protocol](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol) when users receive a new or an updated consultation. Also, tasks such as birthday or inactivity checks are being run on a daily basis taking advantage of some of our system's threads to scan the database.
 
+### Application Screenshots
+Curious about our UI? We got you!
+Check [here](https://github.com/ntagky/Sacchon/tree/main/front-end/README.md) some of our highlights.
+
 # Citations
 
 <pre>
